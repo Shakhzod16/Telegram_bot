@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Food Delivery</title>
+    <link rel="stylesheet" href="./styles.css?v=20260326-3" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+      window.APP_CONFIG = window.APP_CONFIG || {};
+      window.APP_CONFIG.apiBaseUrl =
+        window.APP_CONFIG.apiBaseUrl || 'https://nobuko-nonrepressive-khloe.ngrok-free.dev';
+    </script>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow" id="eyebrow">FoodExpress</p>
+          <h1 id="title">FoodExpress</h1>
+          <p id="subtitle"></p>
+        </div>
+        <button class="ghost" id="location-btn" type="button"></button>
+      </header>
+
+      <main class="layout">
+        <section class="catalog">
+          <div class="grid" id="products"></div>
+        </section>
+        <aside class="cart">
+          <div class="cart-top">
+            <h2 id="cart-title"></h2>
+            <strong id="cart-total">0 so'm</strong>
+          </div>
+          <div id="cart-items" class="cart-items"></div>
+          <button id="submit-order" class="primary" type="button"></button>
+          <div id="payments" class="payments hidden">
+            <button id="pay-click" class="secondary" type="button"></button>
+            <button id="pay-payme" class="secondary" type="button"></button>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <template id="product-card-template">
+      <article class="card">
+        <img class="card-image" alt="" />
+        <div class="card-body">
+          <div>
+            <h3 class="card-title"></h3>
+            <p class="card-description"></p>
+          </div>
+          <div class="card-footer">
+            <span class="card-price"></span>
+            <div class="stepper">
+              <button class="minus" type="button">-</button>
+              <span class="qty">0</span>
+              <button class="plus" type="button">+</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <template id="cart-item-template">
+      <div class="cart-row">
+        <div>
+          <strong class="row-name"></strong>
+          <p class="row-meta"></p>
+        </div>
+        <div class="stepper">
+          <button class="minus" type="button">-</button>
+          <span class="qty">0</span>
+          <button class="plus" type="button">+</button>
+        </div>
+      </div>
+    </template>
+
+    <script src="./app.js?v=20260326-3"></script>
+  </body>
+  </html>
