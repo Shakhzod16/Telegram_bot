@@ -18,7 +18,7 @@ tg.ready();
 tg.expand();
 
 // ❗️ NGROK URL (har safar yangilang)
-const API_BASE_URL = 'https://nobuko-nonrepressive-khloe.ngrok-free.dev';
+const API_BASE_URL = 'https://telegram-bot-1-8a3a.onrender.com';
 
 const state = {
 	user: null,
