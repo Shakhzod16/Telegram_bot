@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import with_statement
 
-import os
 from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
+
+from backend.db import Base
+from backend import models  # noqa: F401
+from config.settings import settings
 
 
 config = context.config
@@ -13,10 +16,9 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-database_path = os.getenv("DATABASE_PATH", "food_delivery.db")
-config.set_main_option("sqlalchemy.url", f"sqlite:///{database_path}")
+config.set_main_option("sqlalchemy.url", settings.database_url_sync)
 
-target_metadata = None
+target_metadata = Base.metadata
 
 
 def run_migrations_offline() -> None:
@@ -27,7 +29,6 @@ def run_migrations_offline() -> None:
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
     )
-
     with context.begin_transaction():
         context.run_migrations()
 
@@ -38,10 +39,8 @@ def run_migrations_online() -> None:
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
-
     with connectable.connect() as connection:
         context.configure(connection=connection, target_metadata=target_metadata)
-
         with context.begin_transaction():
             context.run_migrations()
 

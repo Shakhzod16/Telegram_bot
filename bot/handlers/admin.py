@@ -39,7 +39,7 @@ async def admin_orders(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     keyboard = []
     for order in orders:
         lines.append(
-            f"#{order['id']} — {order['user_name']} — {order['total_amount']:,} so'm — {order['status']}"
+            f"#{order['id']} - {order['user_name']} - {order['total_amount']:,} so'm - {order['status']}"
         )
         keyboard.append(
             [
@@ -61,28 +61,30 @@ async def admin_order_detail(update: Update, context: ContextTypes.DEFAULT_TYPE)
     if not query or not query.from_user:
         return
     if not _is_admin(query.from_user.id):
-        await query.answer("Forbidden", show_alert=True)
+        await query.answer(t("admin_forbidden", "en"), show_alert=True)
         return
 
-    order_id = int(query.data.split("_")[-1])
+    order_id = int((query.data or "").split("_")[-1])
     summary = db.get_order_summary(order_id)
     keyboard = [
-        [InlineKeyboardButton("✅ Tasdiqlash", callback_data=f"status_{order_id}_CONFIRMED")],
-        [InlineKeyboardButton("🍳 Tayyorlanmoqda", callback_data=f"status_{order_id}_IN_PROGRESS")],
-        [InlineKeyboardButton("🚚 Yetkazilmoqda", callback_data=f"status_{order_id}_DELIVERING")],
-        [InlineKeyboardButton("✔️ Yetkazildi", callback_data=f"status_{order_id}_DELIVERED")],
-        [InlineKeyboardButton("❌ Bekor qilish", callback_data=f"status_{order_id}_CANCELLED")],
+        [InlineKeyboardButton(t("admin_confirm", "en"), callback_data=f"status_{order_id}_CONFIRMED")],
+        [InlineKeyboardButton(t("admin_preparing", "en"), callback_data=f"status_{order_id}_IN_PROGRESS")],
+        [InlineKeyboardButton(t("admin_delivering", "en"), callback_data=f"status_{order_id}_DELIVERING")],
+        [InlineKeyboardButton(t("admin_delivered", "en"), callback_data=f"status_{order_id}_DELIVERED")],
+        [InlineKeyboardButton(t("admin_cancel", "en"), callback_data=f"status_{order_id}_CANCELLED")],
     ]
     items = "\n".join(f"- {item['name']} x{item['quantity']}" for item in summary["items"])
-    text = (
-        f"Buyurtma #{order_id}\n"
-        f"Mijoz: {summary['user']['name']}\n"
-        f"Telefon: {summary['user']['phone']}\n"
-        f"Shahar: {summary['user']['city']}\n"
-        f"Manzil: {summary['location_label'] or '-'}\n"
-        f"Jami: {summary['total_amount']:,} so'm\n"
-        f"Holat: {summary['status']}\n\n"
-        f"{items}"
+    text = t(
+        "admin_order_detail",
+        "en",
+        order_id=str(order_id),
+        name=summary["user"]["name"] or "-",
+        phone=summary["user"]["phone"] or "-",
+        city=summary["user"]["city"] or "-",
+        address=summary["location_label"] or "-",
+        amount=f"{summary['total_amount']:,}",
+        status=status_text(summary["status"], "en"),
+        items=items or "-",
     )
     await query.answer()
     await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard))
@@ -93,18 +95,18 @@ async def handle_status_change(update: Update, context: ContextTypes.DEFAULT_TYP
     if not query or not query.from_user:
         return
     if not _is_admin(query.from_user.id):
-        await query.answer("Forbidden", show_alert=True)
+        await query.answer(t("admin_forbidden", "en"), show_alert=True)
         return
 
-    _, order_id_raw, status = query.data.split("_", 2)
+    _, order_id_raw, status = (query.data or "").split("_", 2)
     order_id = int(order_id_raw)
     if status not in MANAGEABLE_ORDER_STATUSES:
-        await query.answer("Invalid status", show_alert=True)
+        await query.answer(t("admin_invalid_status", "en"), show_alert=True)
         return
 
     db.update_order_status(order_id, status)
     await _notify_status_change(context, order_id, status)
-    await query.answer("Updated")
+    await query.answer(t("admin_updated", "en"))
     await query.edit_message_reply_markup(reply_markup=None)
     await context.bot.send_message(
         chat_id=query.message.chat_id,

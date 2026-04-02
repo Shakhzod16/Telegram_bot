@@ -2,17 +2,13 @@
 from telegram import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
 
 from config import settings
-from utils.texts import t
+from utils.texts import LANGUAGE_CODES, t
 
-
-LANGUAGE_BUTTONS = {
-    "🇺🇿 Uzbek": "uz",
-    "🇺🇿 Узбекский": "uz",
-    "🇷🇺 Russian": "ru",
-    "🇷🇺 Русский": "ru",
-    "🇬🇧 English": "en",
-    "🇬🇧 Английский": "en",
-}
+LANGUAGE_BUTTONS: dict[str, str] = {}
+for _lang in LANGUAGE_CODES:
+    LANGUAGE_BUTTONS[t("language_uz", _lang)] = "uz"
+    LANGUAGE_BUTTONS[t("language_ru", _lang)] = "ru"
+    LANGUAGE_BUTTONS[t("language_en", _lang)] = "en"
 
 
 def language_keyboard(language: str = "en") -> ReplyKeyboardMarkup:

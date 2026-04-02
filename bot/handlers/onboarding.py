@@ -11,11 +11,13 @@ from telegram.ext import (
 
 from config import settings
 from database.models import Database
-from utils.keyboards import LANGUAGE_BUTTONS, language_keyboard, main_menu_keyboard, phone_keyboard
+from bot.keyboards import LANGUAGE_BUTTONS, language_keyboard, main_menu_keyboard, phone_keyboard
+from utils.logger import get_logger
 from utils.texts import LANGUAGE_CODES, t
 
 
 db = Database(settings.database_path)
+logger = get_logger("bot.onboarding")
 
 LANGUAGE, NAME, PHONE, CITY = range(4)
 
@@ -29,6 +31,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if not update.effective_message or not update.effective_user:
         return ConversationHandler.END
 
+    logger.info("Command /start received user_id=%s", update.effective_user.id)
     user = db.get_user(update.effective_user.id)
     if user and user.get("name") and user.get("phone") and user.get("city"):
         context.user_data["profile"] = user
