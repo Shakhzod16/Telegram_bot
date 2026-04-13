@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h1>Buyurtmalar</h1>
+<div id="admin-orders-board" class="admin-board"></div>
+<audio id="new-order-audio" src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAAEABAAZGF0YQAAAAA="></audio>
+{% endblock %}
+{% block scripts %}
+<script>
+async function loadBoard() {
+  const data = await window.apiFetch("/api/v1/admin/orders?page=1&size=100");
+  const root = document.getElementById("admin-orders-board");
+  root.innerHTML = "";
+  (data.items || []).forEach(function (o) {
+    const el = document.createElement("div");
+    el.className = "admin-order";
+    el.textContent = "#" + o.id + " — " + o.status + " — " + o.total_amount;
+    root.appendChild(el);
+  });
+}
+setInterval(loadBoard, 30000);
+loadBoard();
+</script>
+{% endblock %}

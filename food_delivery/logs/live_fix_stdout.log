@@ -1,0 +1,9 @@
+{"timestamp": "2026-04-08T04:42:36.209131+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-08T04:42:37.224065+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-08T04:42:37.260943+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=https://86c74a94386d55.lhr.life/webapp/
+Using DEV_RELOAD=0
+bot exited with code 1. Stopping remaining process...
+Stopped.

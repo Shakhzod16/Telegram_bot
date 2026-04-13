@@ -1,0 +1,51 @@
+﻿{% extends "base.html" %}
+{% block title %}Profil{% endblock %}
+{% block content %}
+<section class="page">
+  <div id="state-loading" class="state state-loading">
+    <div class="simple-card section-stack">
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line short"></div>
+      <div class="skeleton skeleton-line"></div>
+    </div>
+  </div>
+
+  <div id="profile-root" class="hidden">
+    <header class="profile-header">
+      <div class="avatar" id="profile-avatar">FE</div>
+      <div class="profile-info">
+        <h2 class="name" id="profile-name">FoodExpress</h2>
+        <p class="handle" id="profile-phone"></p>
+      </div>
+    </header>
+
+    <section class="profile-section">
+      <p class="profile-section-title">Til</p>
+      <div class="lang-switch">
+        <button type="button" class="lang-btn" data-lang="uz">UZ</button>
+        <button type="button" class="lang-btn" data-lang="ru">RU</button>
+      </div>
+    </section>
+
+    <section class="profile-section">
+      <p class="profile-section-title">Akkaunt</p>
+      <div class="menu-list">
+        <a class="menu-item" href="/webapp/address" onclick="haptic('light')">
+          <span class="menu-icon">🏠</span>
+          <span>Manzillarim</span>
+          <span class="menu-chevron">›</span>
+        </a>
+        <button id="logout-btn" class="menu-item" type="button">
+          <span class="menu-icon">⇦</span>
+          <span>Chiqish</span>
+          <span class="menu-chevron">›</span>
+        </button>
+      </div>
+    </section>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/profile.js?v=20260409-2"></script>
+{% endblock %}
+

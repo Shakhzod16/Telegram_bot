@@ -1,0 +1,2 @@
+{"timestamp": "2026-04-09T03:41:11.519951+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-09T03:41:12.526944+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}

@@ -1,0 +1,24 @@
+﻿{% extends "base.html" %}
+{% block title %}Buyurtma #{{ order_id }}{% endblock %}
+{% block content %}
+<section class="page">
+  <header class="orders-header">
+    <h2 class="section-title">Buyurtma #{{ order_id }}</h2>
+  </header>
+
+  <div id="state-loading" class="state state-loading">
+    <div class="simple-card section-stack">
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line short"></div>
+    </div>
+  </div>
+
+  <div id="order-root" class="page-content hidden"></div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>window.ORDER_ID = {{ order_id }};</script>
+<script src="/static/js/orders.js?v=20260409-2"></script>
+{% endblock %}
+

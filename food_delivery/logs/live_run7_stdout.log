@@ -1,0 +1,12 @@
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=https://fine-mangos-change.loca.lt/webapp
+Using DEV_RELOAD=0
+Starting localtunnel on https://foodexpress-22327-boogyj2l.loca.lt ...
+Using WEBAPP_URL=https://foodexpress-22327-boogyj2l.loca.lt/webapp
+your url is: https://foodexpress-22327-boogyj2l.loca.lt
+{"timestamp": "2026-04-08T04:25:34.501886+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-08T04:25:35.507883+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-08T04:25:35.549216+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+localtunnel exited with code 1. Stopping remaining process...
+Stopped.

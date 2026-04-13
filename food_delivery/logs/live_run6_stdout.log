@@ -1,0 +1,7 @@
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=https://fine-mangos-change.loca.lt/webapp
+Using DEV_RELOAD=0
+{"timestamp": "2026-04-08T04:12:07.191598+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-08T04:12:08.196954+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-08T04:12:08.235458+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}

@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Katalog — FoodExpress</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="/webapp/static/css/base.css" />
+  <link rel="stylesheet" href="/webapp/static/css/components.css" />
+  <link rel="stylesheet" href="/webapp/static/css/pages.css" />
+  <script>
+    window.BACKEND_URL = "https://bd7388456f1f58.lhr.life";
+  </script>
+  <style id="tg-theme">
+    :root {
+      --tg-bg: var(--tg-theme-bg-color, #ffffff);
+      --tg-text: var(--tg-theme-text-color, #111111);
+      --tg-hint: var(--tg-theme-hint-color, #999999);
+      --tg-link: var(--tg-theme-link-color, #2481cc);
+      --tg-button: var(--tg-theme-button-color, #2481cc);
+      --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
+      --tg-secondary: var(--tg-theme-secondary-bg-color, #f4f4f5);
+    }
+    body { background: var(--tg-bg); color: var(--tg-text); }
+  </style>
+</head>
+<body class="app-body">
+  <div id="app-error" class="state state-error hidden" role="alert"></div>
+  <main class="main-pad">
+    
+<section class="page">
+  <div id="state-loading" class="state state-loading">
+    <div class="skeleton skeleton-line"></div>
+    <div class="skeleton skeleton-grid">
+      <div class="skeleton-card"></div><div class="skeleton-card"></div>
+      <div class="skeleton-card"></div><div class="skeleton-card"></div>
+    </div>
+  </div>
+  <div id="state-empty" class="state state-empty hidden">
+    <p>Hech narsa topilmadi</p>
+    <button class="btn" type="button" onclick="location.reload()">Qayta urinish</button>
+  </div>
+  <div id="catalog-root" class="hidden">
+    <div class="search-row">
+      <input id="search-input" type="search" placeholder="Qidiruv" class="input" />
+    </div>
+    <div id="categories" class="chips-scroll"></div>
+    <div id="products" class="product-grid"></div>
+  </div>
+</section>
+
+  </main>
+  <nav class="bottom-nav">
+    <a class="nav-item" data-haptic="light" href="/webapp/">Home</a>
+    <a class="nav-item" data-haptic="light" href="/webapp/cart">Cart <span id="cart-badge" class="badge hidden">0</span></a>
+    <a class="nav-item" data-haptic="light" href="/webapp/orders">Orders</a>
+    <a class="nav-item" data-haptic="light" href="/webapp/profile">Profile</a>
+  </nav>
+  <script src="/webapp/static/js/api.js"></script>
+  <script src="/webapp/static/js/auth.js"></script>
+  <script>
+    (function () {
+      const tg = window.Telegram && window.Telegram.WebApp;
+      if (tg) {
+        tg.ready();
+        tg.expand();
+        document.body.classList.add("tg-inited");
+      }
+      document.querySelectorAll("[data-haptic]").forEach(function (el) {
+        el.addEventListener("click", function () {
+          if (tg && tg.HapticFeedback) {
+            try { tg.HapticFeedback.impactOccurred("light"); } catch (e) {}
+          }
+        });
+      });
+    })();
+  </script>
+  
+<script src="/webapp/static/js/catalog.js"></script>
+
+</body>
+</html>

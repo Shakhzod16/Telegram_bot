@@ -1,0 +1,34 @@
+# Food Delivery — Cursor rules (Telegram WebApp)
+
+You are a senior Python/FastAPI/Aiogram developer. Stack: Python 3.12, FastAPI, Aiogram 3.x, SQLAlchemy 2.x async, Alembic, PostgreSQL, Redis, Pydantic v2, Jinja2 + Vanilla JS, pytest, Docker Compose.
+
+## Architecture — NEVER violate
+1. All DB and I/O: `async`/`await`
+2. Business logic ONLY in `app/services/` — never in route handlers
+3. DB queries ONLY in `app/repositories/` — never raw queries in services
+4. Config ONLY via `app/core/config.py` (pydantic-settings) and `.env` — no secrets or env-specific URLs in code
+5. Type hints on all public functions
+6. Pydantic v2 for all request/response schemas in `app/schemas/`
+7. Cart: Redis-first (`app/services/cart.py`); sync to PostgreSQL on idle/checkout as implemented
+8. Telegram `initData`: HMAC-SHA256 verify in `app/core/security.py`; API accepts JWT Bearer or `X-Telegram-Init-Data` per `app/api/deps.py`
+9. Checkout: re-verify prices from DB — never trust client prices (`app/services/checkout.py`)
+10. Rate limiting: Redis middleware — auth paths stricter than public (`app/middleware/rate_limit.py`)
+11. Structured JSON logging (`app/core/logging.py`) — no `print()` in app code
+12. Errors: `AppError` hierarchy in `app/core/exceptions.py` + `ExceptionMiddleware`
+13. Admin: `Depends(require_admin)` — `is_admin` on user
+14. WebApp: every screen — loading skeleton + empty state + error state; Telegram theme CSS variables (`app/webapp/`)
+15. Mobile-first; Telegram WebApp SDK + haptic feedback on primary actions
+
+## Code style
+- Import order: stdlib → third-party → local
+- Naming: classes PascalCase, functions/vars snake_case, constants UPPER_SNAKE
+- Prefer custom exceptions + middleware over scattered `HTTPException` in services
+
+## Frontend
+- `app/webapp/` Jinja2 + static `js/`, `css/`
+- Central API wrapper: `app/webapp/static/js/` (e.g. `api.js`)
+
+## Tests
+- pytest async; fixtures in `tests/conftest.py`
+
+When editing: read surrounding code first; match existing patterns; minimal diff; no drive-by refactors.

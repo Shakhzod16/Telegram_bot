@@ -1,0 +1,64 @@
+﻿{% extends "base.html" %}
+{% block title %}Katalog - FoodExpress{% endblock %}
+{% block content %}
+<section class="page">
+  <header class="home-header">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input id="search-input" type="search" placeholder="Taom qidiring" class="search-input" autocomplete="off" />
+    </div>
+    <div id="categories" class="categories-scroll"></div>
+  </header>
+
+  <div id="state-loading" class="state state-loading">
+    <div class="products-grid">
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-img"></div>
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line short"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-img"></div>
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line short"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-img"></div>
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line short"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-img"></div>
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line short"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="state-empty" class="empty-state hidden">
+    <div class="empty-icon">🍽</div>
+    <div class="empty-title">Mahsulot topilmadi</div>
+    <div class="empty-desc">Filtr yoki qidiruvni o'zgartirib qayta urinib ko'ring.</div>
+  </div>
+
+  <div id="catalog-root" class="hidden">
+    <div id="products" class="products-grid"></div>
+  </div>
+</section>
+
+<section id="product-sheet" class="bottom-sheet" aria-hidden="true">
+  <div class="sheet-handle"></div>
+  <img id="sheet-image" class="product-detail-img" src="" alt="Mahsulot rasmi" />
+  <h3 id="sheet-name" class="product-detail-name"></h3>
+  <p id="sheet-desc" class="product-detail-desc"></p>
+  <div id="sheet-variants-label" class="variants-label hidden">Variantlar</div>
+  <div id="sheet-variants" class="variants-list hidden"></div>
+  <div class="detail-bottom">
+    <div id="sheet-price" class="detail-price">0 UZS</div>
+    <button id="sheet-add-btn" class="btn btn-primary" type="button">Savatga qo'shish</button>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/catalog.js?v=20260409-2"></script>
+{% endblock %}

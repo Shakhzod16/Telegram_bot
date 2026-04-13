@@ -1,0 +1,7 @@
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=https://telegram-bot-1-8a3a.onrender.com
+Using DEV_RELOAD=0
+{"timestamp": "2026-04-08T04:27:30.875364+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-08T04:27:31.879511+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-08T04:27:31.919846+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}

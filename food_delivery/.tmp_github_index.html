@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>FoodFlow</title>
+    <link rel="stylesheet" href="./styles.css?v=20260327-1" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="/app-config.js"></script>
+    <script>
+      window.APP_CONFIG = window.APP_CONFIG || {};
+      window.APP_CONFIG.apiBaseUrl =
+        window.APP_CONFIG.apiBaseUrl || window.location.origin;
+    </script>
+  </head>
+  <body>
+    <div id="app" class="app">
+      <header class="app-header">
+        <div class="brand">
+          <p class="brand-kicker">Fast delivery</p>
+          <h1 id="app-title">FoodFlow</h1>
+          <p id="user-greeting" class="muted">Loading...</p>
+        </div>
+        <button id="location-trigger" class="location-btn" type="button">Location</button>
+      </header>
+
+      <section id="location-panel" class="location-panel hidden">
+        <button id="request-location" class="chip" type="button">Use Telegram location</button>
+        <input id="location-input" class="location-input" type="text" placeholder="Enter delivery address" />
+        <button id="save-address" class="chip" type="button">Save address</button>
+        <div id="saved-addresses" class="saved-addresses"></div>
+      </section>
+
+      <nav id="category-tabs" class="category-tabs"></nav>
+
+      <main>
+        <section id="products-grid" class="products-grid"></section>
+      </main>
+    </div>
+
+    <button id="floating-cart" class="floating-cart hidden" type="button"></button>
+
+    <div id="cart-drawer" class="drawer hidden">
+      <div id="drawer-backdrop" class="drawer-backdrop"></div>
+      <aside class="drawer-panel">
+        <header class="drawer-header">
+          <h2 id="cart-title">Cart</h2>
+          <button id="close-drawer" class="icon-btn" type="button">x</button>
+        </header>
+        <div id="cart-items" class="cart-items"></div>
+        <footer class="drawer-footer">
+          <div class="total-row">
+            <span>Total</span>
+            <strong id="cart-total">0 so'm</strong>
+          </div>
+          <button id="checkout-btn" class="cta" type="button">Checkout</button>
+          <div id="payment-actions" class="payment-actions hidden">
+            <button class="chip payment" type="button" data-provider="click">Click</button>
+            <button class="chip payment" type="button" data-provider="payme">Payme</button>
+            <button class="chip payment" type="button" data-provider="cash">Cash</button>
+          </div>
+        </footer>
+      </aside>
+    </div>
+
+    <template id="product-card-template">
+      <article class="product-card">
+        <div class="image-wrap">
+          <img class="product-image" alt="" loading="lazy" />
+        </div>
+        <div class="product-content">
+          <h3 class="product-name"></h3>
+          <p class="product-description muted"></p>
+          <div class="product-footer">
+            <strong class="product-price"></strong>
+            <div class="controls">
+              <button class="icon-btn minus" type="button">-</button>
+              <span class="qty">0</span>
+              <button class="icon-btn plus" type="button">+</button>
+            </div>
+          </div>
+          <button class="add-btn" type="button">Add to cart</button>
+        </div>
+      </article>
+    </template>
+
+    <template id="cart-item-template">
+      <article class="cart-item">
+        <div>
+          <h4 class="cart-item-name"></h4>
+          <p class="cart-item-meta muted"></p>
+        </div>
+        <div class="controls">
+          <button class="icon-btn minus" type="button">-</button>
+          <span class="qty">0</span>
+          <button class="icon-btn plus" type="button">+</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="./app.js?v=20260327-1"></script>
+  </body>
+</html>
+

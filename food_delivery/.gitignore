@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+htmlcov/
+.coverage
+.npm-cache/
+# alembic/versions/*.py (faqat auto-generated bo'lsa)
+alembic/versions/*.py

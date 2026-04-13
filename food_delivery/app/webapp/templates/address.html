@@ -1,0 +1,126 @@
+﻿{% extends "base.html" %}
+{% block title %}Manzil{% endblock %}
+{% block content %}
+<section class="page">
+  <header class="orders-header">
+    <h2 class="section-title">Manzil</h2>
+  </header>
+
+  <section class="profile-section">
+    <p class="profile-section-title">Saqlangan manzillar</p>
+    <div id="address-list" class="menu-list"></div>
+  </section>
+
+  <section class="profile-section">
+    <p class="profile-section-title">Yangi manzil</p>
+    <form id="address-form" class="simple-card form">
+      <label class="input-label" for="address-line">Manzil</label>
+      <textarea id="address-line" name="address_line" class="input" required placeholder="Ko'cha, uy, mo'ljal"></textarea>
+
+      <input name="apartment" class="input" placeholder="Uy / xonadon" />
+      <input name="floor" class="input" placeholder="Qavat" />
+      <input name="entrance" class="input" placeholder="Kirish" />
+      <input name="door_code" class="input" placeholder="Kod" />
+      <input name="landmark" class="input" placeholder="Mo'ljal" />
+      <textarea name="comment" class="input" placeholder="Izoh"></textarea>
+
+      <label class="input-label" style="display:flex;align-items:center;gap:8px;">
+        <input type="checkbox" name="is_default" /> Asosiy manzil
+      </label>
+
+      <button type="button" id="geo-btn" class="locate-btn">📍 Joylashuvimni aniqlash</button>
+      <button type="submit" class="btn btn-primary">Saqlash</button>
+    </form>
+  </section>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+  function renderAddresses(items) {
+    const root = document.getElementById("address-list");
+    if (!root) return;
+    root.innerHTML = "";
+    if (!items || items.length === 0) {
+      root.innerHTML = '<div class="empty-state" style="padding:20px 12px;"><div class="empty-desc">Manzil hali qo\'shilmagan</div></div>';
+      return;
+    }
+    items.forEach(function (item) {
+      const card = document.createElement("div");
+      card.className = "address-card" + (item.is_default ? " default" : "");
+      card.innerHTML =
+        '<div class="menu-icon">📌</div>' +
+        '<div style="flex:1;min-width:0;">' +
+        '<div style="font-weight:600;font-size:14px;">' + (item.title || "Manzil") + '</div>' +
+        '<div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">' + item.address_line + '</div>' +
+        '</div>';
+      card.addEventListener("click", function () {
+        sessionStorage.setItem("last_address_id", String(item.id));
+        haptic("light");
+        showToast("Manzil tanlandi", "success");
+      });
+      root.appendChild(card);
+    });
+  }
+
+  async function loadAddresses() {
+    try {
+      const data = await window.apiFetch("/api/v1/addresses");
+      renderAddresses(data || []);
+      const selected = (data || []).find(function (x) { return x.is_default; });
+      if (selected) {
+        sessionStorage.setItem("last_address_id", String(selected.id));
+      }
+    } catch (e) {
+      showToast("Manzillarni yuklab bo'lmadi", "error");
+    }
+  }
+
+  document.getElementById("geo-btn").addEventListener("click", function () {
+    haptic("light");
+    if (!navigator.geolocation) {
+      showToast("Geolokatsiya qo'llab-quvvatlanmaydi", "error");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      function (pos) {
+        window._addrLat = pos.coords.latitude;
+        window._addrLng = pos.coords.longitude;
+        hapticOk();
+        showToast("Joylashuv olindi", "success");
+      },
+      function () {
+        hapticErr();
+        showToast("Joylashuvni olib bo'lmadi", "error");
+      }
+    );
+  });
+
+  document.getElementById("address-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const body = Object.fromEntries(fd.entries());
+    body.title = (body.address_line || "").slice(0, 28) || "Manzil";
+    body.is_default = !!fd.get("is_default");
+    body.lat = window._addrLat || null;
+    body.lng = window._addrLng || null;
+
+    try {
+      const saved = await window.apiFetch("/api/v1/addresses", { method: "POST", body: JSON.stringify(body) });
+      if (saved && saved.id) {
+        sessionStorage.setItem("last_address_id", String(saved.id));
+      }
+      hapticOk();
+      showToast("Manzil saqlandi", "success");
+      setTimeout(function () {
+        window.location.href = "/webapp/checkout";
+      }, 350);
+    } catch (err) {
+      hapticErr();
+      showToast("Saqlashda xatolik", "error");
+    }
+  });
+
+  loadAddresses();
+</script>
+{% endblock %}

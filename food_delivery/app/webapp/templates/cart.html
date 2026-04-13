@@ -1,0 +1,49 @@
+﻿{% extends "base.html" %}
+{% block title %}Savat{% endblock %}
+{% block content %}
+<section class="page">
+  <header class="cart-header">
+    <h2 class="section-title">Savat</h2>
+    <button id="cart-clear" class="cart-clear-btn" type="button">Tozalash</button>
+  </header>
+
+  <div id="state-loading" class="state state-loading">
+    <div class="simple-card section-stack">
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line short"></div>
+    </div>
+  </div>
+
+  <div id="state-empty" class="empty-state hidden">
+    <div class="empty-icon">🛒</div>
+    <div class="empty-title">Savatingiz bo'sh</div>
+    <div class="empty-desc">Yoqimli taomlardan birini tanlang va buyurtmani boshlang.</div>
+    <a class="btn btn-primary" href="/webapp/">Katalogga o'tish</a>
+  </div>
+
+  <div id="cart-root" class="hidden">
+    <div id="cart-lines" class="cart-items"></div>
+
+    <div class="promo-wrap">
+      <input id="promo-input" class="promo-input" placeholder="Promo kod" />
+      <button id="promo-apply" class="btn btn-secondary btn-sm" type="button">Qo'llash</button>
+    </div>
+
+    <div class="price-breakdown">
+      <div class="price-row"><span>Subtotal</span><span class="price-value" id="cart-subtotal">0</span></div>
+      <div class="price-row"><span>Yetkazish</span><span class="price-value" id="cart-delivery">0</span></div>
+      <div class="price-row discount hidden" id="cart-discount-row"><span>Chegirma</span><span class="price-value" id="cart-discount">0</span></div>
+      <div class="price-row total"><span>Jami</span><span class="price-value" id="cart-total">0</span></div>
+    </div>
+
+    <div class="cart-checkout-wrap">
+      <a class="btn btn-primary" href="/webapp/checkout">Checkout</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/cart.js?v=20260409-2"></script>
+{% endblock %}
+

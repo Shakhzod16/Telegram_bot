@@ -1,0 +1,35 @@
+﻿{% extends "base.html" %}
+{% block title %}Buyurtmalar{% endblock %}
+{% block content %}
+<section class="page">
+  <header class="orders-header">
+    <h2 class="section-title">Buyurtmalarim</h2>
+  </header>
+
+  <div id="state-loading" class="state state-loading">
+    <div class="orders-list">
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line short"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line short"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="state-empty" class="empty-state hidden">
+    <div class="empty-icon">📦</div>
+    <div class="empty-title">Hozircha buyurtma yo'q</div>
+    <div class="empty-desc">Ilk buyurtmangizni berish uchun katalogga qayting.</div>
+    <a class="btn btn-primary" href="/webapp/">Katalogga o'tish</a>
+  </div>
+
+  <div id="orders-root" class="orders-list hidden"></div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/orders.js?v=20260409-2"></script>
+{% endblock %}
+

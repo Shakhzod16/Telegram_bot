@@ -1,0 +1,48 @@
+﻿{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+<section class="page">
+  <header class="orders-header">
+    <h2 class="section-title">Checkout</h2>
+  </header>
+
+  <div id="state-loading" class="state state-loading">
+    <div class="simple-card section-stack">
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line short"></div>
+    </div>
+  </div>
+
+  <div id="checkout-root" class="hidden">
+    <div class="simple-card section-stack">
+      <a class="menu-item" href="/webapp/address" onclick="haptic('light')">
+        <span class="menu-icon">📍</span>
+        <span>Manzilni tanlash / o'zgartirish</span>
+        <span class="menu-chevron">›</span>
+      </a>
+      <p id="selected-address" class="empty-desc">Manzil tanlanmagan</p>
+    </div>
+
+    <div id="checkout-summary" class="price-breakdown"></div>
+
+    <div class="profile-section section-stack">
+      <label for="checkout-comment" class="input-label">Izoh</label>
+      <textarea id="checkout-comment" class="input" rows="3" placeholder="Qo'shimcha izoh"></textarea>
+      <div class="price-row"><span>To'lov usuli</span><span>Naqd</span></div>
+      <button id="checkout-submit" class="btn btn-primary" type="button">Buyurtma berish</button>
+    </div>
+  </div>
+
+  <div id="checkout-success" class="checkout-success hidden">
+    <div class="success-icon">✓</div>
+    <h3 class="success-title">Buyurtma qabul qilindi</h3>
+    <p class="success-desc">Buyurtmangiz operatorga yuborildi. Holatni "Orders" sahifasida kuzatishingiz mumkin.</p>
+    <a class="btn btn-primary" href="/webapp/orders">Buyurtmalarim</a>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/checkout.js?v=20260409-2"></script>
+{% endblock %}
+

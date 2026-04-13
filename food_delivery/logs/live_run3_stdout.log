@@ -1,0 +1,25 @@
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=http://localhost:8000/webapp
+Using DEV_RELOAD=0
+{"timestamp": "2026-04-08T03:53:24.699724+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-08T03:53:25.706008+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-08T03:53:25.748688+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+2026-04-08 08:54:53,031 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-04-08 08:54:53,079 INFO sqlalchemy.engine.Engine SELECT users.id, users.telegram_id, users.first_name, users.last_name, users.username, users.phone, users.language, users.is_active, users.is_admin, users.created_at, users.updated_at 
+FROM users 
+WHERE users.telegram_id = ?
+2026-04-08 08:54:53,081 INFO sqlalchemy.engine.Engine [generated in 0.00204s] (6412887832,)
+2026-04-08 08:54:53,089 INFO sqlalchemy.engine.Engine SELECT addresses.user_id AS addresses_user_id, addresses.id AS addresses_id, addresses.title AS addresses_title, addresses.address_line AS addresses_address_line, addresses.lat AS addresses_lat, addresses.lng AS addresses_lng, addresses.apartment AS addresses_apartment, addresses.floor AS addresses_floor, addresses.entrance AS addresses_entrance, addresses.door_code AS addresses_door_code, addresses.landmark AS addresses_landmark, addresses.comment AS addresses_comment, addresses.is_default AS addresses_is_default, addresses.created_at AS addresses_created_at 
+FROM addresses 
+WHERE addresses.user_id IN (?)
+2026-04-08 08:54:53,089 INFO sqlalchemy.engine.Engine [generated in 0.00095s] (1,)
+2026-04-08 08:54:53,094 INFO sqlalchemy.engine.Engine SELECT orders.user_id AS orders_user_id, orders.id AS orders_id, orders.address_id AS orders_address_id, orders.branch_id AS orders_branch_id, orders.status AS orders_status, orders.subtotal AS orders_subtotal, orders.delivery_fee AS orders_delivery_fee, orders.discount AS orders_discount, orders.total_amount AS orders_total_amount, orders.payment_method AS orders_payment_method, orders.payment_status AS orders_payment_status, orders.comment AS orders_comment, orders.promo_code AS orders_promo_code, orders.idempotency_key AS orders_idempotency_key, orders.created_at AS orders_created_at, orders.confirmed_at AS orders_confirmed_at, orders.delivered_at AS orders_delivered_at 
+FROM orders 
+WHERE orders.user_id IN (?)
+2026-04-08 08:54:53,094 INFO sqlalchemy.engine.Engine [generated in 0.00092s] (1,)
+2026-04-08 08:54:53,098 INFO sqlalchemy.engine.Engine SELECT carts.user_id AS carts_user_id, carts.id AS carts_id, carts.status AS carts_status, carts.created_at AS carts_created_at, carts.updated_at AS carts_updated_at 
+FROM carts 
+WHERE carts.user_id IN (?)
+2026-04-08 08:54:53,099 INFO sqlalchemy.engine.Engine [generated in 0.00115s] (1,)
+2026-04-08 08:54:53,102 INFO sqlalchemy.engine.Engine ROLLBACK

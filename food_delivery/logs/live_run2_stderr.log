@@ -1,0 +1,220 @@
+INFO:     Started server process [3824]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:sqlalchemy.engine.Engine:BEGIN (implicit)
+INFO:sqlalchemy.engine.Engine:SELECT users.id, users.telegram_id, users.first_name, users.last_name, users.username, users.phone, users.language, users.is_active, users.is_admin, users.created_at, users.updated_at 
+FROM users 
+WHERE users.telegram_id = ?
+INFO:sqlalchemy.engine.Engine:[generated in 0.00177s] (6412887832,)
+INFO:sqlalchemy.engine.Engine:SELECT addresses.user_id AS addresses_user_id, addresses.id AS addresses_id, addresses.title AS addresses_title, addresses.address_line AS addresses_address_line, addresses.lat AS addresses_lat, addresses.lng AS addresses_lng, addresses.apartment AS addresses_apartment, addresses.floor AS addresses_floor, addresses.entrance AS addresses_entrance, addresses.door_code AS addresses_door_code, addresses.landmark AS addresses_landmark, addresses.comment AS addresses_comment, addresses.is_default AS addresses_is_default, addresses.created_at AS addresses_created_at 
+FROM addresses 
+WHERE addresses.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00091s] (1,)
+INFO:sqlalchemy.engine.Engine:SELECT orders.user_id AS orders_user_id, orders.id AS orders_id, orders.address_id AS orders_address_id, orders.branch_id AS orders_branch_id, orders.status AS orders_status, orders.subtotal AS orders_subtotal, orders.delivery_fee AS orders_delivery_fee, orders.discount AS orders_discount, orders.total_amount AS orders_total_amount, orders.payment_method AS orders_payment_method, orders.payment_status AS orders_payment_status, orders.comment AS orders_comment, orders.promo_code AS orders_promo_code, orders.idempotency_key AS orders_idempotency_key, orders.created_at AS orders_created_at, orders.confirmed_at AS orders_confirmed_at, orders.delivered_at AS orders_delivered_at 
+FROM orders 
+WHERE orders.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00072s] (1,)
+INFO:sqlalchemy.engine.Engine:SELECT carts.user_id AS carts_user_id, carts.id AS carts_id, carts.status AS carts_status, carts.created_at AS carts_created_at, carts.updated_at AS carts_updated_at 
+FROM carts 
+WHERE carts.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00077s] (1,)
+INFO:sqlalchemy.engine.Engine:ROLLBACK
+INFO:aiogram.event:Update id=963835358 is not handled. Duration 567 ms by bot id=8772453459
+ERROR:aiogram.event:Cause exception while process update id=963835358 by bot id=8772453459
+TelegramBadRequest: Telegram server says - Bad Request: inline keyboard button Web App URL 'http://localhost:8000/webapp/' is invalid: Only HTTPS links are allowed
+Traceback (most recent call last):
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\fsm\middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\Desktop\FoodExpressBot\food_delivery\bot\middlewares\logging.py", line 19, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 163, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 155, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 191, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 163, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 155, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 183, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\Desktop\FoodExpressBot\food_delivery\bot\handlers\start.py", line 39, in cmd_start
+    await message.answer(
+    ...<2 lines>...
+    )
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\methods\base.py", line 82, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\client\bot.py", line 493, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\client\session\base.py", line 259, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\client\session\aiohttp.py", line 177, in make_request
+    response = self.check_response(
+        bot=bot,
+    ...<2 lines>...
+        content=raw_result,
+    )
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\client\session\base.py", line 121, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: inline keyboard button Web App URL 'http://localhost:8000/webapp/' is invalid: Only HTTPS links are allowed
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835359 is not handled. Duration 3 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:sqlalchemy.engine.Engine:BEGIN (implicit)
+INFO:sqlalchemy.engine.Engine:SELECT users.id, users.telegram_id, users.first_name, users.last_name, users.username, users.phone, users.language, users.is_active, users.is_admin, users.created_at, users.updated_at 
+FROM users 
+WHERE users.telegram_id = ?
+INFO:sqlalchemy.engine.Engine:[cached since 5.599s ago] (6412887832,)
+INFO:sqlalchemy.engine.Engine:SELECT addresses.user_id AS addresses_user_id, addresses.id AS addresses_id, addresses.title AS addresses_title, addresses.address_line AS addresses_address_line, addresses.lat AS addresses_lat, addresses.lng AS addresses_lng, addresses.apartment AS addresses_apartment, addresses.floor AS addresses_floor, addresses.entrance AS addresses_entrance, addresses.door_code AS addresses_door_code, addresses.landmark AS addresses_landmark, addresses.comment AS addresses_comment, addresses.is_default AS addresses_is_default, addresses.created_at AS addresses_created_at 
+FROM addresses 
+WHERE addresses.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[cached since 5.594s ago] (1,)
+INFO:sqlalchemy.engine.Engine:SELECT orders.user_id AS orders_user_id, orders.id AS orders_id, orders.address_id AS orders_address_id, orders.branch_id AS orders_branch_id, orders.status AS orders_status, orders.subtotal AS orders_subtotal, orders.delivery_fee AS orders_delivery_fee, orders.discount AS orders_discount, orders.total_amount AS orders_total_amount, orders.payment_method AS orders_payment_method, orders.payment_status AS orders_payment_status, orders.comment AS orders_comment, orders.promo_code AS orders_promo_code, orders.idempotency_key AS orders_idempotency_key, orders.created_at AS orders_created_at, orders.confirmed_at AS orders_confirmed_at, orders.delivered_at AS orders_delivered_at 
+FROM orders 
+WHERE orders.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[cached since 5.591s ago] (1,)
+INFO:sqlalchemy.engine.Engine:SELECT carts.user_id AS carts_user_id, carts.id AS carts_id, carts.status AS carts_status, carts.created_at AS carts_created_at, carts.updated_at AS carts_updated_at 
+FROM carts 
+WHERE carts.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[cached since 5.589s ago] (1,)
+INFO:sqlalchemy.engine.Engine:ROLLBACK
+INFO:aiogram.event:Update id=963835360 is not handled. Duration 173 ms by bot id=8772453459
+ERROR:aiogram.event:Cause exception while process update id=963835360 by bot id=8772453459
+TelegramBadRequest: Telegram server says - Bad Request: inline keyboard button Web App URL 'http://localhost:8000/webapp/' is invalid: Only HTTPS links are allowed
+Traceback (most recent call last):
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\fsm\middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\Desktop\FoodExpressBot\food_delivery\bot\middlewares\logging.py", line 19, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 163, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 155, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 191, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 163, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 155, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\router.py", line 183, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\Desktop\FoodExpressBot\food_delivery\bot\handlers\start.py", line 39, in cmd_start
+    await message.answer(
+    ...<2 lines>...
+    )
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\methods\base.py", line 82, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\client\bot.py", line 493, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\client\session\base.py", line 259, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\client\session\aiohttp.py", line 177, in make_request
+    response = self.check_response(
+        bot=bot,
+    ...<2 lines>...
+        content=raw_result,
+    )
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiogram\client\session\base.py", line 121, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: inline keyboard button Web App URL 'http://localhost:8000/webapp/' is invalid: Only HTTPS links are allowed
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835361 is not handled. Duration 3 ms by bot id=8772453459

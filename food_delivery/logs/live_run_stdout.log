@@ -1,0 +1,5 @@
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=http://localhost:8000/webapp
+bot exited with code 1. Stopping remaining process...
+Stopped.
