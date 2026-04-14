@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional, cast
 
-from fastapi import Depends, HTTPException, Request, status
+from fastapi import Depends, Header, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer
 from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -41,7 +41,14 @@ async def get_redis(request: Request) -> Redis:
 async def get_current_user(
     token: str | None = Depends(oauth2_scheme),
     db: AsyncSession = Depends(get_db),
+    x_telegram_id: int | None = Header(default=None),
 ) -> User:
+    if x_telegram_id:
+        user = await UserRepository(db).get_by_telegram_id(x_telegram_id)
+        if user is not None and user.is_active:
+            return user
+        raise UnauthorizedError("User is inactive or not found")
+
     if not token:
         raise UnauthorizedError("Missing credentials")
 

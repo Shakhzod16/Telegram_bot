@@ -2,7 +2,7 @@ from datetime import datetime
 import re
 from typing import Optional
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, ConfigDict, validator
 
 
 class AdminWhitelistCreate(BaseModel):
@@ -25,10 +25,9 @@ class AdminWhitelistResponse(BaseModel):
     is_active: bool
     note: Optional[str]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AdminWhitelistUpdate(BaseModel):
-    is_active: bool
+    is_active: Optional[bool] = None
     note: Optional[str] = None

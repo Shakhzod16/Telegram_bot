@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 class ProductCreateAdmin(BaseModel):
     category_id: int
+    owner_id: int | None = None
     name_uz: str
     name_ru: str
     description_uz: str | None = None

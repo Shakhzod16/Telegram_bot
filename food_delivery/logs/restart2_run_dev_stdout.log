@@ -1,0 +1,39 @@
+{"timestamp": "2026-04-13T14:07:19.085659+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-13T14:07:20.100168+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-13T14:07:20.169208+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+INFO:     127.0.0.1:59654 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59655 - "GET /health HTTP/1.1" 200 OK
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=https://joy-transparent-doctor-summer.trycloudflare.com/webapp/
+Using npm cache=C:\Users\Roma\Desktop\Telegram_bot\food_delivery\.npm-cache
+Using DEV_RELOAD=0
+Using DEV_TUNNEL_PROVIDER=auto
+Starting cloudflared quick tunnel ...
+[cloudflared] 2026-04-13T14:07:12Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+[cloudflared] 2026-04-13T14:07:12Z INF Requesting new quick Tunnel on trycloudflare.com...
+[cloudflared] 2026-04-13T14:07:17Z INF +--------------------------------------------------------------------------------------------+
+[cloudflared] 2026-04-13T14:07:17Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+[cloudflared] 2026-04-13T14:07:17Z INF |  https://twisted-conflicts-popularity-divorce.trycloudflare.com                            |
+[cloudflared] 2026-04-13T14:07:17Z INF +--------------------------------------------------------------------------------------------+
+[cloudflared] 2026-04-13T14:07:17Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp]
+[cloudflared] 2026-04-13T14:07:17Z INF Version 2026.3.0 (Checksum 59b12880b24af581cf5b1013db601c7d843b9b097e9c78aa5957c7f39f741885)
+[cloudflared] 2026-04-13T14:07:17Z INF GOOS: windows, GOVersion: go1.24.13, GoArch: amd64
+[cloudflared] 2026-04-13T14:07:17Z INF Settings: map[ha-connections:1 p:http2 protocol:http2 url:http://localhost:8000]
+[cloudflared] 2026-04-13T14:07:17Z INF Environmental variables map[DEV_TUNNEL_PROVIDER:auto]
+[cloudflared] 2026-04-13T14:07:17Z INF cloudflared will not automatically update on Windows systems.
+Using BACKEND_URL=https://twisted-conflicts-popularity-divorce.trycloudflare.com
+Using WEBAPP_URL=https://twisted-conflicts-popularity-divorce.trycloudflare.com/webapp/
+[cloudflared] 2026-04-13T14:07:17Z INF Generated Connector ID: 2dfa270c-a881-4033-ae8e-773b42b1bd2a
+[cloudflared] 2026-04-13T14:07:18Z INF Initial protocol http2
+[cloudflared] 2026-04-13T14:07:18Z INF ICMP proxy will use 10.33.173.105 as source for IPv4
+[cloudflared] 2026-04-13T14:07:18Z INF ICMP proxy will use fe80::a3bf:7491:3cb8:27e9 in zone Беспроводная сеть as source for IPv6
+[cloudflared] 2026-04-13T14:07:18Z INF cloudflared does not support loading the system root certificate pool on Windows. Please use --origin-ca-pool <PATH> to specify the path to the certificate pool
+[cloudflared] 2026-04-13T14:07:18Z INF ICMP proxy will use 10.33.173.105 as source for IPv4
+[cloudflared] 2026-04-13T14:07:18Z INF ICMP proxy will use fe80::a3bf:7491:3cb8:27e9 in zone Беспроводная сеть as source for IPv6
+[cloudflared] 2026-04-13T14:07:18Z INF Starting metrics server on 127.0.0.1:20241/metrics
+[cloudflared] 2026-04-13T14:07:21Z INF Registered tunnel connection connIndex=0 connection=6206a3d2-319f-4ca9-aeb1-5ad7e71cc80e event=0 ip=198.41.192.67 location=fra08 protocol=http2
+[cloudflared] 2026-04-13T14:08:33Z INF Initiating graceful shutdown due to signal terminated ...
+backend exited with code 3221225786. Stopping remaining process...
+Stopped.
+[cloudflared] 2026-04-13T14:08:34Z INF Unregistered tunnel connection connIndex=0 event=0 ip=198.41.192.67

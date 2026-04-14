@@ -9,6 +9,7 @@ from app.core.config import settings
 from bot.handlers.courier import router as courier_router
 from bot.handlers.notifications import router as notifications_router
 from bot.handlers.start import router as start_router
+from bot.handlers.superadmin import router as superadmin_router
 from bot.middlewares.logging import LoggingMiddleware
 
 logging.basicConfig(level=logging.INFO)
@@ -21,6 +22,7 @@ async def main() -> None:
     )
     dp = Dispatcher()
     dp.update.middleware(LoggingMiddleware())
+    dp.include_router(superadmin_router)
     dp.include_router(start_router)
     dp.include_router(notifications_router)
     dp.include_router(courier_router)

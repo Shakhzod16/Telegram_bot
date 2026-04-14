@@ -1,12 +1,19 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import os
 from pathlib import Path
-from urllib.parse import urlsplit, urlunsplit
 
 from aiogram import Router
 from aiogram.filters import Command
-from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, WebAppInfo
+from aiogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    KeyboardButton,
+    Message,
+    ReplyKeyboardMarkup,
+    WebAppInfo,
+)
 
 from app.core.config import settings
 from app.core.logging import get_logger
@@ -18,47 +25,49 @@ logger = get_logger(__name__)
 BASE_DIR = Path(__file__).resolve().parents[2]
 
 
-def _runtime_webapp_url() -> str | None:
-    candidate_paths = (
-        BASE_DIR / "runtime_webapp_url.txt",
-        BASE_DIR / "logs" / "runtime_webapp_url.txt",
-        Path("runtime_webapp_url.txt"),
-        Path("logs/runtime_webapp_url.txt"),
-    )
-    for path in candidate_paths:
-        try:
-            value = path.read_text(encoding="utf-8").strip()
-        except OSError:
-            continue
-        parsed = urlsplit(value)
-        if value and parsed.scheme.lower() == "https" and parsed.netloc:
-            return value
-    return None
+def get_webapp_url() -> str:
+    # 1. runtime fayldan o'qi
+    for path in ["runtime_webapp_url.txt", "logs/runtime_webapp_url.txt"]:
+        if os.path.exists(path):
+            try:
+                with open(path, encoding="utf-8") as file:
+                    url = file.read().strip()
+            except OSError:
+                continue
+            if url.startswith("https://"):
+                return url
 
+    # Optional absolute-path fallback for service runs from another CWD.
+    for path in [BASE_DIR / "runtime_webapp_url.txt", BASE_DIR / "logs" / "runtime_webapp_url.txt"]:
+        if path.exists():
+            try:
+                url = path.read_text(encoding="utf-8").strip()
+            except OSError:
+                continue
+            if url.startswith("https://"):
+                return url
 
-def _webapp_url() -> str:
-    raw = (_runtime_webapp_url() or settings.WEBAPP_URL).strip()
-    if not raw:
-        raw = settings.BACKEND_URL.strip()
-
-    parsed = urlsplit(raw)
-    path = parsed.path or ""
-    if path in {"", "/"}:
-        path = "/webapp/"
-    elif not path.endswith("/"):
-        path = f"{path}/"
-
-    return urlunsplit((parsed.scheme, parsed.netloc, path, parsed.query, parsed.fragment))
+    # 2. env dan fallback
+    return str(getattr(settings, "WEBAPP_URL", "")).strip()
 
 
 def _is_https(url: str) -> bool:
     return url.lower().startswith("https://")
 
 
-def _build_webapp_button(webapp_url: str) -> KeyboardButton:
-    if _is_https(webapp_url):
-        return KeyboardButton(text="🌐 WebApp", web_app=WebAppInfo(url=webapp_url))
-    return KeyboardButton(text="🌐 WebApp")
+def _build_web_button(webapp_url: str) -> InlineKeyboardMarkup | None:
+    if not _is_https(webapp_url):
+        return None
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="🌐 WebApp ochish",
+                    web_app=WebAppInfo(url=webapp_url),
+                )
+            ]
+        ]
+    )
 
 
 def _full_name(first_name: str | None, last_name: str | None, username: str | None) -> str:
@@ -77,22 +86,21 @@ class UserContext:
     is_superadmin: bool
 
 
-def _superadmin_keyboard(webapp_url: str) -> ReplyKeyboardMarkup:
-    superadmin_kb = ReplyKeyboardMarkup(
+def _superadmin_keyboard() -> ReplyKeyboardMarkup:
+    return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="👤 Adminlar"), KeyboardButton(text="📋 Whitelist")],
-            [KeyboardButton(text="📊 Statistika"), _build_webapp_button(webapp_url)],
+            [KeyboardButton(text="📊 Statistika")],
         ],
         resize_keyboard=True,
     )
-    return superadmin_kb
 
 
-def _admin_keyboard(webapp_url: str) -> ReplyKeyboardMarkup:
+def _admin_keyboard() -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="📦 Mahsulotlarim"), KeyboardButton(text="📁 Kategoriyalarim")],
-            [KeyboardButton(text="📋 Buyurtmalar"), _build_webapp_button(webapp_url)],
+            [KeyboardButton(text="📋 Buyurtmalar")],
             [KeyboardButton(text="👤 Profil")],
         ],
         resize_keyboard=True,
@@ -109,14 +117,14 @@ def _user_keyboard() -> ReplyKeyboardMarkup:
     )
 
 
-def _build_start_response(user: UserContext, webapp_url: str) -> tuple[str, ReplyKeyboardMarkup]:
+def _build_start_response(user: UserContext) -> tuple[str, ReplyKeyboardMarkup]:
     if user.is_superadmin:
         text = (
             "👑 Superadmin paneliga xush kelibsiz!\n\n"
             f"Salom, {user.full_name}!\n"
             "Siz barcha tizimni boshqara olasiz."
         )
-        return text, _superadmin_keyboard(webapp_url)
+        return text, _superadmin_keyboard()
 
     if user.is_admin:
         text = (
@@ -124,7 +132,7 @@ def _build_start_response(user: UserContext, webapp_url: str) -> tuple[str, Repl
             f"Salom, {user.full_name}!\n"
             "Siz admin bo'limini boshqara olasiz."
         )
-        return text, _admin_keyboard(webapp_url)
+        return text, _admin_keyboard()
 
     text = (
         "Xush kelibsiz!\n\n"
@@ -181,12 +189,21 @@ async def _ensure_user(message: Message) -> UserContext:
 
 
 async def _reply_with_menu(message: Message, *, user_context: UserContext) -> None:
-    webapp_url = _webapp_url()
-    text, reply_markup = _build_start_response(user_context, webapp_url)
+    webapp_url = get_webapp_url()
+    text, reply_markup = _build_start_response(user_context)
     await message.answer(
         text,
         reply_markup=reply_markup,
     )
+
+    web_button = _build_web_button(webapp_url)
+    if web_button is not None:
+        await message.answer(
+            "WebApp orqali kirish:",
+            reply_markup=web_button,
+        )
+    else:
+        logger.warning("webapp_url_not_https", extra={"webapp_url": webapp_url})
 
 
 @router.message(Command("start"))
