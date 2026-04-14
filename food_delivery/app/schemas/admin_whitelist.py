@@ -1,29 +1,23 @@
 from datetime import datetime
-import re
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, validator
+from pydantic import BaseModel, ConfigDict
 
 
 class AdminWhitelistCreate(BaseModel):
-    phone: str
+    telegram_id: int
     note: Optional[str] = None
-
-    @validator("phone")
-    def validate_phone(cls, v):
-        v = v.strip()
-        if not re.match(r"^\+998\d{9}$", v):
-            raise ValueError("Telefon raqam +998XXXXXXXXX formatida bo'lishi kerak")
-        return v
 
 
 class AdminWhitelistResponse(BaseModel):
     id: int
-    phone: str
+    telegram_id: int
     added_by: Optional[int]
     added_at: datetime
     is_active: bool
     note: Optional[str]
+    user_full_name: Optional[str] = None
+    user_phone: Optional[str] = None
 
     model_config = ConfigDict(from_attributes=True)
 

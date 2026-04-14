@@ -34,6 +34,7 @@ class Settings(BaseSettings):
 
     # App settings
     debug: bool = Field(default=True, validation_alias="DEBUG")
+    dev_mode: bool = Field(default=True, validation_alias="DEV_MODE")
     backend_url: str = Field(default="http://localhost:8000", validation_alias="BACKEND_URL")
     min_order_amount: int = Field(default=15000, validation_alias="MIN_ORDER_AMOUNT")
     delivery_fee: int = Field(default=5000, validation_alias="DELIVERY_FEE")
@@ -73,6 +74,20 @@ class Settings(BaseSettings):
     @field_validator("debug", mode="before")
     @classmethod
     def parse_debug_flag(cls, value: Any) -> bool:
+        if isinstance(value, bool):
+            return value
+        if value is None:
+            return True
+        text = str(value).strip().lower()
+        if text in {"1", "true", "yes", "on", "dev", "debug", "development"}:
+            return True
+        if text in {"0", "false", "no", "off", "prod", "production", "release"}:
+            return False
+        return bool(value)
+
+    @field_validator("dev_mode", mode="before")
+    @classmethod
+    def parse_dev_mode_flag(cls, value: Any) -> bool:
         if isinstance(value, bool):
             return value
         if value is None:
@@ -124,6 +139,10 @@ class Settings(BaseSettings):
     @property
     def DEBUG(self) -> bool:
         return self.debug
+
+    @property
+    def DEV_MODE(self) -> bool:
+        return self.dev_mode
 
     @property
     def BACKEND_URL(self) -> str:

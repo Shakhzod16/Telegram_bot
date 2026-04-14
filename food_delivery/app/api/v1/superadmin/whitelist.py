@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy import func, or_, select
+from sqlalchemy import String, cast, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import require_superadmin
@@ -17,38 +17,62 @@ from app.schemas.admin_whitelist import (
 router = APIRouter(prefix="/whitelist")
 
 
-@router.post("", response_model=AdminWhitelistResponse, status_code=status.HTTP_201_CREATED)
+def _full_name(user: User | None) -> str | None:
+    if user is None:
+        return None
+    parts = [part.strip() for part in ((user.first_name or ""), (user.last_name or "")) if part and part.strip()]
+    if parts:
+        return " ".join(parts)
+    if user.username:
+        return f"@{user.username}"
+    return "Foydalanuvchi"
+
+
+def _to_response(entry: AdminPhoneWhitelist, user: User | None) -> AdminWhitelistResponse:
+    return AdminWhitelistResponse(
+        id=entry.id,
+        telegram_id=entry.telegram_id,
+        added_by=entry.added_by,
+        added_at=entry.added_at,
+        is_active=entry.is_active,
+        note=entry.note,
+        user_full_name=_full_name(user),
+        user_phone=user.phone if user else None,
+    )
+
+
+@router.post("", response_model=AdminWhitelistResponse)
 async def create_whitelist_entry(
     body: AdminWhitelistCreate,
     db: AsyncSession = Depends(get_db),
     current_superadmin: User = Depends(require_superadmin),
 ) -> AdminWhitelistResponse:
     existing_result = await db.execute(
-        select(AdminPhoneWhitelist).where(AdminPhoneWhitelist.phone == body.phone)
+        select(AdminPhoneWhitelist).where(AdminPhoneWhitelist.telegram_id == body.telegram_id)
     )
     existing = existing_result.scalar_one_or_none()
     if existing is not None:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Bu telefon whitelistda allaqachon mavjud",
+            detail="Bu Telegram ID whitelistda allaqachon mavjud",
         )
 
     entry = AdminPhoneWhitelist(
-        phone=body.phone,
+        telegram_id=body.telegram_id,
         note=body.note,
         is_active=True,
         added_by=current_superadmin.id,
     )
     db.add(entry)
 
-    user_result = await db.execute(select(User).where(User.phone == body.phone))
+    user_result = await db.execute(select(User).where(User.telegram_id == body.telegram_id))
     user = user_result.scalar_one_or_none()
     if user is not None:
         user.is_admin = True
 
     await db.flush()
     await db.refresh(entry)
-    return entry
+    return _to_response(entry, user)
 
 
 @router.get("", response_model=list[AdminWhitelistResponse])
@@ -58,21 +82,29 @@ async def list_whitelist_entries(
     db: AsyncSession = Depends(get_db),
     _current_superadmin: User = Depends(require_superadmin),
 ) -> list[AdminWhitelistResponse]:
-    query = select(AdminPhoneWhitelist)
+    query = select(AdminPhoneWhitelist, User).outerjoin(
+        User,
+        User.telegram_id == AdminPhoneWhitelist.telegram_id,
+    )
     if is_active is not None:
-        query = query.where(AdminPhoneWhitelist.is_active == is_active)
+        query = query.where(AdminPhoneWhitelist.is_active.is_(is_active))
 
-    if search:
+    if search and search.strip():
         token = f"%{search.strip()}%"
         query = query.where(
             or_(
-                AdminPhoneWhitelist.phone.ilike(token),
+                cast(AdminPhoneWhitelist.telegram_id, String).ilike(token),
                 func.coalesce(AdminPhoneWhitelist.note, "").ilike(token),
+                func.coalesce(User.first_name, "").ilike(token),
+                func.coalesce(User.last_name, "").ilike(token),
+                func.coalesce(User.username, "").ilike(token),
+                func.coalesce(User.phone, "").ilike(token),
             )
         )
 
     result = await db.execute(query.order_by(AdminPhoneWhitelist.id.desc()))
-    return list(result.scalars().all())
+    rows = result.all()
+    return [_to_response(entry, user) for entry, user in rows]
 
 
 @router.get("/{whitelist_id}", response_model=AdminWhitelistResponse)
@@ -82,15 +114,18 @@ async def get_whitelist_entry(
     _current_superadmin: User = Depends(require_superadmin),
 ) -> AdminWhitelistResponse:
     result = await db.execute(
-        select(AdminPhoneWhitelist).where(AdminPhoneWhitelist.id == whitelist_id)
+        select(AdminPhoneWhitelist, User)
+        .outerjoin(User, User.telegram_id == AdminPhoneWhitelist.telegram_id)
+        .where(AdminPhoneWhitelist.id == whitelist_id)
     )
-    entry = result.scalar_one_or_none()
-    if entry is None:
+    row = result.one_or_none()
+    if row is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Whitelist yozuvi topilmadi",
         )
-    return entry
+    entry, user = row
+    return _to_response(entry, user)
 
 
 @router.patch("/{whitelist_id}", response_model=AdminWhitelistResponse)
@@ -118,6 +153,9 @@ async def patch_whitelist_entry(
             detail="Kamida bitta maydon yuborilishi kerak: is_active yoki note",
         )
 
+    user_result = await db.execute(select(User).where(User.telegram_id == entry.telegram_id))
+    user = user_result.scalar_one_or_none()
+
     if has_is_active:
         if body.is_active is None:
             raise HTTPException(
@@ -125,8 +163,6 @@ async def patch_whitelist_entry(
                 detail="is_active qiymati true yoki false bo'lishi kerak",
             )
         entry.is_active = body.is_active
-        user_result = await db.execute(select(User).where(User.phone == entry.phone))
-        user = user_result.scalar_one_or_none()
         if user is not None:
             if entry.is_active:
                 user.is_admin = True
@@ -138,7 +174,7 @@ async def patch_whitelist_entry(
 
     await db.flush()
     await db.refresh(entry)
-    return entry
+    return _to_response(entry, user)
 
 
 @router.delete("/{whitelist_id}", response_model=AdminWhitelistResponse)
@@ -159,11 +195,11 @@ async def delete_whitelist_entry(
 
     entry.is_active = False
 
-    user_result = await db.execute(select(User).where(User.phone == entry.phone))
+    user_result = await db.execute(select(User).where(User.telegram_id == entry.telegram_id))
     user = user_result.scalar_one_or_none()
     if user is not None and not user.is_superadmin:
         user.is_admin = False
 
     await db.flush()
     await db.refresh(entry)
-    return entry
+    return _to_response(entry, user)

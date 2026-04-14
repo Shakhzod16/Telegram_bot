@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import re
-
 import httpx
 from aiogram import F, Router
 from aiogram.filters import StateFilter
@@ -14,7 +12,7 @@ BACKEND_URL = "http://localhost:8000/api/v1"
 
 
 class SuperadminStates(StatesGroup):
-    waiting_phone = State()
+    waiting_telegram_id = State()
     waiting_note = State()
 
 
@@ -47,7 +45,7 @@ async def show_stats(message: Message) -> None:
             f"📁 Kategoriyalar: <b>{s.get('total_categories', 0)}</b>\n"
             f"📋 Buyurtmalar: <b>{s.get('total_orders', 0)}</b>\n"
             f"💰 Daromad: <b>{s.get('total_revenue', 0):,.0f} so'm</b>\n\n"
-            f"📅 Bugun:\n"
+            f"🗓 Bugun:\n"
             f"   Buyurtmalar: <b>{s.get('today_orders', 0)}</b>\n"
             f"   Daromad: <b>{s.get('today_revenue', 0):,.0f} so'm</b>"
         )
@@ -75,7 +73,7 @@ async def show_admins(message: Message) -> None:
         for admin in admins:
             text += (
                 f"• <b>{admin['full_name']}</b>\n"
-                f"  📱 {admin.get('phone', '—')}\n"
+                f"  📱 {admin.get('phone') or '—'}\n"
                 f"  📦 {admin.get('products_count', 0)} mahsulot | "
                 f"📁 {admin.get('categories_count', 0)} kategoriya\n\n"
             )
@@ -98,27 +96,25 @@ async def whitelist_menu(message: Message) -> None:
 @router.callback_query(F.data == "wl_add")
 async def wl_add_start(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.message.answer(
-        "📱 Admin uchun telefon raqam yuboring:\n"
-        "Format: <code>+998901234567</code>",
-        parse_mode="HTML",
+        "👤 Admin uchun Telegram ID yuboring:\n"
+        "Masalan: 123456789\n"
+        "(Telegram ID ni bilish uchun @userinfobot ga /start yuboring)",
     )
-    await state.set_state(SuperadminStates.waiting_phone)
+    await state.set_state(SuperadminStates.waiting_telegram_id)
     await callback.answer()
 
 
-@router.message(StateFilter(SuperadminStates.waiting_phone))
-async def wl_receive_phone(message: Message, state: FSMContext) -> None:
-    phone = (message.text or "").strip()
-    if not re.match(r"^\+998\d{9}$", phone):
-        await message.answer(
-            "❌ Noto'g'ri format!\nTo'g'ri: <code>+998901234567</code>",
-            parse_mode="HTML",
-        )
+@router.message(StateFilter(SuperadminStates.waiting_telegram_id))
+async def wl_receive_telegram_id(message: Message, state: FSMContext) -> None:
+    text = (message.text or "").strip()
+    if not text.isdigit():
+        await message.answer("❌ Faqat raqam kiriting!\nMasalan: 123456789")
         return
 
-    await state.update_data(phone=phone)
+    telegram_id = int(text)
+    await state.update_data(telegram_id=telegram_id)
     await message.answer(
-        f"✅ Telefon: <code>{phone}</code>\n\n"
+        f"✅ Telegram ID: <code>{telegram_id}</code>\n\n"
         "📝 Izoh kiriting (o'tkazib yuborish uchun - yozing):",
         parse_mode="HTML",
     )
@@ -128,9 +124,9 @@ async def wl_receive_phone(message: Message, state: FSMContext) -> None:
 @router.message(StateFilter(SuperadminStates.waiting_note))
 async def wl_receive_note(message: Message, state: FSMContext) -> None:
     data = await state.get_data()
-    phone = data.get("phone")
-    if not phone:
-        await message.answer("❌ Telefon topilmadi, qaytadan urinib ko'ring.")
+    telegram_id = data.get("telegram_id")
+    if telegram_id is None:
+        await message.answer("❌ Telegram ID topilmadi, qaytadan urinib ko'ring.")
         await state.clear()
         return
 
@@ -141,18 +137,18 @@ async def wl_receive_note(message: Message, state: FSMContext) -> None:
         async with httpx.AsyncClient(timeout=20.0) as client:
             resp = await client.post(
                 f"{BACKEND_URL}/superadmin/whitelist",
-                json={"phone": phone, "note": note},
+                json={"telegram_id": telegram_id, "note": note},
                 headers=headers,
             )
-        if resp.status_code in {200, 201}:
+        if resp.status_code == 200:
             await message.answer(
-                f"✅ <code>{phone}</code> whitelist ga qo'shildi!",
+                f"✅ Telegram ID <code>{telegram_id}</code> whitelist ga qo'shildi!",
                 parse_mode="HTML",
             )
         else:
             await message.answer(f"❌ API xato {resp.status_code}: {resp.text}")
-    except Exception as e:
-        await message.answer(f"❌ Xatolik: {e}")
+    except Exception as exc:
+        await message.answer(f"❌ Xatolik: {exc}")
     await state.clear()
 
 
@@ -176,11 +172,16 @@ async def wl_list_show(callback: CallbackQuery) -> None:
         text = "📋 <b>Whitelist:</b>\n\n"
         for item in items[:20]:
             status = "✅" if item["is_active"] else "❌"
-            text += f"{status} <code>{item['phone']}</code>"
+            name = item.get("user_full_name") or "Ro'yxatdan o'tmagan"
+            phone = item.get("user_phone") or "—"
+            text += (
+                f"{status} ID: <code>{item['telegram_id']}</code>\n"
+                f"   👤 {name} | 📱 {phone}"
+            )
             if item.get("note"):
-                text += f" — {item['note']}"
-            text += "\n"
+                text += f"\n   📝 {item['note']}"
+            text += "\n\n"
         await callback.message.answer(text, parse_mode="HTML")
-    except Exception as e:
-        await callback.message.answer(f"❌ Xatolik: {e}")
+    except Exception as exc:
+        await callback.message.answer(f"❌ Xatolik: {exc}")
     await callback.answer()

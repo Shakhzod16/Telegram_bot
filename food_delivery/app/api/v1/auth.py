@@ -74,11 +74,11 @@ async def phone_verify(
         user.is_admin = True
 
     # 2. Whitelist tekshiruvi (superadmin bo'lmasa)
-    elif user.phone:
+    else:
         whitelist_result = await db.execute(
             select(AdminPhoneWhitelist).where(
-                AdminPhoneWhitelist.phone == user.phone,
-                AdminPhoneWhitelist.is_active == True,
+                AdminPhoneWhitelist.telegram_id == user.telegram_id,
+                AdminPhoneWhitelist.is_active.is_(True),
             )
         )
         whitelist_entry = whitelist_result.scalar_one_or_none()

@@ -1,0 +1,5 @@
+{"timestamp": "2026-04-14T03:34:51.022767+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-14T03:34:52.036116+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-14T03:34:52.071313+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+INFO:     127.0.0.1:63084 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56936 - "GET /health HTTP/1.1" 200 OK

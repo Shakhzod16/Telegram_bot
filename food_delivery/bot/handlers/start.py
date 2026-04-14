@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import logging
 import os
 from pathlib import Path
 
@@ -190,6 +191,7 @@ async def _ensure_user(message: Message) -> UserContext:
 
 async def _reply_with_menu(message: Message, *, user_context: UserContext) -> None:
     webapp_url = get_webapp_url()
+    logging.info(f"WebApp URL: {get_webapp_url()}")
     text, reply_markup = _build_start_response(user_context)
     await message.answer(
         text,

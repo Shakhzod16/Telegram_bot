@@ -1,16 +1,22 @@
 from __future__ import annotations
 
+import json
 import random
 import string
+import urllib.parse
+from typing import Any
 
 from redis.asyncio import Redis
 
 from app.core.config import settings
 from app.core.exceptions import UnauthorizedError, ValidationAppError
+from app.core.logging import get_logger
 from app.core.security import create_access_token, verify_telegram_init_data
 from app.models.user import User
 from app.repositories.user import UserRepository
 from app.schemas.auth import AuthResponse, MessageResponse, UserResponse
+
+logger = get_logger(__name__)
 
 
 class AuthService:
@@ -18,8 +24,30 @@ class AuthService:
         self.user_repo = user_repo
         self.redis = redis
 
+    def _parse_unverified_telegram_user(self, init_data: str) -> dict[str, Any]:
+        if not init_data:
+            raise UnauthorizedError("Missing initData")
+
+        parsed = dict(urllib.parse.parse_qsl(init_data, keep_blank_values=True, strict_parsing=False))
+        raw_user = parsed.get("user")
+        if not raw_user:
+            raise UnauthorizedError("Missing user in initData")
+
+        try:
+            telegram_user = json.loads(raw_user)
+        except json.JSONDecodeError as exc:
+            raise UnauthorizedError("Invalid user payload in initData") from exc
+
+        if not isinstance(telegram_user, dict) or telegram_user.get("id") is None:
+            raise UnauthorizedError("Invalid user payload in initData")
+        return telegram_user
+
     async def authenticate_telegram(self, init_data: str) -> AuthResponse:
-        telegram_user = verify_telegram_init_data(init_data)
+        if not settings.DEV_MODE:
+            telegram_user = verify_telegram_init_data(init_data)
+        else:
+            logger.warning("telegram_init_data_validation_skipped_dev_mode")
+            telegram_user = self._parse_unverified_telegram_user(init_data)
         telegram_id = int(telegram_user["id"])
 
         user = await self.user_repo.get_by_telegram_id(telegram_id)

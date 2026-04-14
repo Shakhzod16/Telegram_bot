@@ -20,7 +20,7 @@ router = APIRouter(prefix="/admins")
 class AdminListItem(BaseModel):
     id: int
     telegram_id: int
-    phone: str | None
+    phone: str
     full_name: str
     is_admin: bool
     is_superadmin: bool
@@ -117,7 +117,7 @@ async def list_admins(
         AdminListItem(
             id=admin.id,
             telegram_id=admin.telegram_id,
-            phone=admin.phone,
+            phone=admin.phone or "—",
             full_name=_full_name(admin),
             is_admin=admin.is_admin,
             is_superadmin=admin.is_superadmin,
@@ -164,7 +164,7 @@ async def get_admin(
     return AdminDetailResponse(
         id=user.id,
         telegram_id=user.telegram_id,
-        phone=user.phone,
+        phone=user.phone or "—",
         full_name=_full_name(user),
         is_admin=user.is_admin,
         is_superadmin=user.is_superadmin,
@@ -196,14 +196,12 @@ async def remove_admin_rights(
 
     user.is_admin = False
 
-    if user.phone:
-        whitelist_result = await db.execute(
-            select(AdminPhoneWhitelist).where(AdminPhoneWhitelist.phone == user.phone)
-        )
-        whitelist_entry = whitelist_result.scalar_one_or_none()
-        if whitelist_entry is not None:
-            whitelist_entry.is_active = False
+    whitelist_result = await db.execute(
+        select(AdminPhoneWhitelist).where(AdminPhoneWhitelist.telegram_id == user.telegram_id)
+    )
+    whitelist_entry = whitelist_result.scalar_one_or_none()
+    if whitelist_entry is not None:
+        whitelist_entry.is_active = False
 
     await db.flush()
     return RemoveAdminResponse(message="Admin huquqi muvaffaqiyatli olindi")
-

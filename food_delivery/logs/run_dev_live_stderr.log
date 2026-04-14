@@ -1,6 +1,58 @@
-INFO:     Started server process [8604]
+INFO:     Started server process [3708]
 INFO:     Waiting for application startup.
-INFO:aiogram.dispatcher:Start polling
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:aiogram.dispatcher:Start polling
 INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:sqlalchemy.engine.Engine:BEGIN (implicit)
+INFO:sqlalchemy.engine.Engine:SELECT users.id, users.telegram_id, users.first_name, users.last_name, users.username, users.phone, users.language, users.is_active, users.is_admin, users.is_superadmin, users.owner_id, users.created_at, users.updated_at 
+FROM users 
+WHERE users.telegram_id = ?
+INFO:sqlalchemy.engine.Engine:[generated in 0.00208s] (6412887832,)
+INFO:sqlalchemy.engine.Engine:SELECT orders.user_id AS orders_user_id, orders.id AS orders_id, orders.address_id AS orders_address_id, orders.branch_id AS orders_branch_id, orders.status AS orders_status, orders.subtotal AS orders_subtotal, orders.delivery_fee AS orders_delivery_fee, orders.discount AS orders_discount, orders.total_amount AS orders_total_amount, orders.payment_method AS orders_payment_method, orders.payment_status AS orders_payment_status, orders.comment AS orders_comment, orders.promo_code AS orders_promo_code, orders.idempotency_key AS orders_idempotency_key, orders.created_at AS orders_created_at, orders.confirmed_at AS orders_confirmed_at, orders.delivered_at AS orders_delivered_at 
+FROM orders 
+WHERE orders.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00141s] (1,)
+INFO:sqlalchemy.engine.Engine:SELECT addresses.user_id AS addresses_user_id, addresses.id AS addresses_id, addresses.title AS addresses_title, addresses.address_line AS addresses_address_line, addresses.lat AS addresses_lat, addresses.lng AS addresses_lng, addresses.apartment AS addresses_apartment, addresses.floor AS addresses_floor, addresses.entrance AS addresses_entrance, addresses.door_code AS addresses_door_code, addresses.landmark AS addresses_landmark, addresses.comment AS addresses_comment, addresses.is_default AS addresses_is_default, addresses.created_at AS addresses_created_at 
+FROM addresses 
+WHERE addresses.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00132s] (1,)
+INFO:sqlalchemy.engine.Engine:SELECT carts.user_id AS carts_user_id, carts.id AS carts_id, carts.status AS carts_status, carts.created_at AS carts_created_at, carts.updated_at AS carts_updated_at 
+FROM carts 
+WHERE carts.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00121s] (1,)
+INFO:sqlalchemy.engine.Engine:ROLLBACK
+INFO:root:WebApp URL: https://regardless-minerals-paths-feel.trycloudflare.com/webapp/
+INFO:aiogram.event:Update id=963835457 is handled. Duration 1343 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835458 is handled. Duration 380 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/superadmin/whitelist "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835459 is handled. Duration 1914 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/superadmin/stats "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835460 is handled. Duration 1365 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/superadmin/admins "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835461 is handled. Duration 1264 ms by bot id=8772453459
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8772453459)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.234822 seconds and try again... (tryings = 1, bot id = 8772453459)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.547876 seconds and try again... (tryings = 2, bot id = 8772453459)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.943400 seconds and try again... (tryings = 3, bot id = 8772453459)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 2.531068 seconds and try again... (tryings = 4, bot id = 8772453459)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 3.483067 seconds and try again... (tryings = 5, bot id = 8772453459)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 4.330732 seconds and try again... (tryings = 6, bot id = 8772453459)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 5.027045 seconds and try again... (tryings = 7, bot id = 8772453459)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 4.890259 seconds and try again... (tryings = 8, bot id = 8772453459)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 5.053271 seconds and try again... (tryings = 9, bot id = 8772453459)
