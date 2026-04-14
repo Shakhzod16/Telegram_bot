@@ -95,5 +95,5 @@ class PromoUpdateAdmin(BaseModel):
 class OrderStatusPatch(BaseModel):
     status: str = Field(
         ...,
-        pattern="^(draft|pending|confirmed|preparing|ready|on_the_way|delivered|cancelled)$",
+        pattern="^(pending|in_progress|delivered|cancelled)$",
     )

@@ -49,6 +49,7 @@ class OrderOut(BaseModel):
     address_id: int | None
     branch_id: int | None
     created_at: datetime
+    user_telegram_id: int | None = None
     items: list[OrderItemOut] = []
 
     model_config = {"from_attributes": True}
@@ -59,3 +60,9 @@ class OrderListResponse(BaseModel):
     total: int
     page: int
     size: int
+
+
+class OrderStatusUpdate(BaseModel):
+    status: str  # pending|in_progress|delivered|cancelled
+    courier_id: int | None = None
+    courier_name: str | None = None

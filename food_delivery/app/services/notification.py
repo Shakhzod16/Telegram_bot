@@ -20,9 +20,7 @@ class NotificationService:
 
     async def send_status_update(self, telegram_id: int, status: str) -> None:
         messages = {
-            "confirmed": "✅ Buyurtmangiz tasdiqlandi!",
-            "preparing": "👨‍🍳 Buyurtmangiz tayyorlanmoqda...",
-            "on_the_way": "🚴 Kuryer yo'lda!",
+            "in_progress": "🚴 Buyurtmangiz yo'lda!",
             "delivered": "🎉 Buyurtma yetkazildi! Marhamat!",
             "cancelled": "❌ Buyurtma bekor qilindi.",
         }

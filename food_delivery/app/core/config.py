@@ -43,6 +43,7 @@ class Settings(BaseSettings):
     admin_telegram_ids: list[int] = Field(default_factory=list, validation_alias="ADMIN_TELEGRAM_IDS")
     superadmin_telegram_ids: list[int] = Field(default_factory=list, validation_alias="SUPERADMIN_TELEGRAM_IDS")
     courier_group_id: int | None = Field(default=None, validation_alias="COURIER_GROUP_ID")
+    default_group_chat_id: int | None = Field(default=None, validation_alias="DEFAULT_GROUP_CHAT_ID")
 
     # Optional runtime settings used by existing services.
     cart_ttl_seconds: int = Field(default=7 * 24 * 3600, validation_alias="CART_TTL_SECONDS")
@@ -109,6 +110,10 @@ class Settings(BaseSettings):
         return self.telegram_bot_token
 
     @property
+    def BOT_TOKEN(self) -> str:
+        return self.telegram_bot_token
+
+    @property
     def TELEGRAM_BOT_USERNAME(self) -> str:
         return self.telegram_bot_username
 
@@ -167,6 +172,10 @@ class Settings(BaseSettings):
     @property
     def COURIER_GROUP_ID(self) -> int | None:
         return self.courier_group_id
+
+    @property
+    def DEFAULT_GROUP_CHAT_ID(self) -> int | None:
+        return self.default_group_chat_id
 
     @property
     def CART_TTL_SECONDS(self) -> int:

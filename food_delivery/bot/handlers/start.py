@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from dataclasses import dataclass
 import logging
@@ -101,8 +101,8 @@ def _admin_keyboard() -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="📦 Mahsulotlarim"), KeyboardButton(text="📁 Kategoriyalarim")],
-            [KeyboardButton(text="📋 Buyurtmalar")],
-            [KeyboardButton(text="👤 Profil")],
+            [KeyboardButton(text="📋 Buyurtmalar"), KeyboardButton(text="🌐 WebApp")],
+            [KeyboardButton(text="⚙️ Sozlamalar"), KeyboardButton(text="👤 Profil")],
         ],
         resize_keyboard=True,
     )
@@ -121,7 +121,7 @@ def _user_keyboard() -> ReplyKeyboardMarkup:
 def _build_start_response(user: UserContext) -> tuple[str, ReplyKeyboardMarkup]:
     if user.is_superadmin:
         text = (
-            "👑 Superadmin paneliga xush kelibsiz!\n\n"
+            "🔐 Superadmin paneliga xush kelibsiz!\n\n"
             f"Salom, {user.full_name}!\n"
             "Siz barcha tizimni boshqara olasiz."
         )
@@ -191,7 +191,7 @@ async def _ensure_user(message: Message) -> UserContext:
 
 async def _reply_with_menu(message: Message, *, user_context: UserContext) -> None:
     webapp_url = get_webapp_url()
-    logging.info(f"WebApp URL: {get_webapp_url()}")
+    logging.info(f"WebApp URL: {webapp_url}")
     text, reply_markup = _build_start_response(user_context)
     await message.answer(
         text,

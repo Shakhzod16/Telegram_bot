@@ -173,9 +173,11 @@ class AdminService:
         old = o.status
         o.status = status
         now = datetime.now(timezone.utc)
-        if status == "confirmed":
+        if status == "in_progress":
+            o.accepted_at = now
             o.confirmed_at = now
         if status == "delivered":
+            o.completed_at = now
             o.delivered_at = now
         await self._session.commit()
         u = await self._users.get_by_id(o.user_id)
