@@ -20,7 +20,7 @@
     </header>
 
     <section class="profile-section">
-      <p class="profile-section-title">Til</p>
+      <p id="profile-lang-title" class="profile-section-title">Til</p>
       <div class="lang-switch">
         <button type="button" class="lang-btn" data-lang="uz">UZ</button>
         <button type="button" class="lang-btn" data-lang="ru">RU</button>
@@ -28,16 +28,16 @@
     </section>
 
     <section class="profile-section">
-      <p class="profile-section-title">Akkaunt</p>
+      <p id="profile-account-title" class="profile-section-title">Akkaunt</p>
       <div class="menu-list">
         <a class="menu-item" href="/webapp/address" onclick="haptic('light')">
           <span class="menu-icon">🏠</span>
-          <span>Manzillarim</span>
+          <span id="profile-addresses-label">Manzillarim</span>
           <span class="menu-chevron">›</span>
         </a>
         <button id="logout-btn" class="menu-item" type="button">
           <span class="menu-icon">⇦</span>
-          <span>Chiqish</span>
+          <span id="profile-logout-label">Chiqish</span>
           <span class="menu-chevron">›</span>
         </button>
       </div>
@@ -46,6 +46,6 @@
 </section>
 {% endblock %}
 {% block scripts %}
-<script src="/static/js/profile.js?v=20260409-2"></script>
+<script src="/static/js/profile.js?v=20260415-1"></script>
 {% endblock %}
 
