@@ -186,7 +186,8 @@ class CheckoutService:
 
         subtotal = sum((x.total_price for x in lines), Decimal("0"))
         if subtotal < settings.MIN_ORDER_AMOUNT:
-            raise MinOrderAmountError(str(settings.MIN_ORDER_AMOUNT))
+            min_amount_text = f"{int(settings.MIN_ORDER_AMOUNT):,}".replace(",", " ")
+            raise MinOrderAmountError(f"Minimal buyurtma summasi {min_amount_text} so'm bo'lishi kerak")
 
         delivery_fee = Decimal(str(branch.delivery_fee))
         discount = Decimal("0")

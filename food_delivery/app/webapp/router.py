@@ -74,7 +74,7 @@ async def webapp_address(request: Request) -> HTMLResponse:
 async def webapp_admin_dashboard(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
         "admin/dashboard.html",
-        {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/")},
+        {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/"), "active": "dashboard"},
     )
 
 
@@ -82,7 +82,7 @@ async def webapp_admin_dashboard(request: Request) -> HTMLResponse:
 async def webapp_admin_orders(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
         "admin/orders.html",
-        {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/")},
+        {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/"), "active": "orders"},
     )
 
 
@@ -90,5 +90,13 @@ async def webapp_admin_orders(request: Request) -> HTMLResponse:
 async def webapp_admin_product_new(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
         "admin/product_new.html",
-        {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/")},
+        {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/"), "active": "products"},
+    )
+
+
+@webapp_router.get("/webapp/admin/broadcast", response_class=HTMLResponse)
+async def webapp_admin_broadcast(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        "admin/broadcast.html",
+        {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/"), "active": "broadcast"},
     )

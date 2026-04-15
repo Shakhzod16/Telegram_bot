@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
@@ -14,6 +14,30 @@
 <body class="app-body">
   <div id="app-error" class="state state-error hidden" role="alert"></div>
   <main class="main-pad page">{% block content %}{% endblock %}</main>
+
+  <nav class="navbar">
+    <a href="/webapp/admin" class="nav-item {% if active == 'dashboard' %}active{% endif %}" onclick="haptic()">
+      <div class="nav-indicator"></div>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="8" height="8" rx="2"></rect><rect x="13" y="3" width="8" height="5" rx="2"></rect><rect x="13" y="10" width="8" height="11" rx="2"></rect><rect x="3" y="13" width="8" height="8" rx="2"></rect></svg>
+      <span class="nav-label">Panel</span>
+    </a>
+    <a href="/webapp/admin/orders" class="nav-item {% if active == 'orders' %}active{% endif %}" onclick="haptic()">
+      <div class="nav-indicator"></div>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      <span class="nav-label">Buyurtma</span>
+    </a>
+    <a href="/webapp/admin/products/new" class="nav-item {% if active == 'products' %}active{% endif %}" onclick="haptic()">
+      <div class="nav-indicator"></div>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline><polyline points="7.5 19.79 7.5 14.6 3 12"></polyline><polyline points="21 12 16.5 14.6 16.5 19.79"></polyline></svg>
+      <span class="nav-label">Mahsulot</span>
+    </a>
+    <a href="/webapp/admin/broadcast" class="nav-item {% if active == 'broadcast' %}active{% endif %}" onclick="haptic()">
+      <div class="nav-indicator"></div>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 11l18-8v18l-18-8v-2z"></path><path d="M7 12v6a2 2 0 0 0 2 2h1"></path></svg>
+      <span class="nav-label">Xabar</span>
+    </a>
+  </nav>
+
   <script src="/static/js/animations.js?v=20260409-2"></script>
   <script src="/static/js/api.js?v=20260409-2"></script>
   <script src="/static/js/auth.js?v=20260409-2"></script>
@@ -30,4 +54,3 @@
   {% block scripts %}{% endblock %}
 </body>
 </html>
-

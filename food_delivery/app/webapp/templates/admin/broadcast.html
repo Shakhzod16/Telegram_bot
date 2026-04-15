@@ -1,0 +1,206 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<section class="card">
+  <h1>Xabar yuborish</h1>
+  <p id="broadcast-state" class="muted">Faol foydalanuvchilar soni aniqlanmoqda...</p>
+  <p id="broadcast-count" class="muted"></p>
+
+  <form id="broadcast-form" class="stack gap-12">
+    <label class="input-label" for="broadcast-message">Xabar matni</label>
+    <textarea
+      id="broadcast-message"
+      class="input"
+      rows="5"
+      maxlength="4096"
+      required
+      placeholder="Aksiya yoki e'lon matnini kiriting"
+    ></textarea>
+
+    <label class="input-label" for="broadcast-image">Rasm (ixtiyoriy)</label>
+    <input id="broadcast-image" class="input" type="file" accept="image/*" />
+    <div id="broadcast-image-preview-wrap" class="hidden">
+      <img
+        id="broadcast-image-preview"
+        alt="Broadcast rasm preview"
+        style="max-width: 100%; max-height: 220px; border-radius: 12px; object-fit: cover;"
+      />
+    </div>
+
+    <button id="broadcast-submit" class="btn btn-primary" type="submit">Yuborish</button>
+  </form>
+
+  <p id="broadcast-progress" class="muted hidden"></p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (function () {
+    const stateEl = document.getElementById("broadcast-state");
+    const countEl = document.getElementById("broadcast-count");
+    const formEl = document.getElementById("broadcast-form");
+    const submitBtn = document.getElementById("broadcast-submit");
+    const messageEl = document.getElementById("broadcast-message");
+    const imageEl = document.getElementById("broadcast-image");
+    const previewWrapEl = document.getElementById("broadcast-image-preview-wrap");
+    const previewImgEl = document.getElementById("broadcast-image-preview");
+    const progressEl = document.getElementById("broadcast-progress");
+
+    let previewObjectUrl = null;
+    let pollTimer = null;
+
+    function clearPreview() {
+      if (previewObjectUrl) {
+        URL.revokeObjectURL(previewObjectUrl);
+        previewObjectUrl = null;
+      }
+      previewImgEl.removeAttribute("src");
+      previewWrapEl.classList.add("hidden");
+    }
+
+    function setSubmitState(isLoading) {
+      submitBtn.disabled = isLoading;
+      if (isLoading) submitBtn.classList.add("loading");
+      else submitBtn.classList.remove("loading");
+    }
+
+    function stopPolling() {
+      if (pollTimer) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+      }
+    }
+
+    async function fetchRecipientsCount() {
+      const data = await window.apiFetch("/api/v1/admin/broadcast/recipients-count");
+      return Number((data && data.total) || 0);
+    }
+
+    async function refreshRecipientsLabel() {
+      try {
+        const total = await fetchRecipientsCount();
+        countEl.textContent = "Faol foydalanuvchilar: " + total;
+        stateEl.textContent = "Xabarni yuborishdan oldin matnni tekshiring.";
+      } catch (error) {
+        const message = (error && error.message) || "Foydalanuvchilar sonini olishda xatolik.";
+        stateEl.textContent = message;
+      }
+    }
+
+    function renderProgress(job) {
+      const total = Number(job.total || 0);
+      const sent = Number(job.sent || 0);
+      const failed = Number(job.failed || 0);
+
+      progressEl.classList.remove("hidden");
+      progressEl.textContent =
+        "Yuborilmoqda... " + sent + "/" + total + " (xato: " + failed + ")";
+
+      if (job.status === "completed") {
+        stopPolling();
+        progressEl.classList.add("hidden");
+        stateEl.textContent = sent + " ta foydalanuvchiga yuborildi (OK). Xato: " + failed;
+        setSubmitState(false);
+      } else if (job.status === "failed") {
+        stopPolling();
+        progressEl.classList.add("hidden");
+        const reason = job.error ? " (" + job.error + ")" : "";
+        stateEl.textContent = "Xatolik yuz berdi" + reason;
+        setSubmitState(false);
+      }
+    }
+
+    async function pollJob(jobId) {
+      try {
+        const job = await window.apiFetch("/api/v1/admin/broadcast/" + encodeURIComponent(jobId));
+        renderProgress(job);
+      } catch (error) {
+        stopPolling();
+        progressEl.classList.add("hidden");
+        stateEl.textContent = (error && error.message) || "Holatni tekshirishda xatolik.";
+        setSubmitState(false);
+      }
+    }
+
+    function startPolling(jobId) {
+      stopPolling();
+      pollJob(jobId);
+      pollTimer = setInterval(function () {
+        pollJob(jobId);
+      }, 1500);
+    }
+
+    imageEl.addEventListener("change", function () {
+      clearPreview();
+      const file = imageEl.files && imageEl.files[0];
+      if (!file) return;
+      previewObjectUrl = URL.createObjectURL(file);
+      previewImgEl.src = previewObjectUrl;
+      previewWrapEl.classList.remove("hidden");
+    });
+
+    formEl.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const message = (messageEl.value || "").trim();
+      if (!message) {
+        stateEl.textContent = "Xabar matni majburiy.";
+        return;
+      }
+
+      let totalRecipients = 0;
+      try {
+        totalRecipients = await fetchRecipientsCount();
+      } catch (error) {
+        stateEl.textContent = (error && error.message) || "Foydalanuvchilar sonini olib bo'lmadi.";
+        return;
+      }
+
+      if (totalRecipients <= 0) {
+        stateEl.textContent = "Faol foydalanuvchi topilmadi.";
+        return;
+      }
+
+      const confirmText =
+        totalRecipients + " ta foydalanuvchiga xabar yuboriladi. Davom etasizmi?";
+      if (!window.confirm(confirmText)) {
+        return;
+      }
+
+      setSubmitState(true);
+      stateEl.textContent = "Yuborish navbatga qo'yildi...";
+      progressEl.classList.add("hidden");
+
+      const formData = new FormData();
+      formData.append("message", message);
+      const imageFile = imageEl.files && imageEl.files[0] ? imageEl.files[0] : null;
+      if (imageFile) {
+        formData.append("image", imageFile, imageFile.name);
+      }
+
+      try {
+        const created = await window.apiFetch("/api/v1/admin/broadcast", {
+          method: "POST",
+          body: formData,
+        });
+        if (!created || !created.job_id) {
+          throw new Error("Broadcast job yaratilmagan");
+        }
+        stateEl.textContent = "Yuborilmoqda...";
+        startPolling(created.job_id);
+      } catch (error) {
+        setSubmitState(false);
+        const messageText = (error && error.message) || "Broadcast yuborishda xatolik.";
+        stateEl.textContent = messageText;
+      }
+    });
+
+    window.addEventListener("beforeunload", function () {
+      clearPreview();
+      stopPolling();
+    });
+
+    refreshRecipientsLabel();
+  })();
+</script>
+{% endblock %}
