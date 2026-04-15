@@ -1,7 +1,369 @@
 {% extends "admin/base.html" %}
 {% block content %}
-<h1>Admin</h1>
-<p><a href="/webapp/admin/orders">Buyurtmalar</a></p>
-<p><a href="/webapp/admin/products/new">Mahsulot qo'shish</a></p>
-<p><a href="/webapp/admin/broadcast">Xabar yuborish</a></p>
+<section class="admin-dashboard">
+  <header class="admin-hero">
+    <div class="admin-hero-head">
+      <p class="admin-hero-kicker">Food Delivery</p>
+      <h1 class="admin-hero-title">Admin Control Center</h1>
+      <p class="admin-hero-subtitle">
+        Buyurtmalar, mahsulotlar va foydalanuvchilar oqimini bitta oynadan boshqaring.
+      </p>
+    </div>
+
+    <div class="admin-hero-actions">
+      <button id="admin-refresh" class="btn btn-secondary btn-sm" type="button">Yangilash</button>
+    </div>
+
+    <div class="admin-hero-strip">
+      <div class="admin-strip-item">
+        <span class="admin-strip-label">Guruh holati</span>
+        <strong id="admin-group-link-state" class="admin-pill admin-pill-warn">Tekshirilmoqda...</strong>
+      </div>
+      <div class="admin-strip-item">
+        <span class="admin-strip-label">Kategoriyalar</span>
+        <strong id="admin-categories-count" class="admin-strip-value">0</strong>
+      </div>
+    </div>
+  </header>
+
+  <section class="admin-kpi-grid">
+    <article class="admin-kpi-card admin-kpi-card-accent">
+      <p class="admin-kpi-label">Jami buyurtmalar</p>
+      <p id="kpi-orders-total" class="admin-kpi-value">0</p>
+      <p class="admin-kpi-note">Sahifadagi real vaqt kesimi</p>
+    </article>
+
+    <article class="admin-kpi-card">
+      <p class="admin-kpi-label">Yangi buyurtmalar</p>
+      <p id="kpi-orders-pending" class="admin-kpi-value">0</p>
+      <p class="admin-kpi-note">Tezkor javobni talab qiladi</p>
+    </article>
+
+    <article class="admin-kpi-card">
+      <p class="admin-kpi-label">Mahsulotlar</p>
+      <p id="kpi-products-total" class="admin-kpi-value">0</p>
+      <p class="admin-kpi-note">Adminga biriktirilgan ro'yxat</p>
+    </article>
+
+    <article class="admin-kpi-card">
+      <p class="admin-kpi-label">Faol foydalanuvchilar</p>
+      <p id="kpi-users-active" class="admin-kpi-value">0</p>
+      <p class="admin-kpi-note">Broadcast qabul qiluvchilar</p>
+    </article>
+  </section>
+
+  <section class="admin-panel-card">
+    <div class="admin-panel-head">
+      <h2>Buyurtma oqimi</h2>
+      <p id="admin-last-sync" class="admin-panel-meta">Yangilanmoqda...</p>
+    </div>
+
+    <div class="admin-status-grid">
+      <div class="admin-status-item">
+        <div class="admin-status-row">
+          <span>Yangi</span>
+          <strong id="status-pending-count">0</strong>
+        </div>
+        <div class="admin-status-track"><div id="status-pending-fill" class="admin-status-fill pending"></div></div>
+      </div>
+
+      <div class="admin-status-item">
+        <div class="admin-status-row">
+          <span>Jarayonda</span>
+          <strong id="status-progress-count">0</strong>
+        </div>
+        <div class="admin-status-track"><div id="status-progress-fill" class="admin-status-fill in-progress"></div></div>
+      </div>
+
+      <div class="admin-status-item">
+        <div class="admin-status-row">
+          <span>Yetkazilgan</span>
+          <strong id="status-delivered-count">0</strong>
+        </div>
+        <div class="admin-status-track"><div id="status-delivered-fill" class="admin-status-fill delivered"></div></div>
+      </div>
+
+      <div class="admin-status-item">
+        <div class="admin-status-row">
+          <span>Bekor qilingan</span>
+          <strong id="status-cancelled-count">0</strong>
+        </div>
+        <div class="admin-status-track"><div id="status-cancelled-fill" class="admin-status-fill cancelled"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="admin-action-grid">
+    <a href="/webapp/admin/orders" class="admin-action-card" onclick="haptic()">
+      <p class="admin-action-kicker">Monitoring</p>
+      <h3>Buyurtmalar paneli</h3>
+      <p>Statuslarni kuzating va jarayondagi buyurtmalarni tezda boshqaring.</p>
+      <span class="admin-action-link">Ochish</span>
+    </a>
+
+    <a href="/webapp/admin/products/new" class="admin-action-card" onclick="haptic()">
+      <p class="admin-action-kicker">Katalog</p>
+      <h3>Yangi mahsulot qo'shish</h3>
+      <p>Rasm, tavsif va narx bilan yangi pozitsiyalarni tez yuklang.</p>
+      <span class="admin-action-link">Yaratish</span>
+    </a>
+
+    <a href="/webapp/admin/broadcast" class="admin-action-card" onclick="haptic()">
+      <p class="admin-action-kicker">Aloqa</p>
+      <h3>Broadcast yuborish</h3>
+      <p>Aksiya va yangiliklarni barcha faol mijozlarga bir urinishda jo'nating.</p>
+      <span class="admin-action-link">Yuborish</span>
+    </a>
+  </section>
+
+  <section class="admin-panel-card admin-panel-card-recent">
+    <div class="admin-panel-head">
+      <h2>So'nggi buyurtmalar</h2>
+      <a href="/webapp/admin/orders" class="admin-inline-link" onclick="haptic()">Barchasi</a>
+    </div>
+    <ul id="admin-recent-orders" class="admin-recent-list">
+      <li class="admin-recent-empty">Ma'lumotlar yuklanmoqda...</li>
+    </ul>
+  </section>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (function () {
+    const refreshBtn = document.getElementById("admin-refresh");
+    const groupStateEl = document.getElementById("admin-group-link-state");
+    const categoriesCountEl = document.getElementById("admin-categories-count");
+    const lastSyncEl = document.getElementById("admin-last-sync");
+    const recentOrdersEl = document.getElementById("admin-recent-orders");
+
+    const kpiEls = {
+      ordersTotal: document.getElementById("kpi-orders-total"),
+      pending: document.getElementById("kpi-orders-pending"),
+      products: document.getElementById("kpi-products-total"),
+      users: document.getElementById("kpi-users-active"),
+    };
+
+    const statusEls = {
+      pending: {
+        count: document.getElementById("status-pending-count"),
+        fill: document.getElementById("status-pending-fill"),
+      },
+      in_progress: {
+        count: document.getElementById("status-progress-count"),
+        fill: document.getElementById("status-progress-fill"),
+      },
+      delivered: {
+        count: document.getElementById("status-delivered-count"),
+        fill: document.getElementById("status-delivered-fill"),
+      },
+      cancelled: {
+        count: document.getElementById("status-cancelled-count"),
+        fill: document.getElementById("status-cancelled-fill"),
+      },
+    };
+
+    const statusLabels = {
+      pending: "Yangi",
+      in_progress: "Jarayonda",
+      delivered: "Yetkazilgan",
+      cancelled: "Bekor qilingan",
+    };
+
+    function toNumber(value) {
+      const num = Number(value);
+      return Number.isFinite(num) ? num : 0;
+    }
+
+    function formatNumber(value) {
+      return toNumber(value).toLocaleString("ru-RU");
+    }
+
+    function formatMoney(value) {
+      return formatNumber(value) + " so'm";
+    }
+
+    function formatDate(value) {
+      if (!value) return "Vaqt ko'rsatilmagan";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "Vaqt ko'rsatilmagan";
+      return date.toLocaleString("uz-UZ", {
+        day: "2-digit",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+
+    function mapStatus(raw) {
+      const status = String(raw || "").trim().toLowerCase();
+      if (status in statusLabels) return status;
+      return "pending";
+    }
+
+    function animateValue(el, value) {
+      if (!el) return;
+      const next = toNumber(value);
+      const prev = toNumber(el.dataset.current);
+      el.dataset.current = String(next);
+      if (typeof window.animateNum === "function") {
+        window.animateNum(el, prev, next, 450);
+      } else {
+        el.textContent = formatNumber(next);
+      }
+    }
+
+    function setStatusMetrics(statusCounts, total) {
+      const safeTotal = Math.max(toNumber(total), 1);
+      Object.keys(statusEls).forEach(function (key) {
+        const config = statusEls[key];
+        if (!config) return;
+        const count = toNumber(statusCounts[key]);
+        if (config.count) {
+          config.count.textContent = formatNumber(count);
+        }
+        if (config.fill) {
+          const percent = Math.round((count / safeTotal) * 100);
+          config.fill.style.width = Math.max(0, Math.min(100, percent)) + "%";
+        }
+      });
+    }
+
+    function renderRecentOrders(items) {
+      if (!recentOrdersEl) return;
+      const orders = Array.isArray(items) ? items.slice(0, 6) : [];
+      if (orders.length === 0) {
+        recentOrdersEl.innerHTML = '<li class="admin-recent-empty">Hozircha buyurtmalar topilmadi.</li>';
+        return;
+      }
+
+      recentOrdersEl.innerHTML = "";
+      const fragment = document.createDocumentFragment();
+      orders.forEach(function (order) {
+        const statusKey = mapStatus(order && order.status);
+        const statusText = statusLabels[statusKey] || "Noma'lum";
+        const item = document.createElement("li");
+        item.className = "admin-recent-item";
+        item.innerHTML =
+          '<div class="admin-recent-main">' +
+          '<div class="admin-recent-top">' +
+          '<strong>#' + String((order && order.id) || "-") + "</strong>" +
+          '<span class="admin-status-badge ' + statusKey + '">' + statusText + "</span>" +
+          "</div>" +
+          '<p class="admin-recent-meta">' + formatDate(order && order.created_at) + "</p>" +
+          "</div>" +
+          '<div class="admin-recent-price">' + formatMoney(order && order.total_amount) + "</div>";
+        item.addEventListener("click", function () {
+          window.location.href = "/webapp/admin/orders";
+        });
+        fragment.appendChild(item);
+      });
+      recentOrdersEl.appendChild(fragment);
+    }
+
+    function setGroupState(hasGroup) {
+      if (!groupStateEl) return;
+      groupStateEl.classList.remove("admin-pill-ok", "admin-pill-warn");
+      if (hasGroup) {
+        groupStateEl.textContent = "Ulangan";
+        groupStateEl.classList.add("admin-pill-ok");
+      } else {
+        groupStateEl.textContent = "Ulanmagan";
+        groupStateEl.classList.add("admin-pill-warn");
+      }
+    }
+
+    async function loadDashboard(options) {
+      const opts = options || {};
+      const manual = !!opts.manual;
+      if (refreshBtn) {
+        refreshBtn.disabled = true;
+        refreshBtn.classList.add("loading");
+      }
+
+      const [ordersRes, productsRes, categoriesRes, recipientsRes, settingsRes] = await Promise.allSettled([
+        window.apiFetch("/api/v1/admin/orders?page=1&size=100"),
+        window.apiFetch("/api/v1/admin/products"),
+        window.apiFetch("/api/v1/admin/categories"),
+        window.apiFetch("/api/v1/admin/broadcast/recipients-count"),
+        window.apiFetch("/api/v1/admin/settings"),
+      ]);
+
+      const ordersPayload = ordersRes.status === "fulfilled" ? ordersRes.value : null;
+      const ordersItems = Array.isArray(ordersPayload && ordersPayload.items) ? ordersPayload.items : [];
+      const ordersTotal = toNumber(ordersPayload && ordersPayload.total) || ordersItems.length;
+
+      const products = productsRes.status === "fulfilled" && Array.isArray(productsRes.value) ? productsRes.value : [];
+      const categories = categoriesRes.status === "fulfilled" && Array.isArray(categoriesRes.value) ? categoriesRes.value : [];
+      const activeUsers = recipientsRes.status === "fulfilled" ? toNumber(recipientsRes.value && recipientsRes.value.total) : 0;
+      const settings = settingsRes.status === "fulfilled" ? settingsRes.value : null;
+
+      const statusCounts = { pending: 0, in_progress: 0, delivered: 0, cancelled: 0 };
+      ordersItems.forEach(function (order) {
+        const key = mapStatus(order && order.status);
+        statusCounts[key] = toNumber(statusCounts[key]) + 1;
+      });
+
+      animateValue(kpiEls.ordersTotal, ordersTotal);
+      animateValue(kpiEls.pending, statusCounts.pending);
+      animateValue(kpiEls.products, products.length);
+      animateValue(kpiEls.users, activeUsers);
+
+      if (categoriesCountEl) categoriesCountEl.textContent = formatNumber(categories.length);
+      setGroupState(Boolean(settings && settings.has_group));
+      setStatusMetrics(statusCounts, Math.max(ordersTotal, ordersItems.length));
+      renderRecentOrders(ordersItems);
+
+      const now = new Date();
+      if (lastSyncEl) {
+        lastSyncEl.textContent =
+          "So'nggi yangilanish: " +
+          now.toLocaleTimeString("uz-UZ", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+      }
+
+      if (manual && typeof window.showToast === "function") {
+        window.showToast("Dashboard yangilandi", "success");
+      }
+
+      if (refreshBtn) {
+        refreshBtn.disabled = false;
+        refreshBtn.classList.remove("loading");
+      }
+    }
+
+    function safeLoad(options) {
+      loadDashboard(options).catch(function (error) {
+        if (typeof window.showToast === "function") {
+          window.showToast((error && error.message) || "Dashboard yuklanmadi", "error");
+        }
+        if (lastSyncEl) {
+          lastSyncEl.textContent = "Yangilashda xatolik";
+        }
+        if (refreshBtn) {
+          refreshBtn.disabled = false;
+          refreshBtn.classList.remove("loading");
+        }
+      });
+    }
+
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", function () {
+        if (typeof window.haptic === "function") window.haptic("light");
+        safeLoad({ manual: true });
+      });
+    }
+
+    safeLoad({ manual: false });
+    const refreshTimer = window.setInterval(function () {
+      safeLoad({ manual: false });
+    }, 45000);
+
+    window.addEventListener("beforeunload", function () {
+      window.clearInterval(refreshTimer);
+    });
+  })();
+</script>
 {% endblock %}

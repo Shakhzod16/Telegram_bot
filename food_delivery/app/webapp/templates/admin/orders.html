@@ -1,23 +1,274 @@
 {% extends "admin/base.html" %}
 {% block content %}
-<h1>Buyurtmalar</h1>
-<div id="admin-orders-board" class="admin-board"></div>
+<section class="admin-orders-page">
+  <header class="admin-page-hero admin-orders-hero">
+    <div class="admin-page-hero-head">
+      <p class="admin-page-kicker">Realtime Monitoring</p>
+      <h1>Buyurtmalar</h1>
+      <p class="admin-page-subtitle">Har bir buyurtma holatini tezkor kuzatish uchun yagona ekran.</p>
+    </div>
+    <button id="admin-orders-refresh" class="btn btn-secondary btn-sm" type="button">Yangilash</button>
+
+    <div class="admin-orders-kpi-grid">
+      <article class="admin-orders-kpi-card">
+        <span>Jami</span>
+        <strong id="orders-kpi-total">0</strong>
+      </article>
+      <article class="admin-orders-kpi-card">
+        <span>Yangi</span>
+        <strong id="orders-kpi-pending">0</strong>
+      </article>
+      <article class="admin-orders-kpi-card">
+        <span>Jarayonda</span>
+        <strong id="orders-kpi-progress">0</strong>
+      </article>
+      <article class="admin-orders-kpi-card">
+        <span>Yetkazilgan</span>
+        <strong id="orders-kpi-delivered">0</strong>
+      </article>
+    </div>
+  </header>
+
+  <section class="admin-orders-toolbar">
+    <div id="admin-orders-filters" class="admin-orders-filters">
+      <button type="button" class="admin-filter-btn active" data-status="">Barchasi</button>
+      <button type="button" class="admin-filter-btn" data-status="pending">Yangi</button>
+      <button type="button" class="admin-filter-btn" data-status="in_progress">Jarayonda</button>
+      <button type="button" class="admin-filter-btn" data-status="delivered">Yetkazilgan</button>
+      <button type="button" class="admin-filter-btn" data-status="cancelled">Bekor</button>
+    </div>
+    <p id="admin-orders-state" class="admin-orders-state">Yuklanmoqda...</p>
+  </section>
+
+  <ul id="admin-orders-list" class="admin-orders-list">
+    <li class="admin-orders-empty">Buyurtmalar yuklanmoqda...</li>
+  </ul>
+</section>
 <audio id="new-order-audio" src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAAEABAAZGF0YQAAAAA="></audio>
 {% endblock %}
 {% block scripts %}
 <script>
-async function loadBoard() {
-  const data = await window.apiFetch("/api/v1/admin/orders?page=1&size=100");
-  const root = document.getElementById("admin-orders-board");
-  root.innerHTML = "";
-  (data.items || []).forEach(function (o) {
-    const el = document.createElement("div");
-    el.className = "admin-order";
-    el.textContent = "#" + o.id + " — " + o.status + " — " + o.total_amount;
-    root.appendChild(el);
-  });
-}
-setInterval(loadBoard, 30000);
-loadBoard();
+  (function () {
+    const refreshBtn = document.getElementById("admin-orders-refresh");
+    const stateEl = document.getElementById("admin-orders-state");
+    const listEl = document.getElementById("admin-orders-list");
+    const filtersRoot = document.getElementById("admin-orders-filters");
+    const newOrderAudio = document.getElementById("new-order-audio");
+
+    const kpiEls = {
+      total: document.getElementById("orders-kpi-total"),
+      pending: document.getElementById("orders-kpi-pending"),
+      in_progress: document.getElementById("orders-kpi-progress"),
+      delivered: document.getElementById("orders-kpi-delivered"),
+    };
+
+    const statusLabels = {
+      pending: "Yangi",
+      in_progress: "Jarayonda",
+      delivered: "Yetkazilgan",
+      cancelled: "Bekor qilingan",
+    };
+
+    let selectedStatus = "";
+    let allOrders = [];
+    let previousTopOrderId = null;
+
+    function toNumber(value) {
+      const num = Number(value);
+      return Number.isFinite(num) ? num : 0;
+    }
+
+    function formatNumber(value) {
+      return toNumber(value).toLocaleString("ru-RU");
+    }
+
+    function formatMoney(value) {
+      return formatNumber(value) + " so'm";
+    }
+
+    function formatDate(value) {
+      if (!value) return "Sana yo'q";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "Sana yo'q";
+      return date.toLocaleString("uz-UZ", {
+        day: "2-digit",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+
+    function normalizeStatus(raw) {
+      const status = String(raw || "").trim().toLowerCase();
+      if (status in statusLabels) return status;
+      return "pending";
+    }
+
+    function animateKpi(el, nextValue) {
+      if (!el) return;
+      const prevValue = toNumber(el.dataset.current);
+      const target = toNumber(nextValue);
+      el.dataset.current = String(target);
+      if (typeof window.animateNum === "function") {
+        window.animateNum(el, prevValue, target, 400);
+      } else {
+        el.textContent = formatNumber(target);
+      }
+    }
+
+    function updateFiltersUi() {
+      const buttons = filtersRoot.querySelectorAll(".admin-filter-btn");
+      buttons.forEach(function (btn) {
+        const isActive = (btn.dataset.status || "") === selectedStatus;
+        btn.classList.toggle("active", isActive);
+      });
+    }
+
+    function getStatusCounts(orders) {
+      const counts = { pending: 0, in_progress: 0, delivered: 0, cancelled: 0 };
+      orders.forEach(function (order) {
+        const key = normalizeStatus(order && order.status);
+        counts[key] = toNumber(counts[key]) + 1;
+      });
+      return counts;
+    }
+
+    function updateKpis(orders) {
+      const counts = getStatusCounts(orders);
+      animateKpi(kpiEls.total, orders.length);
+      animateKpi(kpiEls.pending, counts.pending);
+      animateKpi(kpiEls.in_progress, counts.in_progress);
+      animateKpi(kpiEls.delivered, counts.delivered);
+    }
+
+    function renderOrders() {
+      const filtered = selectedStatus
+        ? allOrders.filter(function (order) {
+            return normalizeStatus(order && order.status) === selectedStatus;
+          })
+        : allOrders.slice();
+
+      listEl.innerHTML = "";
+      if (filtered.length === 0) {
+        const empty = document.createElement("li");
+        empty.className = "admin-orders-empty";
+        empty.textContent = "Tanlangan filter bo'yicha buyurtma topilmadi.";
+        listEl.appendChild(empty);
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      filtered.forEach(function (order) {
+        const statusKey = normalizeStatus(order && order.status);
+        const statusText = statusLabels[statusKey] || "Noma'lum";
+        const item = document.createElement("li");
+        item.className = "admin-order-card";
+        item.innerHTML =
+          '<div class="admin-order-head">' +
+          '<strong>#' + String((order && order.id) || "-") + "</strong>" +
+          '<span class="admin-status-badge ' + statusKey + '">' + statusText + "</span>" +
+          "</div>" +
+          '<div class="admin-order-amount">' + formatMoney(order && order.total_amount) + "</div>" +
+          '<div class="admin-order-meta">' +
+          '<span>' + formatDate(order && order.created_at) + "</span>" +
+          '<span>Telegram: ' + String((order && order.user_telegram_id) || "-") + "</span>" +
+          "</div>";
+        fragment.appendChild(item);
+      });
+      listEl.appendChild(fragment);
+    }
+
+    function setState(text) {
+      if (stateEl) stateEl.textContent = text;
+    }
+
+    function playNewOrderSoundIfNeeded() {
+      if (!Array.isArray(allOrders) || allOrders.length === 0) return;
+      const topOrder = allOrders[0];
+      const topId = Number(topOrder && topOrder.id);
+      if (!Number.isFinite(topId)) return;
+
+      if (previousTopOrderId !== null && topId > previousTopOrderId) {
+        if (newOrderAudio && typeof newOrderAudio.play === "function") {
+          newOrderAudio.play().catch(function () {});
+        }
+        if (typeof window.showToast === "function") {
+          window.showToast("Yangi buyurtma keldi", "info");
+        }
+      }
+      previousTopOrderId = topId;
+    }
+
+    async function loadOrders(options) {
+      const opts = options || {};
+      const manual = !!opts.manual;
+      if (refreshBtn) {
+        refreshBtn.disabled = true;
+        refreshBtn.classList.add("loading");
+      }
+
+      const payload = await window.apiFetch("/api/v1/admin/orders?page=1&size=200");
+      const items = Array.isArray(payload && payload.items) ? payload.items : [];
+      allOrders = items.slice().sort(function (a, b) {
+        return toNumber(b && b.id) - toNumber(a && a.id);
+      });
+
+      playNewOrderSoundIfNeeded();
+      updateKpis(allOrders);
+      renderOrders();
+
+      const now = new Date();
+      setState(
+        "So'nggi yangilanish: " +
+          now.toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit" }),
+      );
+
+      if (manual && typeof window.showToast === "function") {
+        window.showToast("Buyurtmalar yangilandi", "success");
+      }
+
+      if (refreshBtn) {
+        refreshBtn.disabled = false;
+        refreshBtn.classList.remove("loading");
+      }
+    }
+
+    function safeLoad(options) {
+      loadOrders(options).catch(function (error) {
+        setState((error && error.message) || "Buyurtmalarni yuklashda xatolik.");
+        if (refreshBtn) {
+          refreshBtn.disabled = false;
+          refreshBtn.classList.remove("loading");
+        }
+      });
+    }
+
+    filtersRoot.addEventListener("click", function (event) {
+      const btn = event.target.closest(".admin-filter-btn");
+      if (!btn) return;
+      selectedStatus = btn.dataset.status || "";
+      updateFiltersUi();
+      if (typeof window.haptic === "function") window.haptic("light");
+      renderOrders();
+    });
+
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", function () {
+        if (typeof window.haptic === "function") window.haptic("light");
+        safeLoad({ manual: true });
+      });
+    }
+
+    updateFiltersUi();
+    safeLoad({ manual: false });
+
+    const timer = window.setInterval(function () {
+      safeLoad({ manual: false });
+    }, 30000);
+
+    window.addEventListener("beforeunload", function () {
+      window.clearInterval(timer);
+    });
+  })();
 </script>
 {% endblock %}

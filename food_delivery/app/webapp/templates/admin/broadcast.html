@@ -1,35 +1,65 @@
 {% extends "admin/base.html" %}
 {% block content %}
-<section class="card">
-  <h1>Xabar yuborish</h1>
-  <p id="broadcast-state" class="muted">Faol foydalanuvchilar soni aniqlanmoqda...</p>
-  <p id="broadcast-count" class="muted"></p>
-
-  <form id="broadcast-form" class="stack gap-12">
-    <label class="input-label" for="broadcast-message">Xabar matni</label>
-    <textarea
-      id="broadcast-message"
-      class="input"
-      rows="5"
-      maxlength="4096"
-      required
-      placeholder="Aksiya yoki e'lon matnini kiriting"
-    ></textarea>
-
-    <label class="input-label" for="broadcast-image">Rasm (ixtiyoriy)</label>
-    <input id="broadcast-image" class="input" type="file" accept="image/*" />
-    <div id="broadcast-image-preview-wrap" class="hidden">
-      <img
-        id="broadcast-image-preview"
-        alt="Broadcast rasm preview"
-        style="max-width: 100%; max-height: 220px; border-radius: 12px; object-fit: cover;"
-      />
+<section class="admin-broadcast-page">
+  <header class="admin-page-hero admin-broadcast-hero">
+    <div class="admin-page-hero-head">
+      <p class="admin-page-kicker">Audience Reach</p>
+      <h1>Xabar yuborish</h1>
+      <p id="broadcast-state" class="admin-page-subtitle">Faol foydalanuvchilar soni aniqlanmoqda...</p>
     </div>
 
-    <button id="broadcast-submit" class="btn btn-primary" type="submit">Yuborish</button>
-  </form>
+    <div class="admin-broadcast-metrics">
+      <div class="admin-strip-item">
+        <span class="admin-strip-label">Faol foydalanuvchilar</span>
+        <strong id="broadcast-count" class="admin-strip-value">0</strong>
+      </div>
+      <div class="admin-strip-item">
+        <span class="admin-strip-label">Holat</span>
+        <strong id="broadcast-state-badge" class="admin-pill admin-pill-warn">Tayyorlanmoqda</strong>
+      </div>
+    </div>
+  </header>
 
-  <p id="broadcast-progress" class="muted hidden"></p>
+  <section class="admin-form-shell">
+    <form id="broadcast-form" class="admin-broadcast-form">
+      <div class="admin-field">
+        <label class="input-label" for="broadcast-message">Xabar matni</label>
+        <textarea
+          id="broadcast-message"
+          class="input admin-textarea admin-broadcast-textarea"
+          rows="6"
+          maxlength="4096"
+          required
+          placeholder="Aksiya yoki e'lon matnini kiriting"
+        ></textarea>
+        <div class="admin-char-counter"><span id="broadcast-char-count">0</span>/4096</div>
+      </div>
+
+      <div class="admin-field admin-field-full">
+        <label class="input-label" for="broadcast-image">Rasm (ixtiyoriy)</label>
+        <div class="admin-upload-wrap">
+          <input id="broadcast-image" class="admin-file-input" type="file" accept="image/*" />
+          <label for="broadcast-image" class="admin-file-trigger">Rasm tanlash</label>
+          <p id="broadcast-image-name" class="admin-file-name">Fayl tanlanmagan</p>
+        </div>
+        <div id="broadcast-image-preview-wrap" class="admin-image-preview-wrap hidden">
+          <img id="broadcast-image-preview" class="admin-image-preview" alt="Broadcast rasm preview" />
+        </div>
+      </div>
+
+      <button id="broadcast-submit" class="btn btn-primary" type="submit">Yuborish</button>
+    </form>
+  </section>
+
+  <section id="broadcast-progress-card" class="admin-progress-card hidden">
+    <div class="admin-progress-head">
+      <h3>Yuborish jarayoni</h3>
+      <p id="broadcast-progress" class="admin-progress-text">0/0</p>
+    </div>
+    <div class="admin-progress-track">
+      <div id="broadcast-progress-fill" class="admin-progress-fill"></div>
+    </div>
+  </section>
 </section>
 {% endblock %}
 
@@ -37,25 +67,34 @@
 <script>
   (function () {
     const stateEl = document.getElementById("broadcast-state");
+    const stateBadgeEl = document.getElementById("broadcast-state-badge");
     const countEl = document.getElementById("broadcast-count");
     const formEl = document.getElementById("broadcast-form");
     const submitBtn = document.getElementById("broadcast-submit");
     const messageEl = document.getElementById("broadcast-message");
+    const charCountEl = document.getElementById("broadcast-char-count");
     const imageEl = document.getElementById("broadcast-image");
+    const imageNameEl = document.getElementById("broadcast-image-name");
     const previewWrapEl = document.getElementById("broadcast-image-preview-wrap");
     const previewImgEl = document.getElementById("broadcast-image-preview");
-    const progressEl = document.getElementById("broadcast-progress");
+    const progressCardEl = document.getElementById("broadcast-progress-card");
+    const progressTextEl = document.getElementById("broadcast-progress");
+    const progressFillEl = document.getElementById("broadcast-progress-fill");
 
     let previewObjectUrl = null;
     let pollTimer = null;
 
-    function clearPreview() {
-      if (previewObjectUrl) {
-        URL.revokeObjectURL(previewObjectUrl);
-        previewObjectUrl = null;
-      }
-      previewImgEl.removeAttribute("src");
-      previewWrapEl.classList.add("hidden");
+    function setStateBadge(mode, text) {
+      if (!stateBadgeEl) return;
+      stateBadgeEl.classList.remove("admin-pill-ok", "admin-pill-warn");
+      if (mode === "ok") stateBadgeEl.classList.add("admin-pill-ok");
+      else stateBadgeEl.classList.add("admin-pill-warn");
+      stateBadgeEl.textContent = text;
+    }
+
+    function setState(text, mode) {
+      if (stateEl) stateEl.textContent = text;
+      setStateBadge(mode === "ok" ? "ok" : "warn", mode === "ok" ? "Faol" : "Diqqat");
     }
 
     function setSubmitState(isLoading) {
@@ -64,11 +103,35 @@
       else submitBtn.classList.remove("loading");
     }
 
+    function updateCharCounter() {
+      const len = (messageEl.value || "").length;
+      charCountEl.textContent = String(len);
+    }
+
+    function clearPreview() {
+      if (previewObjectUrl) {
+        URL.revokeObjectURL(previewObjectUrl);
+        previewObjectUrl = null;
+      }
+      previewImgEl.removeAttribute("src");
+      previewWrapEl.classList.add("hidden");
+      imageNameEl.textContent = "Fayl tanlanmagan";
+    }
+
     function stopPolling() {
       if (pollTimer) {
         clearInterval(pollTimer);
         pollTimer = null;
       }
+    }
+
+    function setProgress(sent, total, failed) {
+      const safeTotal = Math.max(Number(total || 0), 1);
+      const safeSent = Number(sent || 0);
+      const safeFailed = Number(failed || 0);
+      const percent = Math.max(0, Math.min(100, Math.round((safeSent / safeTotal) * 100)));
+      progressTextEl.textContent = safeSent + "/" + Number(total || 0) + " (xato: " + safeFailed + ")";
+      progressFillEl.style.width = percent + "%";
     }
 
     async function fetchRecipientsCount() {
@@ -79,11 +142,11 @@
     async function refreshRecipientsLabel() {
       try {
         const total = await fetchRecipientsCount();
-        countEl.textContent = "Faol foydalanuvchilar: " + total;
-        stateEl.textContent = "Xabarni yuborishdan oldin matnni tekshiring.";
+        countEl.textContent = String(total);
+        setState("Xabarni yuborishdan oldin matnni tekshiring.", "ok");
       } catch (error) {
         const message = (error && error.message) || "Foydalanuvchilar sonini olishda xatolik.";
-        stateEl.textContent = message;
+        setState(message, "warn");
       }
     }
 
@@ -92,20 +155,20 @@
       const sent = Number(job.sent || 0);
       const failed = Number(job.failed || 0);
 
-      progressEl.classList.remove("hidden");
-      progressEl.textContent =
-        "Yuborilmoqda... " + sent + "/" + total + " (xato: " + failed + ")";
+      progressCardEl.classList.remove("hidden");
+      setProgress(sent, total, failed);
 
       if (job.status === "completed") {
         stopPolling();
-        progressEl.classList.add("hidden");
-        stateEl.textContent = sent + " ta foydalanuvchiga yuborildi (OK). Xato: " + failed;
+        setState(sent + " ta foydalanuvchiga yuborildi. Xato: " + failed, "ok");
         setSubmitState(false);
+        if (typeof window.showToast === "function") {
+          window.showToast("Broadcast yakunlandi", "success");
+        }
       } else if (job.status === "failed") {
         stopPolling();
-        progressEl.classList.add("hidden");
         const reason = job.error ? " (" + job.error + ")" : "";
-        stateEl.textContent = "Xatolik yuz berdi" + reason;
+        setState("Xatolik yuz berdi" + reason, "warn");
         setSubmitState(false);
       }
     }
@@ -116,8 +179,7 @@
         renderProgress(job);
       } catch (error) {
         stopPolling();
-        progressEl.classList.add("hidden");
-        stateEl.textContent = (error && error.message) || "Holatni tekshirishda xatolik.";
+        setState((error && error.message) || "Holatni tekshirishda xatolik.", "warn");
         setSubmitState(false);
       }
     }
@@ -134,17 +196,20 @@
       clearPreview();
       const file = imageEl.files && imageEl.files[0];
       if (!file) return;
+      imageNameEl.textContent = file.name;
       previewObjectUrl = URL.createObjectURL(file);
       previewImgEl.src = previewObjectUrl;
       previewWrapEl.classList.remove("hidden");
     });
+
+    messageEl.addEventListener("input", updateCharCounter);
 
     formEl.addEventListener("submit", async function (event) {
       event.preventDefault();
 
       const message = (messageEl.value || "").trim();
       if (!message) {
-        stateEl.textContent = "Xabar matni majburiy.";
+        setState("Xabar matni majburiy.", "warn");
         return;
       }
 
@@ -152,24 +217,24 @@
       try {
         totalRecipients = await fetchRecipientsCount();
       } catch (error) {
-        stateEl.textContent = (error && error.message) || "Foydalanuvchilar sonini olib bo'lmadi.";
+        setState((error && error.message) || "Foydalanuvchilar sonini olib bo'lmadi.", "warn");
         return;
       }
 
       if (totalRecipients <= 0) {
-        stateEl.textContent = "Faol foydalanuvchi topilmadi.";
+        setState("Faol foydalanuvchi topilmadi.", "warn");
         return;
       }
 
-      const confirmText =
-        totalRecipients + " ta foydalanuvchiga xabar yuboriladi. Davom etasizmi?";
+      const confirmText = totalRecipients + " ta foydalanuvchiga xabar yuboriladi. Davom etasizmi?";
       if (!window.confirm(confirmText)) {
         return;
       }
 
       setSubmitState(true);
-      stateEl.textContent = "Yuborish navbatga qo'yildi...";
-      progressEl.classList.add("hidden");
+      setState("Yuborish navbatga qo'yildi...", "ok");
+      progressCardEl.classList.remove("hidden");
+      setProgress(0, totalRecipients, 0);
 
       const formData = new FormData();
       formData.append("message", message);
@@ -186,21 +251,20 @@
         if (!created || !created.job_id) {
           throw new Error("Broadcast job yaratilmagan");
         }
-        stateEl.textContent = "Yuborilmoqda...";
         startPolling(created.job_id);
       } catch (error) {
         setSubmitState(false);
-        const messageText = (error && error.message) || "Broadcast yuborishda xatolik.";
-        stateEl.textContent = messageText;
+        setState((error && error.message) || "Broadcast yuborishda xatolik.", "warn");
       }
     });
+
+    updateCharCounter();
+    refreshRecipientsLabel();
 
     window.addEventListener("beforeunload", function () {
       clearPreview();
       stopPolling();
     });
-
-    refreshRecipientsLabel();
   })();
 </script>
 {% endblock %}
