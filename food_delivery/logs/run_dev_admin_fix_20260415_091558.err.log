@@ -1,0 +1,145 @@
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835596 is not handled. Duration 7 ms by bot id=8772453459
+INFO:     Started server process [11236]
+INFO:     Waiting for application startup.
+INFO:aiogram.event:Update id=963835597 is handled. Duration 478 ms by bot id=8772453459
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835598 is not handled. Duration 5 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835599 is handled. Duration 799 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835600 is handled. Duration 303 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835601 is not handled. Duration 2 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835602 is handled. Duration 736 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products/41 "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835603 is handled. Duration 885 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835604 is handled. Duration 877 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835605 is handled. Duration 386 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835606 is handled. Duration 797 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835607 is handled. Duration 847 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835608 is handled. Duration 325 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:sqlalchemy.engine.Engine:BEGIN (implicit)
+INFO:sqlalchemy.engine.Engine:SELECT users.id, users.telegram_id, users.group_chat_id, users.first_name, users.last_name, users.username, users.phone, users.language, users.is_active, users.is_admin, users.is_superadmin, users.owner_id, users.created_at, users.updated_at 
+FROM users 
+WHERE users.telegram_id = ?
+INFO:sqlalchemy.engine.Engine:[generated in 0.00143s] (5478161891,)
+INFO:sqlalchemy.engine.Engine:SELECT orders.user_id AS orders_user_id, orders.id AS orders_id, orders.address_id AS orders_address_id, orders.branch_id AS orders_branch_id, orders.courier_id AS orders_courier_id, orders.courier_name AS orders_courier_name, orders.status AS orders_status, orders.subtotal AS orders_subtotal, orders.delivery_fee AS orders_delivery_fee, orders.discount AS orders_discount, orders.total_amount AS orders_total_amount, orders.payment_method AS orders_payment_method, orders.payment_status AS orders_payment_status, orders.comment AS orders_comment, orders.promo_code AS orders_promo_code, orders.idempotency_key AS orders_idempotency_key, orders.created_at AS orders_created_at, orders.accepted_at AS orders_accepted_at, orders.confirmed_at AS orders_confirmed_at, orders.completed_at AS orders_completed_at, orders.delivered_at AS orders_delivered_at 
+FROM orders 
+WHERE orders.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00111s] (8,)
+INFO:sqlalchemy.engine.Engine:SELECT addresses.user_id AS addresses_user_id, addresses.id AS addresses_id, addresses.title AS addresses_title, addresses.address_line AS addresses_address_line, addresses.lat AS addresses_lat, addresses.lng AS addresses_lng, addresses.apartment AS addresses_apartment, addresses.floor AS addresses_floor, addresses.entrance AS addresses_entrance, addresses.door_code AS addresses_door_code, addresses.landmark AS addresses_landmark, addresses.comment AS addresses_comment, addresses.is_default AS addresses_is_default, addresses.created_at AS addresses_created_at 
+FROM addresses 
+WHERE addresses.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00093s] (8,)
+INFO:sqlalchemy.engine.Engine:SELECT carts.user_id AS carts_user_id, carts.id AS carts_id, carts.status AS carts_status, carts.created_at AS carts_created_at, carts.updated_at AS carts_updated_at 
+FROM carts 
+WHERE carts.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00085s] (8,)
+INFO:sqlalchemy.engine.Engine:SELECT order_items.order_id AS order_items_order_id, order_items.id AS order_items_id, order_items.product_id AS order_items_product_id, order_items.variant_id AS order_items_variant_id, order_items.quantity AS order_items_quantity, order_items.unit_price AS order_items_unit_price, order_items.total_price AS order_items_total_price, order_items.snapshot_json AS order_items_snapshot_json 
+FROM order_items 
+WHERE order_items.order_id IN (?, ?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00072s] (4, 5)
+INFO:sqlalchemy.engine.Engine:ROLLBACK
+INFO:root:WebApp URL: https://retro-demographic-organization-back.trycloudflare.com/webapp/
+INFO:aiogram.event:Update id=963835609 is handled. Duration 461 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835610 is handled. Duration 779 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products/43 "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835611 is handled. Duration 1619 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:sqlalchemy.engine.Engine:BEGIN (implicit)
+INFO:sqlalchemy.engine.Engine:SELECT users.id, users.telegram_id, users.group_chat_id, users.first_name, users.last_name, users.username, users.phone, users.language, users.is_active, users.is_admin, users.is_superadmin, users.owner_id, users.created_at, users.updated_at 
+FROM users 
+WHERE users.telegram_id = ?
+INFO:sqlalchemy.engine.Engine:[cached since 69.39s ago] (6412887832,)
+INFO:sqlalchemy.engine.Engine:SELECT orders.user_id AS orders_user_id, orders.id AS orders_id, orders.address_id AS orders_address_id, orders.branch_id AS orders_branch_id, orders.courier_id AS orders_courier_id, orders.courier_name AS orders_courier_name, orders.status AS orders_status, orders.subtotal AS orders_subtotal, orders.delivery_fee AS orders_delivery_fee, orders.discount AS orders_discount, orders.total_amount AS orders_total_amount, orders.payment_method AS orders_payment_method, orders.payment_status AS orders_payment_status, orders.comment AS orders_comment, orders.promo_code AS orders_promo_code, orders.idempotency_key AS orders_idempotency_key, orders.created_at AS orders_created_at, orders.accepted_at AS orders_accepted_at, orders.confirmed_at AS orders_confirmed_at, orders.completed_at AS orders_completed_at, orders.delivered_at AS orders_delivered_at 
+FROM orders 
+WHERE orders.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[cached since 69.38s ago] (1,)
+INFO:sqlalchemy.engine.Engine:SELECT addresses.user_id AS addresses_user_id, addresses.id AS addresses_id, addresses.title AS addresses_title, addresses.address_line AS addresses_address_line, addresses.lat AS addresses_lat, addresses.lng AS addresses_lng, addresses.apartment AS addresses_apartment, addresses.floor AS addresses_floor, addresses.entrance AS addresses_entrance, addresses.door_code AS addresses_door_code, addresses.landmark AS addresses_landmark, addresses.comment AS addresses_comment, addresses.is_default AS addresses_is_default, addresses.created_at AS addresses_created_at 
+FROM addresses 
+WHERE addresses.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[cached since 69.38s ago] (1,)
+INFO:sqlalchemy.engine.Engine:SELECT carts.user_id AS carts_user_id, carts.id AS carts_id, carts.status AS carts_status, carts.created_at AS carts_created_at, carts.updated_at AS carts_updated_at 
+FROM carts 
+WHERE carts.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[cached since 69.37s ago] (1,)
+INFO:sqlalchemy.engine.Engine:SELECT order_items.order_id AS order_items_order_id, order_items.id AS order_items_id, order_items.product_id AS order_items_product_id, order_items.variant_id AS order_items_variant_id, order_items.quantity AS order_items_quantity, order_items.unit_price AS order_items_unit_price, order_items.total_price AS order_items_total_price, order_items.snapshot_json AS order_items_snapshot_json 
+FROM order_items 
+WHERE order_items.order_id IN (?, ?)
+INFO:sqlalchemy.engine.Engine:[cached since 69.37s ago] (1, 3)
+INFO:sqlalchemy.engine.Engine:ROLLBACK
+INFO:root:WebApp URL: https://retro-demographic-organization-back.trycloudflare.com/webapp/
+INFO:aiogram.event:Update id=963835612 is handled. Duration 488 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/superadmin/stats "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835613 is handled. Duration 954 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835614 is handled. Duration 512 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: DELETE http://localhost:8000/api/v1/admin/products/43 "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835615 is handled. Duration 1025 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835616 is handled. Duration 900 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:sqlalchemy.engine.Engine:BEGIN (implicit)
+INFO:sqlalchemy.engine.Engine:SELECT users.id, users.telegram_id, users.group_chat_id, users.first_name, users.last_name, users.username, users.phone, users.language, users.is_active, users.is_admin, users.is_superadmin, users.owner_id, users.created_at, users.updated_at 
+FROM users 
+WHERE users.telegram_id = ?
+INFO:sqlalchemy.engine.Engine:[cached since 200.5s ago] (5478161891,)
+INFO:sqlalchemy.engine.Engine:SELECT orders.user_id AS orders_user_id, orders.id AS orders_id, orders.address_id AS orders_address_id, orders.branch_id AS orders_branch_id, orders.courier_id AS orders_courier_id, orders.courier_name AS orders_courier_name, orders.status AS orders_status, orders.subtotal AS orders_subtotal, orders.delivery_fee AS orders_delivery_fee, orders.discount AS orders_discount, orders.total_amount AS orders_total_amount, orders.payment_method AS orders_payment_method, orders.payment_status AS orders_payment_status, orders.comment AS orders_comment, orders.promo_code AS orders_promo_code, orders.idempotency_key AS orders_idempotency_key, orders.created_at AS orders_created_at, orders.accepted_at AS orders_accepted_at, orders.confirmed_at AS orders_confirmed_at, orders.completed_at AS orders_completed_at, orders.delivered_at AS orders_delivered_at 
+FROM orders 
+WHERE orders.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[cached since 200.5s ago] (8,)
+INFO:sqlalchemy.engine.Engine:SELECT addresses.user_id AS addresses_user_id, addresses.id AS addresses_id, addresses.title AS addresses_title, addresses.address_line AS addresses_address_line, addresses.lat AS addresses_lat, addresses.lng AS addresses_lng, addresses.apartment AS addresses_apartment, addresses.floor AS addresses_floor, addresses.entrance AS addresses_entrance, addresses.door_code AS addresses_door_code, addresses.landmark AS addresses_landmark, addresses.comment AS addresses_comment, addresses.is_default AS addresses_is_default, addresses.created_at AS addresses_created_at 
+FROM addresses 
+WHERE addresses.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[cached since 200.5s ago] (8,)
+INFO:sqlalchemy.engine.Engine:SELECT carts.user_id AS carts_user_id, carts.id AS carts_id, carts.status AS carts_status, carts.created_at AS carts_created_at, carts.updated_at AS carts_updated_at 
+FROM carts 
+WHERE carts.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[cached since 200.5s ago] (8,)
+INFO:sqlalchemy.engine.Engine:SELECT order_items.order_id AS order_items_order_id, order_items.id AS order_items_id, order_items.product_id AS order_items_product_id, order_items.variant_id AS order_items_variant_id, order_items.quantity AS order_items_quantity, order_items.unit_price AS order_items_unit_price, order_items.total_price AS order_items_total_price, order_items.snapshot_json AS order_items_snapshot_json 
+FROM order_items 
+WHERE order_items.order_id IN (?, ?)
+INFO:sqlalchemy.engine.Engine:[cached since 200.5s ago] (4, 5)
+INFO:sqlalchemy.engine.Engine:ROLLBACK
+INFO:root:WebApp URL: https://retro-demographic-organization-back.trycloudflare.com/webapp/
+INFO:aiogram.event:Update id=963835617 is handled. Duration 321 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: PATCH http://localhost:8000/api/v1/orders/6/status "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/orders/6 "HTTP/1.1 401 Unauthorized"
+INFO:aiogram.event:Update id=963835618 is handled. Duration 1588 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835619 is handled. Duration 785 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products/41 "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835620 is handled. Duration 1007 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835621 is handled. Duration 996 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835622 is handled. Duration 334 ms by bot id=8772453459

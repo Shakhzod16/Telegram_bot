@@ -1,0 +1,41 @@
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:root:WebApp URL: https://jpeg-constitutes-physics-kilometers.trycloudflare.com/webapp/
+INFO:root:WebApp URL: https://jpeg-constitutes-physics-kilometers.trycloudflare.com/webapp/
+INFO:root:WebApp URL: https://jpeg-constitutes-physics-kilometers.trycloudflare.com/webapp/
+INFO:root:WebApp URL: https://jpeg-constitutes-physics-kilometers.trycloudflare.com/webapp/
+INFO:root:WebApp URL: https://jpeg-constitutes-physics-kilometers.trycloudflare.com/webapp/
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835637 is handled. Duration 1170 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835638 is handled. Duration 1289 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835636 is handled. Duration 1315 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835640 is handled. Duration 1335 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835639 is handled. Duration 1367 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835635 is handled. Duration 1927 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:root:WebApp URL: https://jpeg-constitutes-physics-kilometers.trycloudflare.com/webapp/
+INFO:aiogram.event:Update id=963835641 is handled. Duration 404 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835642 is handled. Duration 713 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835643 is handled. Duration 366 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835644 is not handled. Duration 5 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:root:WebApp URL: https://jpeg-constitutes-physics-kilometers.trycloudflare.com/webapp/
+INFO:aiogram.event:Update id=963835645 is handled. Duration 370 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835646 is handled. Duration 809 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835647 is handled. Duration 315 ms by bot id=8772453459
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8772453459)
+INFO:aiogram.dispatcher:Connection established (tryings = 1, bot id = 8772453459)

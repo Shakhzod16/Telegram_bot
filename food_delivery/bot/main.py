@@ -6,6 +6,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from app.core.config import settings
+from bot.handlers.admin_products import router as admin_products_router
 from bot.handlers.admin_settings import router as admin_settings_router
 from bot.handlers.courier import router as courier_router
 from bot.handlers.notifications import router as notifications_router
@@ -24,6 +25,7 @@ async def main() -> None:
     dp = Dispatcher()
     dp.update.middleware(LoggingMiddleware())
     dp.include_router(admin_settings_router)
+    dp.include_router(admin_products_router)
     dp.include_router(superadmin_router)
     dp.include_router(start_router)
     dp.include_router(notifications_router)

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import check_resource_ownership, get_owner_filter, require_admin
@@ -32,7 +32,11 @@ async def list_categories(
     owner_filter = get_owner_filter(current_user)
     query = select(Category)
     if owner_filter is not None:
-        query = query.where(Category.owner_id == owner_filter)
+        # Backward compatibility: old seed categories may have owner_id=NULL.
+        # Admin should see own categories + shared legacy categories.
+        query = query.where(
+            or_(Category.owner_id == owner_filter, Category.owner_id.is_(None))
+        )
     query = query.order_by(Category.sort_order, Category.id)
     result = await db.execute(query)
     return list(result.scalars().all())
@@ -81,7 +85,7 @@ async def update_category(
 
     for key, value in body.model_dump(exclude_unset=True).items():
         setattr(category, key, value)
-    await db.flush()
+    await db.commit()
     await db.refresh(category)
     return category
 
@@ -94,6 +98,6 @@ async def delete_category(
 ) -> dict:
     category = await get_category_or_404(category_id, db)
     check_resource_ownership(category.owner_id, current_user)
-    db.delete(category)
-    await db.flush()
-    return {"success": True}
+    await db.delete(category)
+    await db.commit()
+    return {"message": f"Kategoriya #{category_id} o'chirildi"}

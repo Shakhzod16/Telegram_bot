@@ -43,6 +43,8 @@ class AdminDetailResponse(AdminListItem):
 
 class RemoveAdminResponse(BaseModel):
     message: str
+    user_id: int
+    full_name: str
 
 
 def _full_name(user: User) -> str:
@@ -176,32 +178,48 @@ async def get_admin(
 
 
 @router.delete("/{user_id}", response_model=RemoveAdminResponse)
-async def remove_admin_rights(
+async def remove_admin(
     user_id: int,
+    current_user: User = Depends(require_superadmin),
     db: AsyncSession = Depends(get_db),
-    _superadmin: User = Depends(require_superadmin),
 ) -> RemoveAdminResponse:
-    user_result = await db.execute(select(User).where(User.id == user_id))
-    user = user_result.scalar_one_or_none()
-    if user is None:
+    # Userni top
+    result = await db.execute(
+        select(User).where(User.id == user_id)
+    )
+    user = result.scalar_one_or_none()
+
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Foydalanuvchi topilmadi",
         )
+
+    # Superadminni o'chirib bo'lmaydi
     if user.is_superadmin:
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Superadmin huquqini olib bo'lmaydi",
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Superadminni o'chirib bo'lmaydi",
         )
 
+    # Admin huquqini ol
     user.is_admin = False
 
-    whitelist_result = await db.execute(
-        select(AdminPhoneWhitelist).where(AdminPhoneWhitelist.telegram_id == user.telegram_id)
+    # Tegishli whitelist yozuvini faolsizlashtir
+    wl_result = await db.execute(
+        select(AdminPhoneWhitelist).where(
+            AdminPhoneWhitelist.telegram_id == user.telegram_id,
+            AdminPhoneWhitelist.is_active.is_(True),
+        )
     )
-    whitelist_entry = whitelist_result.scalar_one_or_none()
-    if whitelist_entry is not None:
-        whitelist_entry.is_active = False
+    wl = wl_result.scalar_one_or_none()
+    if wl:
+        wl.is_active = False
 
-    await db.flush()
-    return RemoveAdminResponse(message="Admin huquqi muvaffaqiyatli olindi")
+    await db.commit()
+
+    return RemoveAdminResponse(
+        message="Admin huquqi muvaffaqiyatli olindi",
+        user_id=user_id,
+        full_name=user.full_name,
+    )

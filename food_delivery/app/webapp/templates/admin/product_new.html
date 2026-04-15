@@ -1,0 +1,206 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<section class="card">
+  <h1>Mahsulot qo'shish</h1>
+  <p id="admin-product-state" class="muted">Kategoriyalar yuklanmoqda...</p>
+
+  <form id="admin-product-form" class="stack gap-12">
+    <label class="input-label" for="product-category">Kategoriya</label>
+    <select id="product-category" class="input" required></select>
+
+    <label class="input-label" for="product-name-uz">Nomi (UZ)</label>
+    <input id="product-name-uz" class="input" type="text" required maxlength="255" />
+
+    <label class="input-label" for="product-name-ru">Nomi (RU)</label>
+    <input id="product-name-ru" class="input" type="text" required maxlength="255" />
+
+    <label class="input-label" for="product-price">Narx (so'm)</label>
+    <input id="product-price" class="input" type="number" required min="0" step="1" />
+
+    <label class="input-label" for="product-weight">Og'irlik (gramm)</label>
+    <input id="product-weight" class="input" type="number" min="0" step="1" />
+
+    <label class="input-label" for="product-image">Rasm (ixtiyoriy)</label>
+    <input id="product-image" class="input" type="file" accept="image/*" />
+    <div id="product-image-preview-wrap" class="hidden">
+      <img
+        id="product-image-preview"
+        alt="Rasm preview"
+        style="max-width: 100%; max-height: 180px; border-radius: 12px; object-fit: cover;"
+      />
+    </div>
+
+    <label class="input-label" for="product-description-uz">Tavsif (UZ)</label>
+    <textarea id="product-description-uz" class="input" rows="3"></textarea>
+
+    <label class="input-label" for="product-description-ru">Tavsif (RU)</label>
+    <textarea id="product-description-ru" class="input" rows="3"></textarea>
+
+    <label class="input-label">
+      <input id="product-active" type="checkbox" checked />
+      Aktiv holatda yaratish
+    </label>
+
+    <button id="admin-product-submit" class="btn btn-primary" type="submit">
+      Saqlash
+    </button>
+  </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (function () {
+    const tg = window.Telegram && window.Telegram.WebApp;
+    if (tg) {
+      try {
+        tg.ready();
+        tg.expand();
+      } catch (_) {}
+    }
+
+    const stateEl = document.getElementById("admin-product-state");
+    const formEl = document.getElementById("admin-product-form");
+    const submitBtn = document.getElementById("admin-product-submit");
+    const categoryEl = document.getElementById("product-category");
+    const imageInputEl = document.getElementById("product-image");
+    const previewWrapEl = document.getElementById("product-image-preview-wrap");
+    const previewImgEl = document.getElementById("product-image-preview");
+
+    let hasCategories = false;
+    let previewObjectUrl = null;
+
+    function setState(text) {
+      if (stateEl) stateEl.textContent = text;
+    }
+
+    function setSubmitEnabled(enabled) {
+      if (submitBtn) submitBtn.disabled = !enabled;
+    }
+
+    function normalizeNumber(value) {
+      const cleaned = String(value || "").replace(/\s+/g, "").trim();
+      if (!cleaned) return null;
+      const parsed = Number(cleaned);
+      return Number.isFinite(parsed) ? parsed : null;
+    }
+
+    function clearPreview() {
+      if (previewObjectUrl) {
+        URL.revokeObjectURL(previewObjectUrl);
+        previewObjectUrl = null;
+      }
+      if (previewImgEl) previewImgEl.removeAttribute("src");
+      if (previewWrapEl) previewWrapEl.classList.add("hidden");
+    }
+
+    imageInputEl.addEventListener("change", function () {
+      clearPreview();
+      const file = imageInputEl.files && imageInputEl.files[0];
+      if (!file) return;
+      previewObjectUrl = URL.createObjectURL(file);
+      previewImgEl.src = previewObjectUrl;
+      previewWrapEl.classList.remove("hidden");
+    });
+
+    async function loadCategories() {
+      try {
+        const payload = await window.apiFetch("/api/v1/admin/categories");
+        const categories = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload && payload.data)
+            ? payload.data
+            : Array.isArray(payload && payload.categories)
+              ? payload.categories
+              : [];
+
+        categoryEl.innerHTML = "";
+        if (categories.length === 0) {
+          hasCategories = false;
+          setState("Avval kategoriya yarating. Kategoriya bo'lmasa mahsulot qo'shib bo'lmaydi.");
+          setSubmitEnabled(false);
+          return;
+        }
+
+        for (const category of categories) {
+          const option = document.createElement("option");
+          option.value = String(category.id);
+          option.textContent = category.name_uz || category.name_ru || ("Kategoriya #" + category.id);
+          categoryEl.appendChild(option);
+        }
+
+        hasCategories = true;
+        setState("Kategoriya tanlang va formani to'ldiring.");
+        setSubmitEnabled(true);
+      } catch (error) {
+        hasCategories = false;
+        setState((error && error.message) || "Kategoriyalarni yuklashda xatolik.");
+        setSubmitEnabled(false);
+      }
+    }
+
+    formEl.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      setSubmitEnabled(false);
+      submitBtn.classList.add("loading");
+
+      const price = normalizeNumber(document.getElementById("product-price").value);
+      const weight = normalizeNumber(document.getElementById("product-weight").value);
+      const categoryId = Number(categoryEl.value);
+      const nameUz = (document.getElementById("product-name-uz").value || "").trim();
+      const nameRu = (document.getElementById("product-name-ru").value || "").trim();
+      const imageFile = imageInputEl.files && imageInputEl.files[0] ? imageInputEl.files[0] : null;
+
+      if (!hasCategories) {
+        setState("Avval kategoriya yarating.");
+        submitBtn.classList.remove("loading");
+        setSubmitEnabled(false);
+        return;
+      }
+
+      if (!categoryId || !nameUz || !nameRu || price === null) {
+        setState("Kategoriya, nomlar va narx majburiy.");
+        submitBtn.classList.remove("loading");
+        setSubmitEnabled(true);
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("category_id", String(categoryId));
+      formData.append("name_uz", nameUz);
+      formData.append("name_ru", nameRu);
+      formData.append("base_price", String(price));
+      formData.append("is_active", document.getElementById("product-active").checked ? "true" : "false");
+
+      const descriptionUz = (document.getElementById("product-description-uz").value || "").trim();
+      const descriptionRu = (document.getElementById("product-description-ru").value || "").trim();
+      if (descriptionUz) formData.append("description_uz", descriptionUz);
+      if (descriptionRu) formData.append("description_ru", descriptionRu);
+      if (weight !== null) formData.append("weight_grams", String(weight));
+      if (imageFile) formData.append("image", imageFile, imageFile.name);
+
+      try {
+        const created = await window.apiFetch("/api/v1/admin/products", {
+          method: "POST",
+          body: formData,
+        });
+        setState("Mahsulot muvaffaqiyatli qo'shildi. ID: " + created.id);
+        if (typeof hapticOk === "function") hapticOk();
+        if (typeof showToast === "function") showToast("Mahsulot qo'shildi", "success");
+        formEl.reset();
+        clearPreview();
+      } catch (error) {
+        const message = (error && error.message) || "Mahsulot qo'shishda xatolik.";
+        setState(message);
+        if (typeof hapticErr === "function") hapticErr();
+        if (typeof showToast === "function") showToast(message, "error");
+      } finally {
+        submitBtn.classList.remove("loading");
+        setSubmitEnabled(hasCategories);
+      }
+    });
+
+    loadCategories();
+  })();
+</script>
+{% endblock %}

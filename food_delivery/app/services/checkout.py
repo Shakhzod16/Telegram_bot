@@ -109,19 +109,26 @@ class CheckoutService:
         return out
 
     def _pick_branch(self, address: Address, branches: list[Branch]) -> Branch:
-        open_branches = [b for b in branches if b.is_active and b.is_open_now()]
-        if not open_branches:
-            raise BranchClosedError()
+        active_branches = [b for b in branches if b.is_active]
+        open_branches = [b for b in active_branches if b.is_open_now()]
+        candidates = open_branches
+        if not candidates:
+            # Dev muhitda checkout oqimini vaqtga bog'lab qo'ymaslik uchun
+            # aktiv filialni fallback sifatida ishlatamiz.
+            if settings.DEV_MODE and active_branches:
+                candidates = active_branches
+            else:
+                raise BranchClosedError()
         if address.lat is not None and address.lng is not None:
             sorted_bs = sorted(
-                open_branches,
+                candidates,
                 key=lambda x: x.distance_km(address.lat, address.lng),
             )
             for b in sorted_bs:
                 if b.distance_km(address.lat, address.lng) <= b.radius_km:
                     return b
             raise OutOfDeliveryZoneError()
-        return open_branches[0]
+        return candidates[0]
 
     async def preview(self, user_id: int, body: CheckoutPreviewRequest) -> CheckoutPreviewResponse:
         addr = await self._addresses.get_for_user(body.address_id, user_id)

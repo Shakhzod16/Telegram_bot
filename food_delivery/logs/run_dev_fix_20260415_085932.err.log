@@ -1,0 +1,187 @@
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:     Started server process [1840]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 1153, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1251.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 92-98: character maps to <undefined>
+Call stack:
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\persistence.py", line 85, in save_obj
+    _emit_update_statements(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\persistence.py", line 912, in _emit_update_statements
+    c = connection.execute(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 1904, in _exec_single_context
+    self._log_info(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 187, in _log_info
+    self.engine.logger.info(message, *arg, **kw)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\log.py", line 159, in info
+    self.log(logging.INFO, msg, *args, **kwargs)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\log.py", line 210, in log
+    self.logger._log(level, msg, args, **kwargs)
+Message: '[%s] %r'
+Arguments: ('generated in 0.00101s', (6412887832, '\U0001d64e\U0001d65d\U0001d656\U0001d65d\U0001d66f\U0001d664\U0001d659', 'in_progress', '2026-04-15 04:02:02.842990', 5))
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 1153, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1251.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 117-123: character maps to <undefined>
+Call stack:
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\persistence.py", line 85, in save_obj
+    _emit_update_statements(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\orm\persistence.py", line 912, in _emit_update_statements
+    c = connection.execute(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 1904, in _exec_single_context
+    self._log_info(
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\engine\base.py", line 187, in _log_info
+    self.engine.logger.info(message, *arg, **kw)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\log.py", line 159, in info
+    self.log(logging.INFO, msg, *args, **kwargs)
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\log.py", line 210, in log
+    self.logger._log(level, msg, args, **kwargs)
+Message: '[%s] %r'
+Arguments: ('generated in 0.00101s', (6412887832, '\U0001d64e\U0001d65d\U0001d656\U0001d65d\U0001d66f\U0001d664\U0001d659', 'in_progress', '2026-04-15 04:02:02.842990', 5))
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 1153, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1251.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 291-297: character maps to <undefined>
+Call stack:
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1012, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1041, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiosqlite\core.py", line 114, in run
+    LOG.debug("executing %s", function)
+Message: 'executing %s'
+Arguments: (functools.partial(<built-in method execute of sqlite3.Cursor object at 0x000001FB72100740>, 'UPDATE orders SET courier_id=?, courier_name=?, status=?, accepted_at=? WHERE orders.id = ?', (6412887832, '\U0001d64e\U0001d65d\U0001d656\U0001d65d\U0001d66f\U0001d664\U0001d659', 'in_progress', '2026-04-15 04:02:02.842990', 5)),)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 1153, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1251.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 291-297: character maps to <undefined>
+Call stack:
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1012, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1041, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\aiosqlite\core.py", line 116, in run
+    LOG.debug("operation %s completed", function)
+Message: 'operation %s completed'
+Arguments: (functools.partial(<built-in method execute of sqlite3.Cursor object at 0x000001FB72100740>, 'UPDATE orders SET courier_id=?, courier_name=?, status=?, accepted_at=? WHERE orders.id = ?', (6412887832, '\U0001d64e\U0001d65d\U0001d656\U0001d65d\U0001d66f\U0001d664\U0001d659', 'in_progress', '2026-04-15 04:02:02.842990', 5)),)
+INFO:httpx:HTTP Request: PATCH http://localhost:8000/api/v1/orders/5/status "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835592 is handled. Duration 1411 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: PATCH http://localhost:8000/api/v1/orders/5/status "HTTP/1.1 200 OK"
+INFO:sqlalchemy.engine.Engine:BEGIN (implicit)
+INFO:sqlalchemy.engine.Engine:SELECT orders.id, orders.user_id, orders.address_id, orders.branch_id, orders.courier_id, orders.courier_name, orders.status, orders.subtotal, orders.delivery_fee, orders.discount, orders.total_amount, orders.payment_method, orders.payment_status, orders.comment, orders.promo_code, orders.idempotency_key, orders.created_at, orders.accepted_at, orders.confirmed_at, orders.completed_at, orders.delivered_at 
+FROM orders 
+WHERE orders.id = ?
+INFO:sqlalchemy.engine.Engine:[generated in 0.00189s] (5,)
+INFO:sqlalchemy.engine.Engine:SELECT order_items.order_id AS order_items_order_id, order_items.id AS order_items_id, order_items.product_id AS order_items_product_id, order_items.variant_id AS order_items_variant_id, order_items.quantity AS order_items_quantity, order_items.unit_price AS order_items_unit_price, order_items.total_price AS order_items_total_price, order_items.snapshot_json AS order_items_snapshot_json 
+FROM order_items 
+WHERE order_items.order_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00114s] (5,)
+INFO:sqlalchemy.engine.Engine:SELECT users.id, users.telegram_id, users.group_chat_id, users.first_name, users.last_name, users.username, users.phone, users.language, users.is_active, users.is_admin, users.is_superadmin, users.owner_id, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+INFO:sqlalchemy.engine.Engine:[generated in 0.00112s] (8,)
+INFO:sqlalchemy.engine.Engine:SELECT carts.user_id AS carts_user_id, carts.id AS carts_id, carts.status AS carts_status, carts.created_at AS carts_created_at, carts.updated_at AS carts_updated_at 
+FROM carts 
+WHERE carts.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00112s] (8,)
+INFO:sqlalchemy.engine.Engine:SELECT orders.user_id AS orders_user_id, orders.id AS orders_id, orders.address_id AS orders_address_id, orders.branch_id AS orders_branch_id, orders.courier_id AS orders_courier_id, orders.courier_name AS orders_courier_name, orders.status AS orders_status, orders.subtotal AS orders_subtotal, orders.delivery_fee AS orders_delivery_fee, orders.discount AS orders_discount, orders.total_amount AS orders_total_amount, orders.payment_method AS orders_payment_method, orders.payment_status AS orders_payment_status, orders.comment AS orders_comment, orders.promo_code AS orders_promo_code, orders.idempotency_key AS orders_idempotency_key, orders.created_at AS orders_created_at, orders.accepted_at AS orders_accepted_at, orders.confirmed_at AS orders_confirmed_at, orders.completed_at AS orders_completed_at, orders.delivered_at AS orders_delivered_at 
+FROM orders 
+WHERE orders.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00103s] (8,)
+INFO:sqlalchemy.engine.Engine:SELECT addresses.user_id AS addresses_user_id, addresses.id AS addresses_id, addresses.title AS addresses_title, addresses.address_line AS addresses_address_line, addresses.lat AS addresses_lat, addresses.lng AS addresses_lng, addresses.apartment AS addresses_apartment, addresses.floor AS addresses_floor, addresses.entrance AS addresses_entrance, addresses.door_code AS addresses_door_code, addresses.landmark AS addresses_landmark, addresses.comment AS addresses_comment, addresses.is_default AS addresses_is_default, addresses.created_at AS addresses_created_at 
+FROM addresses 
+WHERE addresses.user_id IN (?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00130s] (8,)
+INFO:sqlalchemy.engine.Engine:SELECT order_items.order_id AS order_items_order_id, order_items.id AS order_items_id, order_items.product_id AS order_items_product_id, order_items.variant_id AS order_items_variant_id, order_items.quantity AS order_items_quantity, order_items.unit_price AS order_items_unit_price, order_items.total_price AS order_items_total_price, order_items.snapshot_json AS order_items_snapshot_json 
+FROM order_items 
+WHERE order_items.order_id IN (?, ?)
+INFO:sqlalchemy.engine.Engine:[generated in 0.00100s] (4, 5)
+INFO:sqlalchemy.engine.Engine:ROLLBACK
+INFO:aiogram.event:Update id=963835593 is handled. Duration 2241 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/admin/products "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835594 is handled. Duration 961 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835595 is not handled. Duration 33 ms by bot id=8772453459

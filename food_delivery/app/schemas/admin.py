@@ -1,5 +1,6 @@
 from datetime import datetime, time
 from decimal import Decimal
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -27,6 +28,18 @@ class ProductUpdateAdmin(BaseModel):
     weight_grams: int | None = None
     image_url: str | None = None
     is_active: bool | None = None
+
+
+class ProductUpdate(BaseModel):
+    name_uz: Optional[str] = None
+    name_ru: Optional[str] = None
+    base_price: Optional[float] = None
+    description: Optional[str] = None
+    weight_grams: Optional[int] = None
+    image_url: Optional[str] = None
+    is_active: Optional[bool] = None
+    category_id: Optional[int] = None
+    sort_order: Optional[int] = None
 
 
 class CategoryCreateAdmin(BaseModel):

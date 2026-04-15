@@ -51,11 +51,26 @@ async def create_whitelist_entry(
         select(AdminPhoneWhitelist).where(AdminPhoneWhitelist.telegram_id == body.telegram_id)
     )
     existing = existing_result.scalar_one_or_none()
+    user_result = await db.execute(select(User).where(User.telegram_id == body.telegram_id))
+    user = user_result.scalar_one_or_none()
+
     if existing is not None:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Bu Telegram ID whitelistda allaqachon mavjud",
-        )
+        if existing.is_active:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Bu Telegram ID allaqachon aktiv whitelistda mavjud",
+            )
+
+        existing.is_active = True
+        existing.added_by = current_superadmin.id
+        existing.note = body.note
+
+        if user is not None:
+            user.is_admin = True
+
+        await db.flush()
+        await db.refresh(existing)
+        return _to_response(existing, user)
 
     entry = AdminPhoneWhitelist(
         telegram_id=body.telegram_id,
@@ -65,8 +80,6 @@ async def create_whitelist_entry(
     )
     db.add(entry)
 
-    user_result = await db.execute(select(User).where(User.telegram_id == body.telegram_id))
-    user = user_result.scalar_one_or_none()
     if user is not None:
         user.is_admin = True
 

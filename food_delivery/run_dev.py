@@ -46,6 +46,27 @@ def _load_dotenv(dotenv_path: Path) -> dict[str, str]:
     return values
 
 
+def _upsert_dotenv_values(dotenv_path: Path, updates: dict[str, str]) -> None:
+    existing_lines: list[str] = []
+    if dotenv_path.exists():
+        existing_lines = dotenv_path.read_text(encoding="utf-8").splitlines()
+
+    output_lines = list(existing_lines)
+    for key, value in updates.items():
+        pattern = re.compile(rf"^\s*{re.escape(key)}\s*=")
+        replacement = f"{key}={value}"
+        replaced = False
+        for idx, line in enumerate(output_lines):
+            if pattern.match(line):
+                output_lines[idx] = replacement
+                replaced = True
+                break
+        if not replaced:
+            output_lines.append(replacement)
+
+    dotenv_path.write_text("\n".join(output_lines).rstrip() + "\n", encoding="utf-8")
+
+
 def _is_enabled(value: str | None, default: bool = False) -> bool:
     if value is None:
         return default
@@ -237,12 +258,22 @@ async def _start_tunnel_if_needed(
     logs_dir.mkdir(parents=True, exist_ok=True)
     runtime_webapp_file = logs_dir / "runtime_webapp_url.txt"
     runtime_backend_file = logs_dir / "runtime_backend_url.txt"
+    dotenv_path = root / ".env"
+    sync_dotenv = _is_enabled(env.get("DEV_SYNC_DOTENV"), default=True)
 
     provider = _pick_tunnel_provider(env)
     print(f"Using DEV_TUNNEL_PROVIDER={provider}")
     if provider == "none":
         runtime_backend_file.write_text(f"{env.get('BACKEND_URL', '').strip()}\n", encoding="utf-8")
         runtime_webapp_file.write_text(f"{env.get('WEBAPP_URL', '').strip()}\n", encoding="utf-8")
+        if sync_dotenv:
+            _upsert_dotenv_values(
+                dotenv_path,
+                {
+                    "BACKEND_URL": env.get("BACKEND_URL", "").strip(),
+                    "WEBAPP_URL": env.get("WEBAPP_URL", "").strip(),
+                },
+            )
         return None
 
     candidates = ("cloudflared", "localtunnel") if provider == "auto" else (provider,)
@@ -256,6 +287,14 @@ async def _start_tunnel_if_needed(
             print(f"Using WEBAPP_URL={env['WEBAPP_URL']}")
             runtime_backend_file.write_text(f"{env['BACKEND_URL']}\n", encoding="utf-8")
             runtime_webapp_file.write_text(f"{env['WEBAPP_URL']}\n", encoding="utf-8")
+            if sync_dotenv:
+                _upsert_dotenv_values(
+                    dotenv_path,
+                    {
+                        "BACKEND_URL": env["BACKEND_URL"],
+                        "WEBAPP_URL": env["WEBAPP_URL"],
+                    },
+                )
             return proc
         except Exception as exc:
             errors.append(f"{candidate}: {exc}")

@@ -33,3 +33,12 @@ class User(Base, TimestampMixin):
     addresses: Mapped[list["Address"]] = relationship(back_populates="user", lazy="selectin")
     orders: Mapped[list["Order"]] = relationship(back_populates="user", lazy="selectin")
     cart: Mapped["Cart | None"] = relationship(back_populates="user", uselist=False, lazy="selectin")
+
+    @property
+    def full_name(self) -> str:
+        parts = [part.strip() for part in ((self.first_name or ""), (self.last_name or "")) if part and part.strip()]
+        if parts:
+            return " ".join(parts)
+        if self.username:
+            return f"@{self.username}"
+        return "Foydalanuvchi"

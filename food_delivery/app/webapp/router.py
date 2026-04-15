@@ -84,3 +84,11 @@ async def webapp_admin_orders(request: Request) -> HTMLResponse:
         "admin/orders.html",
         {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/")},
     )
+
+
+@webapp_router.get("/webapp/admin/products/new", response_class=HTMLResponse)
+async def webapp_admin_product_new(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        "admin/product_new.html",
+        {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/")},
+    )

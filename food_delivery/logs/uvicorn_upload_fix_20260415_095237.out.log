@@ -1,0 +1,11 @@
+{"timestamp": "2026-04-15T04:52:42.191654+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-15T04:52:43.197931+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-15T04:52:43.257298+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-15T04:53:13.636624+00:00", "level": "WARNING", "message": "telegram_init_data_validation_skipped_dev_mode", "module": "auth", "logger": "food_delivery.app.services.auth", "extra": {"taskName": "Task-7"}}
+INFO:     127.0.0.1:49811 - "POST /api/v1/auth/telegram/init HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49813 - "GET /api/v1/admin/categories HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49815 - "POST /api/v1/admin/categories HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49817 - "POST /api/v1/admin/products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50778 - "GET /api/v1/admin/products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56252 - "GET /api/v1/admin/products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54869 - "GET /api/v1/admin/products HTTP/1.1" 200 OK

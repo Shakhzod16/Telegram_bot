@@ -1,6 +1,11 @@
 function buildHeaders(options) {
 	const headers = Object.assign({}, (options && options.headers) || {});
-	headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+	const isFormData = options && options.body instanceof FormData;
+	if (!isFormData) {
+		headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+	} else if ('Content-Type' in headers) {
+		delete headers['Content-Type'];
+	}
 	const token = sessionStorage.getItem('access_token');
 	if (token) {
 		headers['Authorization'] = 'Bearer ' + token;

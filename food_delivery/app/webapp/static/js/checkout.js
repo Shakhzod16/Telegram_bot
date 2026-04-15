@@ -73,6 +73,9 @@ async function loadPreview(addressId) {
     });
     renderSummary(preview);
   } catch (e) {
+    if (e && e.message) {
+      showToast(e.message, "error");
+    }
     try {
       const cart = await window.apiFetch("/api/v1/cart");
       fallback.subtotal = Number(cart.subtotal || 0);
@@ -131,7 +134,7 @@ if (submitBtn) {
     } catch (e) {
       btn.classList.remove("loading");
       hapticErr();
-      showToast("Buyurtma yuborilmadi", "error");
+      showToast((e && e.message) || "Buyurtma yuborilmadi", "error");
     }
   });
 }
