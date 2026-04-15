@@ -9,6 +9,7 @@ from aiogram.enums import ParseMode
 from aiogram.types import MenuButtonWebApp, WebAppInfo
 
 from app.core.config import settings
+from bot.handlers.admin_menu import router as admin_menu_router
 from bot.handlers.admin_products import router as admin_products_router
 from bot.handlers.admin_settings import router as admin_settings_router
 from bot.handlers.courier import router as courier_router
@@ -67,6 +68,7 @@ async def main() -> None:
     dp.update.middleware(LoggingMiddleware())
     dp.include_router(admin_settings_router)
     dp.include_router(admin_products_router)
+    dp.include_router(admin_menu_router)
     dp.include_router(superadmin_router)
     dp.include_router(start_router)
     dp.include_router(notifications_router)

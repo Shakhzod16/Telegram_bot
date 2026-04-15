@@ -49,6 +49,63 @@ async def get_group_id(message: Message) -> None:
     )
 
 
+@router.message(Command("link_group"))
+async def link_group(message: Message) -> None:
+    """Adminni shu guruhga bog'lash."""
+    if message.chat.type not in {"group", "supergroup"}:
+        await message.answer("❌ /link_group ni guruh ichida yuboring.")
+        return
+
+    telegram_id = message.from_user.id if message.from_user else 0
+    group_chat_id = message.chat.id
+    group_title = message.chat.title or "—"
+
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.post(
+                f"{BACKEND}/admin/settings/group",
+                headers={"X-Telegram-Id": str(telegram_id)},
+                json={"group_chat_id": group_chat_id},
+            )
+
+        if resp.status_code == 200:
+            await message.answer(
+                f"✅ Guruh muvaffaqiyatli ulandi!\n\n"
+                f"Nomi: {group_title}\n"
+                f"ID: <code>{group_chat_id}</code>",
+                parse_mode="HTML",
+            )
+        elif resp.status_code == 403:
+            await message.answer("❌ Bu amal faqat admin uchun ruxsat etilgan.")
+        else:
+            await message.answer(f"❌ Xatolik: {resp.text}")
+    except Exception as exc:  # noqa: BLE001
+        logger.error("link_group_error: %s", exc)
+        await message.answer("❌ Guruhni ulashda server xatoligi.")
+
+
+@router.message(Command("unlink_group"))
+async def unlink_group(message: Message) -> None:
+    """Adminning bog'langan guruhini uzish."""
+    telegram_id = message.from_user.id if message.from_user else 0
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.delete(
+                f"{BACKEND}/admin/settings/group",
+                headers={"X-Telegram-Id": str(telegram_id)},
+            )
+
+        if resp.status_code == 200:
+            await message.answer("✅ Buyurtmalar guruhi uzildi.")
+        elif resp.status_code == 403:
+            await message.answer("❌ Bu amal faqat admin uchun ruxsat etilgan.")
+        else:
+            await message.answer(f"❌ Xatolik: {resp.text}")
+    except Exception as exc:  # noqa: BLE001
+        logger.error("unlink_group_error: %s", exc)
+        await message.answer("❌ Guruhni uzishda server xatoligi.")
+
+
 @router.message(F.text == "⚙️ Sozlamalar")
 async def admin_settings_menu(message: Message) -> None:
     telegram_id = message.from_user.id
