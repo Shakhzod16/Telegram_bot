@@ -2,6 +2,7 @@ import asyncio
 import logging
 import os
 from pathlib import Path
+from urllib.parse import urlsplit, urlunsplit
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
@@ -13,6 +14,7 @@ from bot.handlers.admin_menu import router as admin_menu_router
 from bot.handlers.admin_products import router as admin_products_router
 from bot.handlers.admin_settings import router as admin_settings_router
 from bot.handlers.courier import router as courier_router
+from bot.handlers.location import router as location_router
 from bot.handlers.notifications import router as notifications_router
 from bot.handlers.start import router as start_router
 from bot.handlers.superadmin import router as superadmin_router
@@ -37,9 +39,26 @@ def _resolve_webapp_url() -> str:
         except OSError:
             continue
         if value.lower().startswith("https://"):
-            return value
+            return _normalize_webapp_url(value)
     env_url = os.getenv("WEBAPP_URL") or str(getattr(settings, "WEBAPP_URL", "")).strip()
-    return env_url
+    return _normalize_webapp_url(env_url)
+
+
+def _normalize_webapp_url(url: str) -> str:
+    raw = (url or "").strip()
+    if not raw:
+        return ""
+    try:
+        parsed = urlsplit(raw)
+    except Exception:
+        return raw
+    path = parsed.path or ""
+    if path in {"", "/"}:
+        path = "/webapp/"
+    elif path.rstrip("/") == "/webapp":
+        path = "/webapp/"
+    normalized = parsed._replace(path=path, query="", fragment="")
+    return urlunsplit(normalized)
 
 
 async def _sync_chat_menu_button(bot: Bot) -> None:
@@ -71,6 +90,7 @@ async def main() -> None:
     dp.include_router(admin_menu_router)
     dp.include_router(superadmin_router)
     dp.include_router(start_router)
+    dp.include_router(location_router)
     dp.include_router(notifications_router)
     dp.include_router(courier_router)
     await _sync_chat_menu_button(bot)

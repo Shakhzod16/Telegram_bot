@@ -16,17 +16,19 @@
 
   <div id="checkout-root" class="hidden">
     <div class="simple-card section-stack">
-      <a class="menu-item" href="/webapp/address" onclick="haptic('light')">
+      <a class="menu-item" href="/webapp/map" onclick="haptic('light')">
         <span class="menu-icon">📍</span>
-        <span>Manzilni tanlash / o'zgartirish</span>
+        <span>Xaritada manzil tanlash</span>
         <span class="menu-chevron">›</span>
       </a>
-      <p id="selected-address" class="empty-desc">Manzil tanlanmagan</p>
+      <p id="selected-address" class="empty-desc">Manzil hali belgilanmagan</p>
     </div>
 
     <div id="checkout-summary" class="price-breakdown"></div>
 
     <div class="profile-section section-stack">
+      <label for="checkout-address-text" class="input-label">Manzil matni (ixtiyoriy, lokatsiya bo'lmasa majburiy)</label>
+      <textarea id="checkout-address-text" class="input" rows="2" placeholder="Masalan: Chilonzor 9-kvartal, 12-uy"></textarea>
       <label for="checkout-comment" class="input-label">Izoh</label>
       <textarea id="checkout-comment" class="input" rows="3" placeholder="Qo'shimcha izoh"></textarea>
       <div class="price-row"><span>To'lov usuli</span><span>Naqd</span></div>
@@ -43,6 +45,6 @@
 </section>
 {% endblock %}
 {% block scripts %}
-<script src="/static/js/checkout.js?v=20260409-2"></script>
+<script src="/static/js/checkout.js?v=20260416-map-pin"></script>
 {% endblock %}
 

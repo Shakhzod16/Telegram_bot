@@ -2,7 +2,7 @@ const PROFILE_I18N = {
   uz: {
     langTitle: "Til",
     accountTitle: "Akkaunt",
-    addresses: "Manzillarim",
+    addresses: "Xaritada manzil",
     logout: "Chiqish",
     phoneMissing: "Telefon raqam kiritilmagan",
     toastLanguageUpdated: "Til yangilandi",

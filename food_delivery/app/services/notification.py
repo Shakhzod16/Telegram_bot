@@ -2,6 +2,7 @@
 
 import json
 from datetime import datetime
+from html import escape
 from typing import Any
 
 import httpx
@@ -56,20 +57,9 @@ class NotificationService:
         items_text = "\n".join(items_text_parts) if items_text_parts else "  • Mahsulotlar topilmadi"
 
         address_text = "Manzil ko'rsatilmagan"
-        address = order.address
-        if address:
-            parts = [address.address_line]
-            if address.apartment:
-                parts.append(f"kv. {address.apartment}")
-            if address.floor:
-                parts.append(f"{address.floor}-qavat")
-            if address.entrance:
-                parts.append(f"{address.entrance}-kirish")
-            if address.landmark:
-                parts.append(f"Mo'ljal: {address.landmark}")
-            address_text = ", ".join(parts)
-            if address.comment:
-                address_text += f"\n  💬 {address.comment}"
+        manual_text = (getattr(order, "delivery_address_text", None) or "").strip()
+        if manual_text:
+            address_text = manual_text
 
         user = order.user
         user_name = "Noma'lum"
@@ -113,9 +103,14 @@ class NotificationService:
 
         text += f"\n⏰ {created_at_text}"
 
-        map_url = "https://maps.google.com"
-        if address and address.lat is not None and address.lng is not None:
-            map_url = f"https://maps.google.com/?q={address.lat},{address.lng}"
+        latitude = getattr(order, "latitude", None)
+        longitude = getattr(order, "longitude", None)
+
+        map_url = (getattr(order, "maps_url", None) or "").strip()
+        if not map_url and latitude is not None and longitude is not None:
+            map_url = f"https://maps.google.com/?q={latitude},{longitude}"
+        if not map_url:
+            map_url = "https://maps.google.com"
 
         call_url = "https://t.me"
         if user_phone != "Telefon yo'q":
@@ -125,7 +120,7 @@ class NotificationService:
             "inline_keyboard": [
                 [
                     {"text": "✅ Qabul qildim", "callback_data": f"courier_accept_{order.id}"},
-                    {"text": "🗺 Xaritada ko'r", "url": map_url},
+                    {"text": "🗺 Xaritada ko'r", "url": escape(map_url, quote=True)},
                 ],
                 [
                     {"text": "📞 Mijozga qo'ng'iroq", "url": call_url},
@@ -133,12 +128,19 @@ class NotificationService:
             ]
         }
 
-        return await self._send_message(
+        sent = await self._send_message(
             chat_id=int(settings.courier_group_id),
             text=text,
             parse_mode="HTML",
             reply_markup=keyboard,
         )
+        if sent and latitude is not None and longitude is not None:
+            await self._send_location(
+                chat_id=int(settings.courier_group_id),
+                latitude=float(latitude),
+                longitude=float(longitude),
+            )
+        return sent
 
     def _format_order_message(self, order: Order) -> str:
         lines: list[str] = [
@@ -192,4 +194,32 @@ class NotificationService:
                 return True
         except Exception as exc:
             logger.warning("telegram_send_error %s", str(exc))
+            return False
+
+    async def _send_location(
+        self,
+        *,
+        chat_id: int,
+        latitude: float,
+        longitude: float,
+    ) -> bool:
+        payload: dict[str, Any] = {
+            "chat_id": chat_id,
+            "latitude": latitude,
+            "longitude": longitude,
+        }
+        url = f"https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendLocation"
+        try:
+            async with httpx.AsyncClient(timeout=15.0) as client:
+                response = await client.post(url, json=payload)
+                if response.status_code >= 400:
+                    logger.warning(
+                        "telegram_send_location_failed %s %s",
+                        response.status_code,
+                        response.text[:500],
+                    )
+                    return False
+                return True
+        except Exception as exc:
+            logger.warning("telegram_send_location_error %s", str(exc))
             return False

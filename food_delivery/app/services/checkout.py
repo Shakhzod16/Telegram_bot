@@ -108,7 +108,13 @@ class CheckoutService:
             )
         return out
 
-    def _pick_branch(self, address: Address, branches: list[Branch]) -> Branch:
+    def _pick_branch(
+        self,
+        *,
+        latitude: float | None,
+        longitude: float | None,
+        branches: list[Branch],
+    ) -> Branch:
         active_branches = [b for b in branches if b.is_active]
         open_branches = [b for b in active_branches if b.is_open_now()]
         candidates = open_branches
@@ -119,14 +125,18 @@ class CheckoutService:
                 candidates = active_branches
             else:
                 raise BranchClosedError()
-        if address.lat is not None and address.lng is not None:
+        if latitude is not None and longitude is not None:
             sorted_bs = sorted(
                 candidates,
-                key=lambda x: x.distance_km(address.lat, address.lng),
+                key=lambda x: x.distance_km(latitude, longitude),
             )
             for b in sorted_bs:
-                if b.distance_km(address.lat, address.lng) <= b.radius_km:
+                if b.distance_km(latitude, longitude) <= b.radius_km:
                     return b
+            # Dev muhitda geozona check checkout oqimini bloklamasligi uchun
+            # eng yaqin filialga fallback qilamiz.
+            if settings.DEV_MODE and sorted_bs:
+                return sorted_bs[0]
             raise OutOfDeliveryZoneError()
         return candidates[0]
 
@@ -139,7 +149,7 @@ class CheckoutService:
             raise EmptyCartError()
         subtotal = sum((x.total_price for x in lines), Decimal("0"))
         branches = await self._branches.list_active()
-        branch = self._pick_branch(addr, branches)
+        branch = self._pick_branch(latitude=addr.lat, longitude=addr.lng, branches=branches)
         delivery_fee = Decimal(str(branch.delivery_fee))
         discount = Decimal("0")
         if body.promo_code:
@@ -164,9 +174,12 @@ class CheckoutService:
         self,
         user_id: int,
         *,
-        address_id: int,
+        address_text: str | None,
         comment: str | None,
         promo_code: str | None,
+        latitude: float | None,
+        longitude: float | None,
+        maps_url: str | None,
         idempotency_key: str,
     ) -> Order:
         existing = await self._orders.get_by_idempotency_key(idempotency_key)
@@ -177,12 +190,17 @@ class CheckoutService:
         if not lines:
             raise EmptyCartError()
 
-        addr = await self._addresses.get_for_user(address_id, user_id)
-        if not addr:
-            raise NotFoundError("Address not found")
-
         branches = await self._branches.list_active()
-        branch = self._pick_branch(addr, branches)
+        resolved_latitude = latitude
+        resolved_longitude = longitude
+        resolved_address_text = (address_text or "").strip()
+        if not resolved_address_text and resolved_latitude is None and resolved_longitude is None:
+            raise ValidationAppError("Address text is required when location is not provided")
+        branch = self._pick_branch(
+            latitude=resolved_latitude,
+            longitude=resolved_longitude,
+            branches=branches,
+        )
 
         subtotal = sum((x.total_price for x in lines), Decimal("0"))
         if subtotal < settings.MIN_ORDER_AMOUNT:
@@ -204,9 +222,13 @@ class CheckoutService:
         if total_amount < Decimal("0"):
             total_amount = Decimal("0")
 
+        resolved_maps_url = (maps_url or "").strip() or None
+        if resolved_maps_url is None and resolved_latitude is not None and resolved_longitude is not None:
+            resolved_maps_url = f"https://maps.google.com/?q={resolved_latitude},{resolved_longitude}"
+
         order = Order(
             user_id=user_id,
-            address_id=addr.id,
+            address_id=None,
             branch_id=branch.id,
             status="pending",
             subtotal=subtotal,
@@ -215,6 +237,10 @@ class CheckoutService:
             total_amount=total_amount,
             payment_method="cash",
             payment_status="pending",
+            latitude=resolved_latitude,
+            longitude=resolved_longitude,
+            delivery_address_text=resolved_address_text or None,
+            maps_url=resolved_maps_url,
             comment=comment,
             promo_code=(promo_code.upper().strip() if promo_code else None),
             idempotency_key=idempotency_key,

@@ -1,45 +1,49 @@
-﻿function formatMoney(value) {
+function formatMoney(value) {
   return `${Number(value || 0).toLocaleString()} UZS`;
 }
 
-let selectedAddressId = null;
+const DELIVERY_LOCATION_KEY = "delivery_location";
+let selectedLocation = null;
 
-function pickAddress(addresses) {
-  if (!addresses || addresses.length === 0) return null;
-
-  const saved = Number(sessionStorage.getItem("last_address_id") || 0);
-  const fromSaved = addresses.find(function (a) {
-    return a.id === saved;
-  });
-  if (fromSaved) return fromSaved;
-
-  const fromDefault = addresses.find(function (a) {
-    return !!a.is_default;
-  });
-  return fromDefault || addresses[0];
-}
-
-async function renderAddress() {
-  const target = document.getElementById("selected-address");
-  if (!target) return null;
-
+function parseDeliveryLocation(raw) {
+  if (!raw) return null;
   try {
-    const addresses = await window.apiFetch("/api/v1/addresses");
-    const selected = pickAddress(addresses || []);
-
-    if (!selected) {
-      target.textContent = "Manzil topilmadi. Davom etish uchun manzil qo'shing.";
-      return null;
-    }
-
-    selectedAddressId = selected.id;
-    sessionStorage.setItem("last_address_id", String(selected.id));
-    target.textContent = `${selected.title || "Manzil"}: ${selected.address_line}`;
-    return selected.id;
-  } catch (e) {
-    target.textContent = "Manzilni yuklashda xatolik.";
+    const parsed = JSON.parse(raw);
+    const lat = Number(parsed.lat);
+    const lng = Number(parsed.lng);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+    return {
+      lat: lat,
+      lng: lng,
+      address: String(parsed.address || "").trim(),
+    };
+  } catch (_) {
     return null;
   }
+}
+
+function getStoredDeliveryLocation() {
+  const location = parseDeliveryLocation(sessionStorage.getItem(DELIVERY_LOCATION_KEY));
+  if (!location) {
+    sessionStorage.removeItem(DELIVERY_LOCATION_KEY);
+    return null;
+  }
+  return location;
+}
+
+function renderSelectedLocation() {
+  const target = document.getElementById("selected-address");
+  if (!target) return;
+
+  selectedLocation = getStoredDeliveryLocation();
+  if (!selectedLocation) {
+    target.textContent = "Manzil hali belgilanmagan. Xarita orqali pin qo'ying.";
+    return;
+  }
+
+  const fallback = `${selectedLocation.lat.toFixed(6)}, ${selectedLocation.lng.toFixed(6)}`;
+  const text = selectedLocation.address || fallback;
+  target.textContent = `PIN: ${text}`;
 }
 
 function renderSummary(preview) {
@@ -53,37 +57,18 @@ function renderSummary(preview) {
     `<div class="price-row total"><span>Jami</span><span class="price-value">${formatMoney(preview.total)}</span></div>`;
 }
 
-async function loadPreview(addressId) {
-  const fallback = {
-    subtotal: 0,
-    delivery_fee: 0,
-    discount: 0,
-    total: 0,
-  };
-
-  if (!addressId) {
-    renderSummary(fallback);
-    return;
-  }
-
+async function loadPreview() {
   try {
-    const preview = await window.apiFetch("/api/v1/checkout/preview", {
-      method: "POST",
-      body: JSON.stringify({ address_id: addressId, promo_code: null }),
+    const cart = await window.apiFetch("/api/v1/cart");
+    const subtotal = Number((cart && cart.subtotal) || 0);
+    renderSummary({
+      subtotal: subtotal,
+      delivery_fee: 0,
+      discount: 0,
+      total: subtotal,
     });
-    renderSummary(preview);
   } catch (e) {
-    if (e && e.message) {
-      showToast(e.message, "error");
-    }
-    try {
-      const cart = await window.apiFetch("/api/v1/cart");
-      fallback.subtotal = Number(cart.subtotal || 0);
-      fallback.total = fallback.subtotal;
-      renderSummary(fallback);
-    } catch (err) {
-      renderSummary(fallback);
-    }
+    renderSummary({ subtotal: 0, delivery_fee: 0, discount: 0, total: 0 });
   }
 }
 
@@ -91,52 +76,78 @@ async function loadCheckout() {
   const loading = document.getElementById("state-loading");
   const root = document.getElementById("checkout-root");
 
-  const addressId = await renderAddress();
-  await loadPreview(addressId);
+  renderSelectedLocation();
+  await loadPreview();
 
   if (loading) loading.classList.add("hidden");
   if (root) root.classList.remove("hidden");
 }
 
-const submitBtn = document.getElementById("checkout-submit");
-if (submitBtn) {
-  submitBtn.addEventListener("click", async function () {
-    const btn = this;
-    btn.classList.add("loading");
+function buildMapsUrl(latitude, longitude) {
+  if (typeof latitude !== "number" || typeof longitude !== "number") {
+    return null;
+  }
+  return `https://maps.google.com/?q=${latitude},${longitude}`;
+}
 
-    try {
-      if (!selectedAddressId) {
+async function submitOrder() {
+  const submitBtn = document.getElementById("checkout-submit");
+  if (submitBtn) submitBtn.classList.add("loading");
+
+  try {
+    const location = getStoredDeliveryLocation();
+    const manualAddress = String(document.getElementById("checkout-address-text")?.value || "").trim();
+    const resolvedAddressText = manualAddress || (location ? location.address : "");
+    const latitude = location ? location.lat : null;
+    const longitude = location ? location.lng : null;
+    const mapsUrl = buildMapsUrl(latitude, longitude);
+
+    if (latitude === null || longitude === null) {
+      if (!resolvedAddressText) {
         hapticErr();
-        showToast("Avval manzil tanlang", "error");
-        btn.classList.remove("loading");
+        showToast("Xaritada manzil belgilang yoki qo'lda manzil kiriting.", "error");
         return;
       }
-
-      const idem = `idem-${Date.now()}`;
-      await window.apiFetch("/api/v1/orders", {
-        method: "POST",
-        body: JSON.stringify({
-          address_id: selectedAddressId,
-          comment: document.getElementById("checkout-comment").value || null,
-          promo_code: null,
-          idempotency_key: idem,
-        }),
-      });
-
-      const root = document.getElementById("checkout-root");
-      const success = document.getElementById("checkout-success");
-      if (root) root.classList.add("hidden");
-      if (success) success.classList.remove("hidden");
-
-      updateCartBadge(0);
-      hapticOk();
-      showToast("Buyurtma qabul qilindi!", "success");
-    } catch (e) {
-      btn.classList.remove("loading");
-      hapticErr();
-      showToast((e && e.message) || "Buyurtma yuborilmadi", "error");
+      showToast("Lokatsiyasiz buyurtma yuborildi. Kuryer bilan aniqlashtiriladi.", "info");
     }
-  });
+
+    const idem = `idem-${Date.now()}`;
+    await window.apiFetch("/api/v1/orders", {
+      method: "POST",
+      body: JSON.stringify({
+        address_text: resolvedAddressText || null,
+        comment: document.getElementById("checkout-comment")?.value || null,
+        promo_code: null,
+        idempotency_key: idem,
+        latitude: latitude,
+        longitude: longitude,
+        maps_url: mapsUrl,
+      }),
+    });
+
+    const root = document.getElementById("checkout-root");
+    const success = document.getElementById("checkout-success");
+    if (root) root.classList.add("hidden");
+    if (success) success.classList.remove("hidden");
+
+    updateCartBadge(0);
+    hapticOk();
+    showToast("Buyurtma qabul qilindi!", "success");
+  } catch (e) {
+    hapticErr();
+    showToast((e && e.message) || "Buyurtma yuborilmadi", "error");
+  } finally {
+    if (submitBtn) submitBtn.classList.remove("loading");
+  }
 }
+
+const submitBtn = document.getElementById("checkout-submit");
+if (submitBtn) {
+  submitBtn.addEventListener("click", submitOrder);
+}
+
+window.addEventListener("pageshow", function () {
+  renderSelectedLocation();
+});
 
 loadCheckout();

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from app.core.config import settings
@@ -7,6 +7,16 @@ from app.core.config import settings
 templates = Jinja2Templates(directory="app/webapp/templates")
 
 webapp_router = APIRouter()
+
+
+@webapp_router.get("/", include_in_schema=False)
+async def root_redirect() -> RedirectResponse:
+    return RedirectResponse(url="/webapp/", status_code=307)
+
+
+@webapp_router.get("/webapp", include_in_schema=False)
+async def webapp_redirect() -> RedirectResponse:
+    return RedirectResponse(url="/webapp/", status_code=307)
 
 
 @webapp_router.get("/webapp/", response_class=HTMLResponse)
@@ -29,6 +39,14 @@ async def webapp_cart(request: Request) -> HTMLResponse:
 async def webapp_checkout(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
         "checkout.html",
+        {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/"), "active": "cart"},
+    )
+
+
+@webapp_router.get("/webapp/map", response_class=HTMLResponse)
+async def webapp_map(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        "map.html",
         {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/"), "active": "cart"},
     )
 
@@ -64,10 +82,7 @@ async def webapp_profile(request: Request) -> HTMLResponse:
 
 @webapp_router.get("/webapp/address", response_class=HTMLResponse)
 async def webapp_address(request: Request) -> HTMLResponse:
-    return templates.TemplateResponse(
-        "address.html",
-        {"request": request, "backend_url": settings.BACKEND_URL.rstrip("/"), "active": "profile"},
-    )
+    return RedirectResponse(url="/webapp/map", status_code=307)
 
 
 @webapp_router.get("/webapp/admin", response_class=HTMLResponse)

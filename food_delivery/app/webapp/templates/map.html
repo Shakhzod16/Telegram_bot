@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Manzil xaritasi{% endblock %}
+{% block content %}
+<section class="map-screen">
+  <div id="delivery-map" class="delivery-map" role="application" aria-label="Yetkazish xaritasi"></div>
+  <div class="map-center-pin" aria-hidden="true">&#128205;</div>
+
+  <div class="map-sheet">
+    <p class="map-sheet-title">Yetkazish nuqtasini belgilang</p>
+    <p id="map-address" class="map-address-text">Manzil aniqlanmoqda...</p>
+    <p id="map-coords" class="map-coords">Koordinata: -</p>
+    <div class="map-actions">
+      <button id="confirm-location-btn" class="btn btn-primary" type="button">Shu manzilni tanlash</button>
+      <a class="btn btn-secondary" href="/webapp/checkout" onclick="haptic('light')">Checkout ga qaytish</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/static/js/map.js?v=20260416-1"></script>
+{% endblock %}

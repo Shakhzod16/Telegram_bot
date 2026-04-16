@@ -18,9 +18,12 @@ class CheckoutPreviewResponse(BaseModel):
 
 
 class CreateOrderRequest(BaseModel):
-    address_id: int = Field(..., ge=1)
+    address_text: str | None = Field(None, max_length=1024)
     comment: str | None = Field(None, max_length=1024)
     promo_code: str | None = Field(None, max_length=64)
+    latitude: float | None = None
+    longitude: float | None = None
+    maps_url: str | None = Field(None, max_length=1024)
     idempotency_key: str = Field(..., min_length=8, max_length=128)
 
 
@@ -44,6 +47,10 @@ class OrderOut(BaseModel):
     total_amount: Decimal
     payment_method: str
     payment_status: str
+    latitude: float | None
+    longitude: float | None
+    delivery_address_text: str | None
+    maps_url: str | None
     comment: str | None
     promo_code: str | None
     address_id: int | None

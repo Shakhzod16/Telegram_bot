@@ -26,9 +26,12 @@ async def create_order(
 ) -> OrderOut:
     new_order = await CheckoutService(db, redis).create_order(
         user.id,
-        address_id=body.address_id,
+        address_text=body.address_text,
         comment=body.comment,
         promo_code=body.promo_code,
+        latitude=body.latitude,
+        longitude=body.longitude,
+        maps_url=body.maps_url,
         idempotency_key=body.idempotency_key,
     )
 

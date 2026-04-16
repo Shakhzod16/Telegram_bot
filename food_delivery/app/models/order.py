@@ -4,7 +4,7 @@ from datetime import datetime
 from decimal import Decimal
 from typing import TYPE_CHECKING, Any
 
-from sqlalchemy import BigInteger, DateTime, ForeignKey, Integer, JSON, Numeric, String, func
+from sqlalchemy import BigInteger, DateTime, Float, ForeignKey, Integer, JSON, Numeric, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
@@ -39,6 +39,10 @@ class Order(Base):
     total_amount: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)
     payment_method: Mapped[str] = mapped_column(String(32), nullable=False, default="cash")
     payment_status: Mapped[str] = mapped_column(String(32), nullable=False, default="pending")
+    latitude: Mapped[float | None] = mapped_column(Float(), nullable=True)
+    longitude: Mapped[float | None] = mapped_column(Float(), nullable=True)
+    delivery_address_text: Mapped[str | None] = mapped_column(String(1024), nullable=True)
+    maps_url: Mapped[str | None] = mapped_column(String(1024), nullable=True)
     comment: Mapped[str | None] = mapped_column(String(1024), nullable=True)
     promo_code: Mapped[str | None] = mapped_column(String(64), nullable=True)
     idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False, unique=True, index=True)

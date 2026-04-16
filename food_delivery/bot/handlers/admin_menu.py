@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 import httpx
 from aiogram import F, Router
@@ -26,10 +27,27 @@ def _resolve_webapp_url() -> str:
             if path.exists():
                 url = path.read_text(encoding="utf-8").strip()
                 if url:
-                    return url
+                    return _normalize_webapp_url(url)
         except OSError:
             continue
-    return str(getattr(settings, "WEBAPP_URL", "")).strip()
+    return _normalize_webapp_url(str(getattr(settings, "WEBAPP_URL", "")).strip())
+
+
+def _normalize_webapp_url(url: str) -> str:
+    raw = (url or "").strip()
+    if not raw:
+        return ""
+    try:
+        parsed = urlsplit(raw)
+    except Exception:
+        return raw
+    path = parsed.path or ""
+    if path in {"", "/"}:
+        path = "/webapp/"
+    elif path.rstrip("/") == "/webapp":
+        path = "/webapp/"
+    normalized = parsed._replace(path=path, query="", fragment="")
+    return urlunsplit(normalized)
 
 
 def _admin_orders_url() -> str:

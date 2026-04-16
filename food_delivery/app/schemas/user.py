@@ -19,4 +19,4 @@ class UserPublic(BaseModel):
 class ProfileUpdate(BaseModel):
     first_name: str | None = Field(None, max_length=255)
     last_name: str | None = Field(None, max_length=255)
-    language: str | None = Field(None, pattern="^(uz|ru)$")
+    language: str | None = Field(None, pattern="^(uz|ru|en)$")

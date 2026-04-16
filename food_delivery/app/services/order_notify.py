@@ -2,6 +2,7 @@
 
 import logging
 from datetime import datetime
+from html import escape
 from typing import Optional
 
 from aiogram import Bot
@@ -29,30 +30,16 @@ def _user_full_name(user: User | None) -> str:
 
 
 def _order_address_text(order: Order) -> str:
-    address = getattr(order, "address", None)
-    if isinstance(address, str):
-        return address
-    if not address:
-        return "—"
+    manual_text = getattr(order, "delivery_address_text", None)
+    if manual_text:
+        return str(manual_text)
 
-    parts: list[str] = []
-    address_line = getattr(address, "address_line", None)
-    if address_line:
-        parts.append(str(address_line))
-    apartment = getattr(address, "apartment", None)
-    if apartment:
-        parts.append(f"kv. {apartment}")
-    floor = getattr(address, "floor", None)
-    if floor:
-        parts.append(f"{floor}-qavat")
-    entrance = getattr(address, "entrance", None)
-    if entrance:
-        parts.append(f"{entrance}-kirish")
-    landmark = getattr(address, "landmark", None)
-    if landmark:
-        parts.append(f"Mo'ljal: {landmark}")
+    lat = getattr(order, "latitude", None)
+    lon = getattr(order, "longitude", None)
+    if lat is not None and lon is not None:
+        return f"{float(lat):.6f}, {float(lon):.6f}"
 
-    return ", ".join(parts) if parts else "—"
+    return "—"
 
 
 async def get_target_group(order: Order, db: AsyncSession) -> Optional[int]:
@@ -99,7 +86,6 @@ async def notify_admin_group(order_id: int, db: AsyncSession, bot: Bot) -> None:
         select(Order)
         .options(
             selectinload(Order.items),
-            selectinload(Order.address),
             selectinload(Order.user),
         )
         .where(Order.id == order_id)
@@ -138,6 +124,11 @@ async def notify_admin_group(order_id: int, db: AsyncSession, bot: Bot) -> None:
     order_note = getattr(order, "note", None) or getattr(order, "comment", None) or ""
     user_name = _user_full_name(user or getattr(order, "user", None))
     user_phone = (user.phone if user else None) or "—"
+    lat = getattr(order, "latitude", None)
+    lon = getattr(order, "longitude", None)
+    maps_url = getattr(order, "maps_url", None)
+    if not maps_url and lat is not None and lon is not None:
+        maps_url = f"https://maps.google.com/?q={lat},{lon}"
 
     text = (
         f"🛍 <b>YANGI BUYURTMA #{order.id}</b>\n\n"
@@ -147,6 +138,8 @@ async def notify_admin_group(order_id: int, db: AsyncSession, bot: Bot) -> None:
     )
     if order_note:
         text += f"📝 Izoh: {order_note}\n"
+    if maps_url:
+        text += f"🗺 <a href='{escape(maps_url, quote=True)}'>Xaritada ko'rish</a>\n"
     text += (
         f"\n🧾 <b>Tarkib:</b>\n{items_text or '  • Mahsulotlar topilmadi'}\n"
         f"💰 Jami: <b>{int(total):,} so'm</b>\n"
@@ -167,6 +160,15 @@ async def notify_admin_group(order_id: int, db: AsyncSession, bot: Bot) -> None:
             parse_mode="HTML",
             reply_markup=kb,
         )
+        if lat is not None and lon is not None:
+            try:
+                await bot.send_location(
+                    chat_id=group_chat_id,
+                    latitude=float(lat),
+                    longitude=float(lon),
+                )
+            except Exception as exc:
+                logger.error("Lokatsiya pin xato: %s", exc)
         logger.info("Order #%s guruhga yuborildi: %s", order_id, group_chat_id)
     except Exception as exc:
         logger.error("Guruhga yuborishda xato: %s", exc)
