@@ -1,0 +1,7 @@
+INFO:root:Chat menu button set to commands. webapp_url=https://listen-speech-tim-college.trycloudflare.com/webapp/
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:     Started server process [5112]
+INFO:     Waiting for application startup.

@@ -1,0 +1,52 @@
+INFO:root:Chat menu button set to commands. webapp_url=https://prescribed-serial-sagem-hosting.trycloudflare.com/webapp/
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:     Started server process [6028]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:aiogram.event:Update id=963835954 is handled. Duration 1355 ms by bot id=8772453459
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/superadmin/admins "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835956 is handled. Duration 1938 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835955 is handled. Duration 2292 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835953 is handled. Duration 2650 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/superadmin/stats "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835957 is handled. Duration 1011 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/superadmin/admins "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835958 is handled. Duration 1368 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835959 is handled. Duration 517 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/v1/profile "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835960 is handled. Duration 1380 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835961 is handled. Duration 401 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835962 is handled. Duration 360 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: PATCH http://localhost:8000/api/v1/orders/21/status "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835963 is handled. Duration 1625 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835964 is handled. Duration 937 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835965 is handled. Duration 827 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835966 is handled. Duration 1758 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835967 is handled. Duration 421 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835968 is handled. Duration 1448 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835969 is handled. Duration 511 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: PATCH http://localhost:8000/api/v1/orders/22/status "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835970 is handled. Duration 3166 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: PATCH http://localhost:8000/api/v1/orders/22/status "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835971 is handled. Duration 3364 ms by bot id=8772453459

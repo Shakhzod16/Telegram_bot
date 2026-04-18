@@ -3,7 +3,7 @@
 {% block content %}
 <section class="page">
   <header class="orders-header">
-    <h2 class="section-title">Buyurtmalarim</h2>
+    <h2 class="section-title" data-i18n="orders_title">Buyurtmalarim</h2>
   </header>
 
   <div id="state-loading" class="state state-loading">
@@ -21,15 +21,15 @@
 
   <div id="state-empty" class="empty-state hidden">
     <div class="empty-icon">📦</div>
-    <div class="empty-title">Hozircha buyurtma yo'q</div>
-    <div class="empty-desc">Ilk buyurtmangizni berish uchun katalogga qayting.</div>
-    <a class="btn btn-primary" href="/webapp/">Katalogga o'tish</a>
+    <div class="empty-title" data-i18n="orders_empty_title">Hozircha buyurtma yo'q</div>
+    <div class="empty-desc" data-i18n="orders_empty_desc">Ilk buyurtmangizni berish uchun katalogga qayting.</div>
+    <a class="btn btn-primary" href="/webapp/" data-i18n="go_catalog">Katalogga o'tish</a>
   </div>
 
   <div id="orders-root" class="orders-list hidden"></div>
 </section>
 {% endblock %}
 {% block scripts %}
-<script src="/static/js/orders.js?v=20260409-2"></script>
+<script src="/static/js/orders.js?v=20260416-1"></script>
 {% endblock %}
 

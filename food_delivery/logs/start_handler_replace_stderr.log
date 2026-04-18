@@ -1,0 +1,7 @@
+INFO:     Started server process [14444]
+INFO:     Waiting for application startup.
+INFO:root:Chat menu button set to commands. webapp_url=https://paper-releases-breed-reflected.trycloudflare.com/webapp/
+INFO:aiogram.dispatcher:Start polling
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'

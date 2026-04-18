@@ -1,0 +1,19 @@
+INFO:root:Chat menu button set to commands. webapp_url=https://patrick-mailto-theft-alliance.trycloudflare.com/webapp/
+INFO:aiogram.dispatcher:Start polling
+INFO:     Started server process [6068]
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835941 is handled. Duration 827 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835942 is handled. Duration 595 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835943 is handled. Duration 755 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835944 is handled. Duration 329 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835945 is handled. Duration 717 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835946 is handled. Duration 281 ms by bot id=8772453459

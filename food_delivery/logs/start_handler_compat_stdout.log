@@ -1,0 +1,46 @@
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=https://paper-releases-breed-reflected.trycloudflare.com/webapp/
+Using npm cache=C:\Users\Roma\Desktop\Telegram_bot\food_delivery\.npm-cache
+Using DEV_RELOAD=0
+Using DEV_TUNNEL_PROVIDER=auto
+Starting cloudflared quick tunnel ...
+[cloudflared] 2026-04-17T14:26:19Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+[cloudflared] 2026-04-17T14:26:19Z INF Requesting new quick Tunnel on trycloudflare.com...
+[cloudflared] 2026-04-17T14:26:24Z INF +--------------------------------------------------------------------------------------------+
+[cloudflared] 2026-04-17T14:26:24Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+[cloudflared] 2026-04-17T14:26:24Z INF |  https://comply-weapon-consultants-unavailable.trycloudflare.com                           |
+[cloudflared] 2026-04-17T14:26:24Z INF +--------------------------------------------------------------------------------------------+
+[cloudflared] 2026-04-17T14:26:24Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp]
+[cloudflared] 2026-04-17T14:26:24Z INF Version 2026.3.0 (Checksum 59b12880b24af581cf5b1013db601c7d843b9b097e9c78aa5957c7f39f741885)
+[cloudflared] 2026-04-17T14:26:24Z INF GOOS: windows, GOVersion: go1.24.13, GoArch: amd64
+[cloudflared] 2026-04-17T14:26:24Z INF Settings: map[ha-connections:1 p:http2 protocol:http2 url:http://localhost:8000]
+[cloudflared] 2026-04-17T14:26:24Z INF Environmental variables map[DEV_TUNNEL_PROVIDER:auto]
+[cloudflared] 2026-04-17T14:26:24Z INF cloudflared will not automatically update on Windows systems.
+[cloudflared] 2026-04-17T14:26:24Z INF Generated Connector ID: 90a609e0-ab79-4cb5-9ad3-3f3e873c81f8
+[cloudflared] 2026-04-17T14:26:24Z INF Initial protocol http2
+[cloudflared] 2026-04-17T14:26:24Z INF ICMP proxy will use 10.33.173.105 as source for IPv4
+[cloudflared] 2026-04-17T14:26:24Z INF ICMP proxy will use fe80::a3bf:7491:3cb8:27e9 in zone Беспроводная сеть as source for IPv6
+[cloudflared] 2026-04-17T14:26:24Z INF cloudflared does not support loading the system root certificate pool on Windows. Please use --origin-ca-pool <PATH> to specify the path to the certificate pool
+[cloudflared] 2026-04-17T14:26:24Z INF ICMP proxy will use 10.33.173.105 as source for IPv4
+[cloudflared] 2026-04-17T14:26:24Z INF ICMP proxy will use fe80::a3bf:7491:3cb8:27e9 in zone Беспроводная сеть as source for IPv6
+[cloudflared] 2026-04-17T14:26:24Z INF Starting metrics server on 127.0.0.1:20241/metrics
+Using BACKEND_URL=https://comply-weapon-consultants-unavailable.trycloudflare.com
+Using WEBAPP_URL=https://comply-weapon-consultants-unavailable.trycloudflare.com/webapp/
+[cloudflared] 2026-04-17T14:26:25Z INF Registered tunnel connection connIndex=0 connection=98b3abd0-0f9a-4776-9c0b-134a833f77bb event=0 ip=198.41.192.37 location=waw03 protocol=http2
+{"timestamp": "2026-04-17T14:26:29.843606+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-17T14:26:30.852253+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-17T14:26:30.942273+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+INFO:     127.0.0.1:59236 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59237 - "GET /api/users/900000123 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59238 - "POST /api/users/register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59004 - "GET /api/users/900000123 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58316 - "POST /api/addresses/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62058 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62059 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59052 - "POST /api/users/register HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:59053 - "POST /api/addresses/save HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:59054 - "GET /api/users/901234567 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59055 - "POST /api/users/register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59056 - "POST /api/addresses/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59057 - "GET /api/users/901234567 HTTP/1.1" 200 OK

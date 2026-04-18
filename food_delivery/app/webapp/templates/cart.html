@@ -3,8 +3,8 @@
 {% block content %}
 <section class="page">
   <header class="cart-header">
-    <h2 class="section-title">Savat</h2>
-    <button id="cart-clear" class="cart-clear-btn" type="button">Tozalash</button>
+    <h2 class="section-title" data-i18n="cart_title">Savat</h2>
+    <button id="cart-clear" class="cart-clear-btn" type="button" data-i18n="cart_clear">Tozalash</button>
   </header>
 
   <div id="state-loading" class="state state-loading">
@@ -17,33 +17,33 @@
 
   <div id="state-empty" class="empty-state hidden">
     <div class="empty-icon">🛒</div>
-    <div class="empty-title">Savatingiz bo'sh</div>
-    <div class="empty-desc">Yoqimli taomlardan birini tanlang va buyurtmani boshlang.</div>
-    <a class="btn btn-primary" href="/webapp/">Katalogga o'tish</a>
+    <div class="empty-title" data-i18n="cart_empty_title">Savatingiz bo'sh</div>
+    <div class="empty-desc" data-i18n="cart_empty_desc">Yoqimli taomlardan birini tanlang va buyurtmani boshlang.</div>
+    <a class="btn btn-primary" href="/webapp/" data-i18n="go_catalog">Katalogga o'tish</a>
   </div>
 
   <div id="cart-root" class="hidden">
     <div id="cart-lines" class="cart-items"></div>
 
     <div class="promo-wrap">
-      <input id="promo-input" class="promo-input" placeholder="Promo kod" />
-      <button id="promo-apply" class="btn btn-secondary btn-sm" type="button">Qo'llash</button>
+      <input id="promo-input" class="promo-input" placeholder="Promo kod" data-i18n-placeholder="promo_placeholder" />
+      <button id="promo-apply" class="btn btn-secondary btn-sm" type="button" data-i18n="promo_apply">Qo'llash</button>
     </div>
 
     <div class="price-breakdown">
-      <div class="price-row"><span>Subtotal</span><span class="price-value" id="cart-subtotal">0</span></div>
-      <div class="price-row"><span>Yetkazish</span><span class="price-value" id="cart-delivery">0</span></div>
-      <div class="price-row discount hidden" id="cart-discount-row"><span>Chegirma</span><span class="price-value" id="cart-discount">0</span></div>
-      <div class="price-row total"><span>Jami</span><span class="price-value" id="cart-total">0</span></div>
+      <div class="price-row"><span data-i18n="subtotal">Subtotal</span><span class="price-value" id="cart-subtotal">0</span></div>
+      <div class="price-row"><span data-i18n="delivery">Yetkazish</span><span class="price-value" id="cart-delivery">0</span></div>
+      <div class="price-row discount hidden" id="cart-discount-row"><span data-i18n="discount">Chegirma</span><span class="price-value" id="cart-discount">0</span></div>
+      <div class="price-row total"><span data-i18n="total">Jami</span><span class="price-value" id="cart-total">0</span></div>
     </div>
 
     <div class="cart-checkout-wrap">
-      <a class="btn btn-primary" href="/webapp/checkout">Checkout</a>
+      <a class="btn btn-primary" href="/webapp/checkout" data-i18n="checkout">Checkout</a>
     </div>
   </div>
 </section>
 {% endblock %}
 {% block scripts %}
-<script src="/static/js/cart.js?v=20260409-2"></script>
+<script src="/static/js/cart.js?v=20260416-1"></script>
 {% endblock %}
 

@@ -1,6 +1,32 @@
-﻿function show(el, on) {
+function show(el, on) {
   if (!el) return;
   el.classList.toggle("hidden", !on);
+}
+
+function t(key, fallback, params) {
+  if (typeof window.feT === "function") {
+    return window.feT(key, fallback, params);
+  }
+  return fallback;
+}
+
+function currentLang() {
+  if (typeof window.getAppLanguage === "function") {
+    return window.getAppLanguage();
+  }
+  return "uz";
+}
+
+function localValue(entity, keyBase, fallback) {
+  const safe = entity || {};
+  const lang = currentLang();
+  if (lang === "ru") {
+    return safe[`${keyBase}_ru`] || safe[`${keyBase}_uz`] || fallback || "";
+  }
+  if (lang === "en") {
+    return safe[`${keyBase}_uz`] || safe[`${keyBase}_ru`] || fallback || "";
+  }
+  return safe[`${keyBase}_uz`] || safe[`${keyBase}_ru`] || fallback || "";
 }
 
 function formatMoney(value) {
@@ -31,7 +57,7 @@ async function refreshBadgeFromCart() {
   try {
     const cart = await window.apiFetch("/api/v1/cart");
     updateCartBadge(cartCount(cart));
-  } catch (e) {
+  } catch (_) {
     updateCartBadge(0);
   }
 }
@@ -59,10 +85,10 @@ async function addToCart(btn, id, variantId) {
 
     haptic();
     updateCartBadge(cartCount(cart));
-    showToast("Savatga qo'shildi", "success");
-  } catch (e) {
+    showToast(t("toast_add_to_cart_ok", "Savatga qo'shildi"), "success");
+  } catch (_) {
     hapticErr();
-    showToast("Savatga qo'shib bo'lmadi", "error");
+    showToast(t("toast_add_to_cart_fail", "Savatga qo'shib bo'lmadi"), "error");
   }
 }
 
@@ -74,6 +100,9 @@ function renderProducts(items) {
   grid.innerHTML = "";
 
   (items || []).forEach(function (p) {
+    const productName = localValue(p, "name", t("catalog_product_alt", "Mahsulot"));
+    const weightText = p.weight_grams ? `${p.weight_grams} g` : t("catalog_standard", "Standart");
+
     const card = document.createElement("article");
     card.className = "product-card";
     card.addEventListener("click", function () {
@@ -81,10 +110,10 @@ function renderProducts(items) {
     });
 
     card.innerHTML =
-      `<img class="product-card-img" src="${p.image_url || ""}" alt="${p.name_uz}" loading="lazy" onerror="this.src='';this.style.background='var(--bg-elevated)'" />` +
+      `<img class="product-card-img" src="${p.image_url || ""}" alt="${productName}" loading="lazy" onerror="this.src='';this.style.background='var(--bg-elevated)'" />` +
       `<div class="product-card-body">` +
-      `<div class="product-card-name">${p.name_uz}</div>` +
-      `<div class="product-card-weight">${p.weight_grams ? `${p.weight_grams} g` : "Standart"}</div>` +
+      `<div class="product-card-name">${productName}</div>` +
+      `<div class="product-card-weight">${weightText}</div>` +
       `<div class="product-card-footer">` +
       `<div class="product-card-price">${formatMoney(p.base_price)}</div>` +
       `<button class="btn-add" onclick="addToCart(this, ${p.id})">+</button>` +
@@ -110,7 +139,7 @@ function renderCategories(cats) {
   const all = document.createElement("button");
   all.type = "button";
   all.className = "category-chip";
-  all.textContent = "Barchasi";
+  all.textContent = t("catalog_all", "Barchasi");
   all.dataset.categoryId = "";
   all.addEventListener("click", function () {
     haptic("light");
@@ -124,7 +153,7 @@ function renderCategories(cats) {
     const chip = document.createElement("button");
     chip.type = "button";
     chip.className = "category-chip";
-    chip.textContent = c.name_uz;
+    chip.textContent = localValue(c, "name", "Category");
     chip.dataset.categoryId = String(c.id);
     chip.addEventListener("click", function () {
       haptic("light");
@@ -159,12 +188,15 @@ async function openProductSheet(productId) {
     const price = document.getElementById("sheet-price");
     const addBtn = document.getElementById("sheet-add-btn");
 
+    const detailName = localValue(productDetail, "name", t("catalog_product_alt", "Mahsulot"));
+    const detailDesc = localValue(productDetail, "description", t("catalog_tasty_fallback", "Mazali taom."));
+
     if (image) {
       image.src = productDetail.image_url || "";
-      image.alt = productDetail.name_uz || "Mahsulot";
+      image.alt = detailName;
     }
-    if (name) name.textContent = productDetail.name_uz || "";
-    if (desc) desc.textContent = productDetail.description_uz || "Mazali taom.";
+    if (name) name.textContent = detailName;
+    if (desc) desc.textContent = detailDesc;
 
     const hasVariants = (productDetail.variants || []).length > 0;
     if (variantsLabel) variantsLabel.classList.toggle("hidden", !hasVariants);
@@ -176,7 +208,7 @@ async function openProductSheet(productId) {
         const item = document.createElement("button");
         item.type = "button";
         item.className = "variant-item" + (String(v.id) === String(selectedVariantId) ? " selected" : "");
-        item.innerHTML = `<span>${v.name_uz}</span><span class="variant-price">${formatMoney(v.price)}</span>`;
+        item.innerHTML = `<span>${localValue(v, "name", "Variant")}</span><span class="variant-price">${formatMoney(v.price)}</span>`;
         item.addEventListener("click", function () {
           selectedVariantId = v.id;
           haptic("light");
@@ -201,9 +233,9 @@ async function openProductSheet(productId) {
     }
 
     openSheet("product-sheet");
-  } catch (e) {
+  } catch (_) {
     hapticErr();
-    showToast("Mahsulot ma'lumoti ochilmadi", "error");
+    showToast(t("toast_product_open_fail", "Mahsulot ma'lumoti ochilmadi"), "error");
   }
 }
 
@@ -227,7 +259,7 @@ async function loadProducts() {
     show(loading, false);
     show(root, items.length > 0);
     show(empty, items.length === 0);
-  } catch (e) {
+  } catch (_) {
     show(loading, false);
     show(root, false);
     show(empty, true);
@@ -241,6 +273,8 @@ async function loadCatalog() {
 
   try {
     await (window.authReady || Promise.resolve());
+    await (window.appLangReady || Promise.resolve());
+
     const cats = await window.apiFetch("/api/v1/categories");
     renderCategories(cats || []);
 
@@ -249,7 +283,7 @@ async function loadCatalog() {
     show(loading, false);
     show(root, true);
     show(empty, false);
-  } catch (e) {
+  } catch (_) {
     show(loading, false);
     show(root, false);
     show(empty, true);

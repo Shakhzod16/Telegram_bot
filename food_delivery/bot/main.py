@@ -7,7 +7,8 @@ from urllib.parse import urlsplit, urlunsplit
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.types import MenuButtonWebApp, WebAppInfo
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.types import MenuButtonCommands
 
 from app.core.config import settings
 from bot.handlers.admin_menu import router as admin_menu_router
@@ -26,10 +27,8 @@ logging.basicConfig(level=logging.INFO)
 def _resolve_webapp_url() -> str:
     base_dir = Path(__file__).resolve().parents[1]
     candidates = [
-        Path("runtime_webapp_url.txt"),
-        Path("logs/runtime_webapp_url.txt"),
-        base_dir / "runtime_webapp_url.txt",
         base_dir / "logs" / "runtime_webapp_url.txt",
+        base_dir / "runtime_webapp_url.txt",
     ]
     for path in candidates:
         if not path.exists():
@@ -63,17 +62,11 @@ def _normalize_webapp_url(url: str) -> str:
 
 async def _sync_chat_menu_button(bot: Bot) -> None:
     webapp_url = _resolve_webapp_url().strip()
-    if not webapp_url.lower().startswith("https://"):
-        logging.warning("Skip set_chat_menu_button: WEBAPP_URL is not https (%s)", webapp_url)
-        return
     try:
         await bot.set_chat_menu_button(
-            menu_button=MenuButtonWebApp(
-                text="Open App",
-                web_app=WebAppInfo(url=webapp_url),
-            )
+            menu_button=MenuButtonCommands()
         )
-        logging.info("Chat menu button synced to %s", webapp_url)
+        logging.info("Chat menu button set to commands. webapp_url=%s", webapp_url)
     except Exception as exc:  # noqa: BLE001
         logging.warning("set_chat_menu_button failed: %s", exc)
 
@@ -83,7 +76,7 @@ async def main() -> None:
         settings.TELEGRAM_BOT_TOKEN,
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
-    dp = Dispatcher()
+    dp = Dispatcher(storage=MemoryStorage())
     dp.update.middleware(LoggingMiddleware())
     dp.include_router(admin_settings_router)
     dp.include_router(admin_products_router)

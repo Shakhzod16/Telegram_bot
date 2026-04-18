@@ -5,6 +5,13 @@ function formatMoney(value) {
 const DELIVERY_LOCATION_KEY = "delivery_location";
 let selectedLocation = null;
 
+function t(key, fallback, params) {
+  if (typeof window.feT === "function") {
+    return window.feT(key, fallback, params);
+  }
+  return fallback;
+}
+
 function parseDeliveryLocation(raw) {
   if (!raw) return null;
   try {
@@ -37,7 +44,7 @@ function renderSelectedLocation() {
 
   selectedLocation = getStoredDeliveryLocation();
   if (!selectedLocation) {
-    target.textContent = "Manzil hali belgilanmagan. Xarita orqali pin qo'ying.";
+    target.textContent = t("checkout_location_missing", "Manzil hali belgilanmagan");
     return;
   }
 
@@ -51,10 +58,10 @@ function renderSummary(preview) {
   if (!root) return;
 
   root.innerHTML =
-    `<div class="price-row"><span>Subtotal</span><span class="price-value">${formatMoney(preview.subtotal)}</span></div>` +
-    `<div class="price-row"><span>Yetkazish</span><span class="price-value">${formatMoney(preview.delivery_fee)}</span></div>` +
-    `<div class="price-row discount"><span>Chegirma</span><span class="price-value">-${formatMoney(preview.discount)}</span></div>` +
-    `<div class="price-row total"><span>Jami</span><span class="price-value">${formatMoney(preview.total)}</span></div>`;
+    `<div class="price-row"><span>${t("subtotal", "Subtotal")}</span><span class="price-value">${formatMoney(preview.subtotal)}</span></div>` +
+    `<div class="price-row"><span>${t("delivery", "Yetkazish")}</span><span class="price-value">${formatMoney(preview.delivery_fee)}</span></div>` +
+    `<div class="price-row discount"><span>${t("discount", "Chegirma")}</span><span class="price-value">-${formatMoney(preview.discount)}</span></div>` +
+    `<div class="price-row total"><span>${t("total", "Jami")}</span><span class="price-value">${formatMoney(preview.total)}</span></div>`;
 }
 
 async function loadPreview() {
@@ -76,6 +83,7 @@ async function loadCheckout() {
   const loading = document.getElementById("state-loading");
   const root = document.getElementById("checkout-root");
 
+  await (window.appLangReady || Promise.resolve());
   renderSelectedLocation();
   await loadPreview();
 
@@ -105,10 +113,10 @@ async function submitOrder() {
     if (latitude === null || longitude === null) {
       if (!resolvedAddressText) {
         hapticErr();
-        showToast("Xaritada manzil belgilang yoki qo'lda manzil kiriting.", "error");
+        showToast(t("toast_select_location", "Xaritada manzil belgilang yoki qo'lda manzil kiriting."), "error");
         return;
       }
-      showToast("Lokatsiyasiz buyurtma yuborildi. Kuryer bilan aniqlashtiriladi.", "info");
+      showToast(t("toast_location_without_coords", "Lokatsiyasiz buyurtma yuborildi. Kuryer bilan aniqlashtiriladi."), "info");
     }
 
     const idem = `idem-${Date.now()}`;
@@ -132,10 +140,10 @@ async function submitOrder() {
 
     updateCartBadge(0);
     hapticOk();
-    showToast("Buyurtma qabul qilindi!", "success");
+    showToast(t("checkout_success_title", "Buyurtma qabul qilindi"), "success");
   } catch (e) {
     hapticErr();
-    showToast((e && e.message) || "Buyurtma yuborilmadi", "error");
+    showToast((e && e.message) || t("toast_order_failed", "Buyurtma yuborilmadi"), "error");
   } finally {
     if (submitBtn) submitBtn.classList.remove("loading");
   }

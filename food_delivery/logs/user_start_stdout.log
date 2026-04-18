@@ -1,0 +1,22 @@
+{"timestamp": "2026-04-17T14:52:17.647396+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-17T14:52:18.660270+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-17T14:52:18.732571+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+INFO:     127.0.0.1:54989 - "GET /health HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/users/6412887832 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/tokens.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/components.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/base.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/pages.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/animations.js?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/i18n.js?v=20260416-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/catalog.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/api.js?v=20260416-6 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/auth.js?v=20260416-8 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     37.110.214.9:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+{"timestamp": "2026-04-17T14:56:39.773832+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-33", "path": "/api/v1/users/me", "origin": null, "referer": "https://webmasters-membrane-drainage-remaining.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-17T14:56:39.805013+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-33", "path": "/api/v1/users/me", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     37.110.214.9:0 - "GET /api/v1/users/me HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:60819 - "GET /health HTTP/1.1" 200 OK

@@ -1,0 +1,58 @@
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=https://increasing-nokia-left-herald.trycloudflare.com/webapp/
+Using npm cache=C:\Users\Roma\Desktop\Telegram_bot\food_delivery\.npm-cache
+Using DEV_RELOAD=0
+Using DEV_TUNNEL_PROVIDER=auto
+Starting cloudflared quick tunnel ...
+[cloudflared] 2026-04-17T13:51:23Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+[cloudflared] 2026-04-17T13:51:23Z INF Requesting new quick Tunnel on trycloudflare.com...
+[cloudflared] 2026-04-17T13:51:28Z INF +--------------------------------------------------------------------------------------------+
+[cloudflared] 2026-04-17T13:51:28Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+[cloudflared] 2026-04-17T13:51:28Z INF |  https://shade-beam-priced-fell.trycloudflare.com                                          |
+[cloudflared] 2026-04-17T13:51:28Z INF +--------------------------------------------------------------------------------------------+
+[cloudflared] 2026-04-17T13:51:28Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp]
+[cloudflared] 2026-04-17T13:51:28Z INF Version 2026.3.0 (Checksum 59b12880b24af581cf5b1013db601c7d843b9b097e9c78aa5957c7f39f741885)
+[cloudflared] 2026-04-17T13:51:28Z INF GOOS: windows, GOVersion: go1.24.13, GoArch: amd64
+[cloudflared] 2026-04-17T13:51:28Z INF Settings: map[ha-connections:1 p:http2 protocol:http2 url:http://localhost:8000]
+[cloudflared] 2026-04-17T13:51:28Z INF Environmental variables map[DEV_TUNNEL_PROVIDER:auto]
+[cloudflared] 2026-04-17T13:51:28Z INF cloudflared will not automatically update on Windows systems.
+Using BACKEND_URL=https://shade-beam-priced-fell.trycloudflare.com
+Using WEBAPP_URL=https://shade-beam-priced-fell.trycloudflare.com/webapp/
+[cloudflared] 2026-04-17T13:51:28Z INF Generated Connector ID: 7e8bc16d-a473-47e8-ba47-6934151bc788
+[cloudflared] 2026-04-17T13:51:28Z INF Initial protocol http2
+[cloudflared] 2026-04-17T13:51:28Z INF ICMP proxy will use 10.33.173.105 as source for IPv4
+[cloudflared] 2026-04-17T13:51:28Z INF ICMP proxy will use fe80::a3bf:7491:3cb8:27e9 in zone Беспроводная сеть as source for IPv6
+[cloudflared] 2026-04-17T13:51:29Z INF cloudflared does not support loading the system root certificate pool on Windows. Please use --origin-ca-pool <PATH> to specify the path to the certificate pool
+[cloudflared] 2026-04-17T13:51:29Z INF ICMP proxy will use 10.33.173.105 as source for IPv4
+[cloudflared] 2026-04-17T13:51:29Z INF ICMP proxy will use fe80::a3bf:7491:3cb8:27e9 in zone Беспроводная сеть as source for IPv6
+[cloudflared] 2026-04-17T13:51:29Z INF Starting metrics server on 127.0.0.1:20244/metrics
+[cloudflared] 2026-04-17T13:51:31Z INF Registered tunnel connection connIndex=0 connection=8561267b-9a6f-4d1c-ae0a-50eeec83e77b event=0 ip=198.41.200.33 location=waw05 protocol=http2
+{"timestamp": "2026-04-17T13:51:33.741281+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-17T13:51:34.750354+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-17T13:51:34.794084+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+INFO:     127.0.0.1:51507 - "GET /health HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52756 - "GET /health HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/base.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/i18n.js?v=20260416-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/components.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/catalog.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/api.js?v=20260416-6 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/tokens.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/pages.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/auth.js?v=20260416-8 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/animations.js?v=20260409-2 HTTP/1.1" 200 OK
+{"timestamp": "2026-04-17T13:55:19.304084+00:00", "level": "WARNING", "message": "telegram_init_data_validation_skipped_dev_mode", "module": "auth", "logger": "food_delivery.app.services.auth", "extra": {"taskName": "Task-32"}}
+INFO:     37.110.214.9:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     37.110.214.9:0 - "POST /api/v1/auth/telegram/init HTTP/1.1" 200 OK
+[cloudflared] 2026-04-17T13:55:19Z INF Initiating graceful shutdown due to signal terminated ...
+[cloudflared] 2026-04-17T13:55:19Z ERR  error="Unable to reach the origin service. The service may be down or it may not be responding to traffic from cloudflared: dial tcp [::1]:8000: connectex: No connection could be made because the target machine actively refused it." connIndex=0 event=1 ingressRule=0 originService=http://localhost:8000
+[cloudflared] 2026-04-17T13:55:19Z ERR failed to serve incoming request error="Failed to proxy HTTP: Unable to reach the origin service. The service may be down or it may not be responding to traffic from cloudflared: dial tcp [::1]:8000: connectex: No connection could be made because the target machine actively refused it."
+[cloudflared] 2026-04-17T13:55:19Z ERR  error="Unable to reach the origin service. The service may be down or it may not be responding to traffic from cloudflared: dial tcp [::1]:8000: connectex: No connection could be made because the target machine actively refused it." connIndex=0 event=1 ingressRule=0 originService=http://localhost:8000
+[cloudflared] 2026-04-17T13:55:19Z ERR failed to serve incoming request error="Failed to proxy HTTP: Unable to reach the origin service. The service may be down or it may not be responding to traffic from cloudflared: dial tcp [::1]:8000: connectex: No connection could be made because the target machine actively refused it."
+[cloudflared] 2026-04-17T13:55:20Z INF Unregistered tunnel connection connIndex=0 event=0 ip=198.41.200.33
+backend exited with code 3221225786. Stopping remaining process...
+Stopped.

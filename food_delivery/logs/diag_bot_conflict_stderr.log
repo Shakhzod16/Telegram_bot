@@ -1,0 +1,338 @@
+INFO:root:Chat menu button set to commands. webapp_url=https://marijuana-nor-mentor-assigned.trycloudflare.com/webapp/
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835989 is handled. Duration 1443 ms by bot id=8772453459
+ERROR:bot.handlers.admin_products:my_products: All connection attempts failed
+INFO:aiogram.event:Update id=963835986 is handled. Duration 3404 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835987 is handled. Duration 3628 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835985 is handled. Duration 3667 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835984 is handled. Duration 3920 ms by bot id=8772453459
+INFO:aiogram.event:Update id=963835988 is handled. Duration 3914 ms by bot id=8772453459
+ERROR:bot.handlers.start:api_request_failed method=GET path=/api/users/5478161891
+Traceback (most recent call last):
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 72, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 377, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: All connection attempts failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Roma\Desktop\Telegram_bot\food_delivery\bot\handlers\start.py", line 293, in _api_request
+    response = await client.request(
+               ^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1585, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1674, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1702, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1739, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1776, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 376, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 89, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: All connection attempts failed
+INFO:aiogram.event:Update id=963835992 is handled. Duration 4349 ms by bot id=8772453459
+ERROR:bot.handlers.start:api_request_failed method=GET path=/api/users/5478161891
+Traceback (most recent call last):
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 72, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 377, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: All connection attempts failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Roma\Desktop\Telegram_bot\food_delivery\bot\handlers\start.py", line 293, in _api_request
+    response = await client.request(
+               ^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1585, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1674, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1702, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1739, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1776, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 376, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 89, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: All connection attempts failed
+ERROR:bot.handlers.start:api_request_failed method=GET path=/api/users/5478161891
+Traceback (most recent call last):
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 72, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 377, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: All connection attempts failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Roma\Desktop\Telegram_bot\food_delivery\bot\handlers\start.py", line 293, in _api_request
+    response = await client.request(
+               ^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1585, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1674, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1702, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1739, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1776, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 376, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 89, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: All connection attempts failed
+ERROR:bot.handlers.start:api_request_failed method=GET path=/api/users/5478161891
+Traceback (most recent call last):
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 72, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 377, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
+    raise exc
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: All connection attempts failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Roma\Desktop\Telegram_bot\food_delivery\bot\handlers\start.py", line 293, in _api_request
+    response = await client.request(
+               ^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1585, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1674, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1702, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1739, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1776, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 376, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Roma\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 89, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: All connection attempts failed
+INFO:aiogram.event:Update id=963835990 is handled. Duration 4960 ms by bot id=8772453459

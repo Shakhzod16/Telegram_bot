@@ -1,0 +1,13 @@
+INFO:     Started server process [19016]
+INFO:     Waiting for application startup.
+INFO:root:Chat menu button set to commands. webapp_url=https://shade-beam-priced-fell.trycloudflare.com/webapp/
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835950 is handled. Duration 674 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835951 is handled. Duration 1017 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835952 is handled. Duration 448 ms by bot id=8772453459

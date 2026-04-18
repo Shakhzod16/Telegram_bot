@@ -3,7 +3,7 @@
 {% block content %}
 <section class="page">
   <header class="orders-header">
-    <h2 class="section-title">Checkout</h2>
+    <h2 class="section-title" data-i18n="checkout_title">Checkout</h2>
   </header>
 
   <div id="state-loading" class="state state-loading">
@@ -18,33 +18,33 @@
     <div class="simple-card section-stack">
       <a class="menu-item" href="/webapp/map" onclick="haptic('light')">
         <span class="menu-icon">📍</span>
-        <span>Xaritada manzil tanlash</span>
+        <span data-i18n="checkout_pick_location">Xaritada manzil tanlash</span>
         <span class="menu-chevron">›</span>
       </a>
-      <p id="selected-address" class="empty-desc">Manzil hali belgilanmagan</p>
+      <p id="selected-address" class="empty-desc" data-i18n="checkout_location_missing">Manzil hali belgilanmagan</p>
     </div>
 
     <div id="checkout-summary" class="price-breakdown"></div>
 
     <div class="profile-section section-stack">
-      <label for="checkout-address-text" class="input-label">Manzil matni (ixtiyoriy, lokatsiya bo'lmasa majburiy)</label>
-      <textarea id="checkout-address-text" class="input" rows="2" placeholder="Masalan: Chilonzor 9-kvartal, 12-uy"></textarea>
-      <label for="checkout-comment" class="input-label">Izoh</label>
-      <textarea id="checkout-comment" class="input" rows="3" placeholder="Qo'shimcha izoh"></textarea>
-      <div class="price-row"><span>To'lov usuli</span><span>Naqd</span></div>
-      <button id="checkout-submit" class="btn btn-primary" type="button">Buyurtma berish</button>
+      <label for="checkout-address-text" class="input-label" data-i18n="checkout_address_label">Manzil matni (ixtiyoriy, lokatsiya bo'lmasa majburiy)</label>
+      <textarea id="checkout-address-text" class="input" rows="2" placeholder="Masalan: Chilonzor 9-kvartal, 12-uy" data-i18n-placeholder="checkout_address_placeholder"></textarea>
+      <label for="checkout-comment" class="input-label" data-i18n="checkout_comment_label">Izoh</label>
+      <textarea id="checkout-comment" class="input" rows="3" placeholder="Qo'shimcha izoh" data-i18n-placeholder="checkout_comment_placeholder"></textarea>
+      <div class="price-row"><span data-i18n="payment_method">To'lov usuli</span><span data-i18n="payment_cash">Naqd</span></div>
+      <button id="checkout-submit" class="btn btn-primary" type="button" data-i18n="order_btn">Buyurtma berish</button>
     </div>
   </div>
 
   <div id="checkout-success" class="checkout-success hidden">
     <div class="success-icon">✓</div>
-    <h3 class="success-title">Buyurtma qabul qilindi</h3>
-    <p class="success-desc">Buyurtmangiz operatorga yuborildi. Holatni "Orders" sahifasida kuzatishingiz mumkin.</p>
-    <a class="btn btn-primary" href="/webapp/orders">Buyurtmalarim</a>
+    <h3 class="success-title" data-i18n="checkout_success_title">Buyurtma qabul qilindi</h3>
+    <p class="success-desc" data-i18n="checkout_success_desc">Buyurtmangiz operatorga yuborildi. Holatni "Orders" sahifasida kuzatishingiz mumkin.</p>
+    <a class="btn btn-primary" href="/webapp/orders" data-i18n="my_orders">Buyurtmalarim</a>
   </div>
 </section>
 {% endblock %}
 {% block scripts %}
-<script src="/static/js/checkout.js?v=20260416-map-pin"></script>
+<script src="/static/js/checkout.js?v=20260416-map-pin2"></script>
 {% endblock %}
 

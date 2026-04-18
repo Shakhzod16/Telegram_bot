@@ -1,0 +1,17 @@
+INFO:root:Chat menu button set to commands. webapp_url=https://gage-variable-findarticles-headquarters.trycloudflare.com/webapp/
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:     Started server process [15472]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: GET http://localhost:8000/api/users/6412887832 "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835977 is handled. Duration 2209 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835978 is handled. Duration 684 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:aiogram.event:Update id=963835979 is handled. Duration 301 ms by bot id=8772453459
+INFO:food_delivery.bot.middlewares.logging:bot_update Update
+INFO:httpx:HTTP Request: POST http://localhost:8000/api/addresses/save "HTTP/1.1 200 OK"
+INFO:aiogram.event:Update id=963835980 is handled. Duration 1965 ms by bot id=8772453459

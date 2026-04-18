@@ -6,12 +6,12 @@
   <div class="map-center-pin" aria-hidden="true">&#128205;</div>
 
   <div class="map-sheet">
-    <p class="map-sheet-title">Yetkazish nuqtasini belgilang</p>
-    <p id="map-address" class="map-address-text">Manzil aniqlanmoqda...</p>
-    <p id="map-coords" class="map-coords">Koordinata: -</p>
+    <p class="map-sheet-title" data-i18n="map_pick_title">Yetkazish nuqtasini belgilang</p>
+    <p id="map-address" class="map-address-text" data-i18n="map_loading">Manzil aniqlanmoqda...</p>
+    <p id="map-coords" class="map-coords"><span data-i18n="map_coords">Koordinata:</span> -</p>
     <div class="map-actions">
-      <button id="confirm-location-btn" class="btn btn-primary" type="button">Shu manzilni tanlash</button>
-      <a class="btn btn-secondary" href="/webapp/checkout" onclick="haptic('light')">Checkout ga qaytish</a>
+      <button id="confirm-location-btn" class="btn btn-primary" type="button" data-i18n="map_confirm">Shu manzilni tanlash</button>
+      <a class="btn btn-secondary" href="/webapp/checkout" onclick="haptic('light')" data-i18n="map_back_checkout">Checkout ga qaytish</a>
     </div>
   </div>
 </section>
@@ -19,5 +19,5 @@
 {% block scripts %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/static/js/map.js?v=20260416-1"></script>
+<script src="/static/js/map.js?v=20260416-2"></script>
 {% endblock %}

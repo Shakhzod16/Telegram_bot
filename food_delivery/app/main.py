@@ -9,6 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from app.api.v1.auth import router as auth_router
+from app.api.compat import router as compat_router
 from app.api.v1.router import api_router
 from app.api.v1.superadmin.router import router as superadmin_router
 from app.core.config import settings
@@ -84,6 +85,7 @@ def create_app() -> FastAPI:
     app.include_router(auth_router, prefix="/api/v1")
     app.include_router(api_router, prefix="/api/v1")
     app.include_router(superadmin_router, prefix="/api/v1")
+    app.include_router(compat_router)
     app.include_router(webapp_router)
 
     return app

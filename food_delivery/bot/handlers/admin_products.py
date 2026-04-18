@@ -22,6 +22,7 @@ from app.core.config import settings
 router = Router()
 logger = logging.getLogger(__name__)
 BACKEND = "http://localhost:8000/api/v1"
+BASE_DIR = Path(__file__).resolve().parents[2]
 
 
 class ProductStates(StatesGroup):
@@ -36,10 +37,8 @@ class ProductStates(StatesGroup):
 
 def _resolve_webapp_url() -> str:
     candidate_paths = [
-        Path("runtime_webapp_url.txt"),
-        Path("logs/runtime_webapp_url.txt"),
-        Path(__file__).resolve().parents[2] / "runtime_webapp_url.txt",
-        Path(__file__).resolve().parents[2] / "logs" / "runtime_webapp_url.txt",
+        BASE_DIR / "logs" / "runtime_webapp_url.txt",
+        BASE_DIR / "runtime_webapp_url.txt",
     ]
     for path in candidate_paths:
         try:

@@ -1,0 +1,9 @@
+INFO:root:Chat menu button set to commands. webapp_url=https://handhelds-talked-biographies-classic.trycloudflare.com/webapp/
+INFO:aiogram.dispatcher:Start polling
+INFO:     Started server process [10632]
+INFO:     Waiting for application startup.
+INFO:aiogram.dispatcher:Run polling for bot @foodexpress24_bot id=8772453459 - 'FoodExpressBot'
+INFO:     Application startup complete.
+ERROR:    [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] обычно разрешается только одно использование адреса сокета (протокол/сетевой адрес/порт)
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.

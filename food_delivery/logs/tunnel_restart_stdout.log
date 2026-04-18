@@ -1,0 +1,211 @@
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=https://shade-beam-priced-fell.trycloudflare.com/webapp/
+Using npm cache=C:\Users\Roma\Desktop\Telegram_bot\food_delivery\.npm-cache
+Using DEV_RELOAD=0
+Using DEV_TUNNEL_PROVIDER=auto
+Starting cloudflared quick tunnel ...
+[cloudflared] 2026-04-17T13:58:51Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+[cloudflared] 2026-04-17T13:58:51Z INF Requesting new quick Tunnel on trycloudflare.com...
+[cloudflared] 2026-04-17T13:58:56Z INF +--------------------------------------------------------------------------------------------+
+[cloudflared] 2026-04-17T13:58:56Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+[cloudflared] 2026-04-17T13:58:56Z INF |  https://prescribed-serial-sagem-hosting.trycloudflare.com                                 |
+[cloudflared] 2026-04-17T13:58:56Z INF +--------------------------------------------------------------------------------------------+
+[cloudflared] 2026-04-17T13:58:56Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp]
+[cloudflared] 2026-04-17T13:58:56Z INF Version 2026.3.0 (Checksum 59b12880b24af581cf5b1013db601c7d843b9b097e9c78aa5957c7f39f741885)
+[cloudflared] 2026-04-17T13:58:56Z INF GOOS: windows, GOVersion: go1.24.13, GoArch: amd64
+[cloudflared] 2026-04-17T13:58:56Z INF Settings: map[ha-connections:1 p:http2 protocol:http2 url:http://localhost:8000]
+[cloudflared] 2026-04-17T13:58:56Z INF Environmental variables map[DEV_TUNNEL_PROVIDER:auto]
+[cloudflared] 2026-04-17T13:58:56Z INF cloudflared will not automatically update on Windows systems.
+Using BACKEND_URL=https://prescribed-serial-sagem-hosting.trycloudflare.com
+Using WEBAPP_URL=https://prescribed-serial-sagem-hosting.trycloudflare.com/webapp/
+[cloudflared] 2026-04-17T13:58:56Z INF Generated Connector ID: 0c71a29a-b5bb-4bd4-8609-c1cff131b890
+[cloudflared] 2026-04-17T13:58:56Z INF Initial protocol http2
+[cloudflared] 2026-04-17T13:58:56Z INF ICMP proxy will use 10.33.173.105 as source for IPv4
+[cloudflared] 2026-04-17T13:58:56Z INF ICMP proxy will use fe80::a3bf:7491:3cb8:27e9 in zone Беспроводная сеть as source for IPv6
+[cloudflared] 2026-04-17T13:58:57Z INF cloudflared does not support loading the system root certificate pool on Windows. Please use --origin-ca-pool <PATH> to specify the path to the certificate pool
+[cloudflared] 2026-04-17T13:58:57Z INF ICMP proxy will use 10.33.173.105 as source for IPv4
+[cloudflared] 2026-04-17T13:58:57Z INF ICMP proxy will use fe80::a3bf:7491:3cb8:27e9 in zone Беспроводная сеть as source for IPv6
+[cloudflared] 2026-04-17T13:58:57Z INF Starting metrics server on 127.0.0.1:20241/metrics
+[cloudflared] 2026-04-17T13:58:58Z INF Registered tunnel connection connIndex=0 connection=0b038457-a848-4787-a743-79509dab7f07 event=0 ip=198.41.200.53 location=waw04 protocol=http2
+{"timestamp": "2026-04-17T13:59:02.210842+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-17T13:59:03.223530+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+{"timestamp": "2026-04-17T13:59:03.322222+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+INFO:     127.0.0.1:49199 - "GET /api/v1/superadmin/admins HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64138 - "GET /health HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/pages.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/api.js?v=20260416-6 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/base.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/tokens.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/components.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/catalog.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/i18n.js?v=20260416-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/auth.js?v=20260416-8 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/animations.js?v=20260409-2 HTTP/1.1" 200 OK
+{"timestamp": "2026-04-17T13:59:56.920836+00:00", "level": "WARNING", "message": "telegram_init_data_validation_skipped_dev_mode", "module": "auth", "logger": "food_delivery.app.services.auth", "extra": {"taskName": "Task-33"}}
+INFO:     37.110.214.9:0 - "POST /api/v1/auth/telegram/init HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     37.110.214.9:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/categories HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/products?page=1&size=40 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/2026-04-09-111833-1776309846-6f887ef1.png HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%282%29.png HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/Screenshot-2026-04-13-104427-1776270794-91e8d695.png HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2817%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/3-1776230574-703bc167.png HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%284%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%285%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%283%29.png HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%F0%9F%8D%B0%F0%9F%8D%B0%F0%9F%8D%B0%F0%9F%8D%B0.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2812%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2816%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2814%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2811%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2813%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2815%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/Nutella%20Tiramisu.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2810%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/Vegetable%20salad.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/Fresh%20Garden%20Salad.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "POST /api/v1/cart/items HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/Payhip%20-%20Create%20a%20free%20website%20and%20sell%20online.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%281%29.png HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/Pasta%20%F0%9F%8D%B2%F0%9F%8D%B2.png HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/images/products/Beef%20and%20Vegetable%20Kabobs%20with%20Lemon%20Herb%20Marinade.jpg HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/cart HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/cart.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/checkout HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/checkout.js?v=20260416-map-pin2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/map HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/map.js?v=20260416-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/checkout HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+{"timestamp": "2026-04-17T14:00:24.688130+00:00", "level": "INFO", "message": "HTTP Request: POST https://api.telegram.org/bot8772453459:AAHQA0dUIMqp2nSCrj353bhxNiOeFQxFDjM/sendMessage \"HTTP/1.1 200 OK\"", "module": "_client", "logger": "httpx", "extra": {"taskName": "Task-100"}}
+{"timestamp": "2026-04-17T14:00:25.971998+00:00", "level": "INFO", "message": "HTTP Request: POST https://api.telegram.org/bot8772453459:AAHQA0dUIMqp2nSCrj353bhxNiOeFQxFDjM/sendMessage \"HTTP/1.1 400 Bad Request\"", "module": "_client", "logger": "httpx", "extra": {"taskName": "Task-100"}}
+{"timestamp": "2026-04-17T14:00:25.973811+00:00", "level": "WARNING", "message": "telegram_send_failed 400 {\"ok\":false,\"error_code\":400,\"description\":\"Bad Request: inline keyboard button URL 'tel:+998919201636' is invalid: Wrong port number specified in the URL\"}", "module": "notification", "logger": "food_delivery.app.services.notification", "extra": {"taskName": "Task-100"}}
+{"timestamp": "2026-04-17T14:00:27.135097+00:00", "level": "INFO", "message": "Order #21 guruhga yuborildi: -5222403367", "module": "order_notify", "logger": "app.services.order_notify", "extra": {"taskName": "Task-100"}}
+INFO:     37.110.214.9:0 - "POST /api/v1/orders HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/orders HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/orders.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/orders?page=1&size=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63541 - "GET /api/v1/superadmin/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63543 - "GET /api/v1/superadmin/admins HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63545 - "GET /api/v1/profile HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/admin HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/css/pages.css?v=20260415-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/auth.js?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /static/js/api.js?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     37.110.214.9:0 - "GET /api/v1/admin/settings HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/admin/broadcast/recipients-count HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/admin/orders?page=1&size=100 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/admin/products HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/admin/categories HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /webapp/admin HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     37.110.214.9:0 - "GET /api/v1/admin/settings HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/admin/orders?page=1&size=100 HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/admin/products HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/admin/categories HTTP/1.1" 200 OK
+INFO:     37.110.214.9:0 - "GET /api/v1/admin/broadcast/recipients-count HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56279 - "PATCH /api/v1/orders/21/status HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/css/pages.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/css/components.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/js/catalog.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/js/api.js?v=20260416-6 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/js/auth.js?v=20260416-8 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/css/base.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/css/tokens.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/js/i18n.js?v=20260416-2 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/js/animations.js?v=20260409-2 HTTP/1.1" 200 OK
+{"timestamp": "2026-04-17T14:03:43.121644+00:00", "level": "WARNING", "message": "telegram_init_data_validation_skipped_dev_mode", "module": "auth", "logger": "food_delivery.app.services.auth", "extra": {"taskName": "Task-184"}}
+INFO:     95.214.210.186:0 - "POST /api/v1/auth/telegram/init HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/categories HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/products?page=1&size=40 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/3-1776230574-703bc167.png HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2817%29.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%282%29.png HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/2026-04-09-111833-1776309846-6f887ef1.png HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%284%29.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2816%29.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%283%29.png HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%285%29.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2815%29.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/Screenshot-2026-04-13-104427-1776270794-91e8d695.png HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%F0%9F%8D%B0%F0%9F%8D%B0%F0%9F%8D%B0%F0%9F%8D%B0.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/Nutella%20Tiramisu.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2813%29.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2814%29.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2812%29.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2811%29.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/Vegetable%20salad.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2810%29.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%281%29.png HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/Fresh%20Garden%20Salad.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/Payhip%20-%20Create%20a%20free%20website%20and%20sell%20online.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/Pasta%20%F0%9F%8D%B2%F0%9F%8D%B2.png HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/images/products/Beef%20and%20Vegetable%20Kabobs%20with%20Lemon%20Herb%20Marinade.jpg HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/products/43 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "POST /api/v1/cart/items HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /webapp/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/js/cart.js?v=20260416-1 HTTP/1.1" 200 OK
+{"timestamp": "2026-04-17T14:04:14.530701+00:00", "level": "WARNING", "message": "telegram_init_data_validation_skipped_dev_mode", "module": "auth", "logger": "food_delivery.app.services.auth", "extra": {"taskName": "Task-229"}}
+INFO:     95.214.210.186:0 - "POST /api/v1/auth/telegram/init HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /webapp/checkout HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/js/checkout.js?v=20260416-map-pin2 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /webapp/map HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/js/map.js?v=20260416-2 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /webapp/checkout HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+{"timestamp": "2026-04-17T14:06:37.705700+00:00", "level": "INFO", "message": "HTTP Request: POST https://api.telegram.org/bot8772453459:AAHQA0dUIMqp2nSCrj353bhxNiOeFQxFDjM/sendMessage \"HTTP/1.1 200 OK\"", "module": "_client", "logger": "httpx", "extra": {"taskName": "Task-263"}}
+{"timestamp": "2026-04-17T14:06:40.188486+00:00", "level": "INFO", "message": "HTTP Request: POST https://api.telegram.org/bot8772453459:AAHQA0dUIMqp2nSCrj353bhxNiOeFQxFDjM/sendMessage \"HTTP/1.1 400 Bad Request\"", "module": "_client", "logger": "httpx", "extra": {"taskName": "Task-263"}}
+{"timestamp": "2026-04-17T14:06:40.219330+00:00", "level": "WARNING", "message": "telegram_send_failed 400 {\"ok\":false,\"error_code\":400,\"description\":\"Bad Request: inline keyboard button URL 'tel:+998903211263' is invalid: Wrong port number specified in the URL\"}", "module": "notification", "logger": "food_delivery.app.services.notification", "extra": {"taskName": "Task-263"}}
+{"timestamp": "2026-04-17T14:06:42.312521+00:00", "level": "INFO", "message": "Order #22 guruhga yuborildi: -5222403367", "module": "order_notify", "logger": "app.services.order_notify", "extra": {"taskName": "Task-263"}}
+INFO:     95.214.210.186:0 - "POST /api/v1/orders HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /webapp/orders HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /static/js/orders.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58552 - "PATCH /api/v1/orders/22/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58554 - "PATCH /api/v1/orders/22/status HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/categories HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/products?page=1&size=40 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/categories HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/products?page=1&size=40 HTTP/1.1" 200 OK
+INFO:     95.214.210.186:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+[cloudflared] 2026-04-17T14:15:26Z INF Initiating graceful shutdown due to signal terminated ...
+backend exited with code 3221225786. Stopping remaining process...
+Stopped.

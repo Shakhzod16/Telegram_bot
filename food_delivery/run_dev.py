@@ -264,14 +264,26 @@ async def _start_tunnel_if_needed(
     provider = _pick_tunnel_provider(env)
     print(f"Using DEV_TUNNEL_PROVIDER={provider}")
     if provider == "none":
-        runtime_backend_file.write_text(f"{env.get('BACKEND_URL', '').strip()}\n", encoding="utf-8")
-        runtime_webapp_file.write_text(f"{env.get('WEBAPP_URL', '').strip()}\n", encoding="utf-8")
+        backend_url = env.get("BACKEND_URL", "").strip()
+        webapp_url = env.get("WEBAPP_URL", "").strip()
+
+        # Avoid stale temporary tunnel domains when tunnel mode is explicitly disabled.
+        # In this case we fall back to a guaranteed local URL pair for browser debugging.
+        if _requires_runtime_tunnel(webapp_url):
+            backend_url = "http://127.0.0.1:8000"
+            webapp_url = f"{backend_url}/webapp/"
+            env["BACKEND_URL"] = backend_url
+            env["WEBAPP_URL"] = webapp_url
+            print("DEV_TUNNEL_PROVIDER=none and WEBAPP_URL requires tunnel; using local URLs.")
+
+        runtime_backend_file.write_text(f"{backend_url}\n", encoding="utf-8")
+        runtime_webapp_file.write_text(f"{webapp_url}\n", encoding="utf-8")
         if sync_dotenv:
             _upsert_dotenv_values(
                 dotenv_path,
                 {
-                    "BACKEND_URL": env.get("BACKEND_URL", "").strip(),
-                    "WEBAPP_URL": env.get("WEBAPP_URL", "").strip(),
+                    "BACKEND_URL": backend_url,
+                    "WEBAPP_URL": webapp_url,
                 },
             )
         return None
@@ -306,8 +318,9 @@ async def _start_tunnel_if_needed(
 
 async def main() -> None:
     root = Path(__file__).resolve().parent
-    env = os.environ.copy()
-    env.update(_load_dotenv(root / ".env"))
+    env = _load_dotenv(root / ".env")
+    # OS env must win over .env so users can override values from the shell.
+    env.update(os.environ.copy())
     npm_cache_dir = root / ".npm-cache"
     npm_cache_dir.mkdir(parents=True, exist_ok=True)
     env.setdefault("npm_config_cache", str(npm_cache_dir))
@@ -344,14 +357,19 @@ async def main() -> None:
     processes: dict[str, subprocess.Popen[object]] = {"backend": backend, "bot": bot_proc}
     if tunnel_proc is not None:
         processes["tunnel"] = tunnel_proc
+    critical_processes = {"backend", "bot"}
     exit_code = 0
 
     try:
         while True:
             await asyncio.sleep(1)
-            for name, proc in processes.items():
+            for name, proc in list(processes.items()):
                 code = proc.poll()
                 if code is not None:
+                    if name not in critical_processes:
+                        print(f"{name} exited with code {code}. Backend and bot will keep running.")
+                        processes.pop(name, None)
+                        continue
                     print(f"{name} exited with code {code}. Stopping remaining process...")
                     exit_code = code or exit_code
                     return

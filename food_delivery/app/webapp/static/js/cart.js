@@ -1,4 +1,11 @@
-﻿function formatMoney(value) {
+function t(key, fallback, params) {
+  if (typeof window.feT === "function") {
+    return window.feT(key, fallback, params);
+  }
+  return fallback;
+}
+
+function formatMoney(value) {
   const n = Number(value || 0);
   return `${n.toLocaleString()} UZS`;
 }
@@ -44,9 +51,14 @@ function ensureCartVisibility(hasItems) {
 function lineVariantText(item) {
   if (item.variant_name) return item.variant_name;
   if (item.modifiers && item.modifiers.length > 0) {
-    return item.modifiers.map(function (m) { return m.name_uz; }).join(", ");
+    return item.modifiers
+      .map(function (m) {
+        return m.name_uz || m.name_ru || "";
+      })
+      .filter(Boolean)
+      .join(", ");
   }
-  return "Standart";
+  return t("catalog_standard", "Standart");
 }
 
 async function deleteCartItem(itemId, rowEl) {
@@ -65,9 +77,9 @@ async function deleteCartItem(itemId, rowEl) {
     updateCartBadge(count);
     renderTotals(lastCart);
     ensureCartVisibility(count > 0);
-  } catch (e) {
+  } catch (_) {
     hapticErr();
-    showToast("Item o'chirilmadi", "error");
+    showToast(t("cart_item_delete_failed", "Mahsulot o'chirilmadi"), "error");
   }
 }
 
@@ -101,9 +113,9 @@ async function patchQuantity(item, nextQty, qtyEl, priceEl) {
     lastCart = cart;
     renderTotals(cart);
     updateCartBadge(cartCount(cart.items));
-  } catch (e) {
+  } catch (_) {
     hapticErr();
-    showToast("Miqdorni yangilab bo'lmadi", "error");
+    showToast(t("cart_qty_update_failed", "Miqdorni yangilab bo'lmadi"), "error");
   }
 }
 
@@ -160,6 +172,7 @@ function renderLines(items) {
 
 async function refreshCart() {
   try {
+    await (window.appLangReady || Promise.resolve());
     const data = await window.apiFetch("/api/v1/cart");
     lastCart = data;
 
@@ -174,7 +187,7 @@ async function refreshCart() {
     renderLines(data.items);
     renderTotals(data);
     updateCartBadge(cartCount(data.items));
-  } catch (e) {
+  } catch (_) {
     const loading = document.getElementById("state-loading");
     const empty = document.getElementById("state-empty");
     const root = document.getElementById("cart-root");
@@ -191,11 +204,11 @@ if (clearBtn) {
       await window.apiFetch("/api/v1/cart/clear", { method: "DELETE" });
       promoPercent = 0;
       haptic("light");
-      showToast("Savat tozalandi", "info");
+      showToast(t("cart_cleared", "Savat tozalandi"), "info");
       refreshCart();
-    } catch (e) {
+    } catch (_) {
       hapticErr();
-      showToast("Savatni tozalab bo'lmadi", "error");
+      showToast(t("cart_clear_failed", "Savatni tozalab bo'lmadi"), "error");
     }
   });
 }
@@ -207,13 +220,13 @@ if (promoBtn) {
     const code = input ? (input.value || "").trim() : "";
     if (!code) {
       hapticErr();
-      showToast("Promo kod kiriting", "error");
+      showToast(t("promo_enter_code", "Promo kod kiriting"), "error");
       return;
     }
 
     promoPercent = 10;
     if (input) input.classList.add("applied");
-    showToast("Chegirma qo'llanildi! -10%", "success");
+    showToast(t("promo_applied", "Chegirma qo'llanildi! -10%"), "success");
     hapticOk();
     renderTotals(lastCart || { subtotal: 0, items: [] });
   });

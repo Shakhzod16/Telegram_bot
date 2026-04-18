@@ -9,6 +9,13 @@ let selectedAddress = "";
 let pendingLookupId = 0;
 let moveTimer = null;
 
+function t(key, fallback, params) {
+  if (typeof window.feT === "function") {
+    return window.feT(key, fallback, params);
+  }
+  return fallback;
+}
+
 function parseStoredLocation() {
   try {
     const raw = sessionStorage.getItem(DELIVERY_LOCATION_KEY);
@@ -30,7 +37,7 @@ function parseStoredLocation() {
 function renderCoords() {
   const coordsEl = document.getElementById("map-coords");
   if (!coordsEl) return;
-  coordsEl.textContent = `Koordinata: ${selectedLat.toFixed(6)}, ${selectedLng.toFixed(6)}`;
+  coordsEl.textContent = `${t("map_coords", "Koordinata:")} ${selectedLat.toFixed(6)}, ${selectedLng.toFixed(6)}`;
 }
 
 function setAddressText(text) {
@@ -60,7 +67,7 @@ async function updateSelection() {
   renderCoords();
 
   const lookupId = ++pendingLookupId;
-  setAddressText("Manzil aniqlanmoqda...");
+  setAddressText(t("map_loading", "Manzil aniqlanmoqda..."));
   try {
     const address = await reverseGeocode(selectedLat, selectedLng);
     if (lookupId !== pendingLookupId) return;
@@ -69,7 +76,7 @@ async function updateSelection() {
   } catch (_) {
     if (lookupId !== pendingLookupId) return;
     selectedAddress = `${selectedLat.toFixed(6)}, ${selectedLng.toFixed(6)}`;
-    setAddressText(`Manzil aniqlanmadi. Koordinata: ${selectedAddress}`);
+    setAddressText(`${t("map_coords", "Koordinata:")} ${selectedAddress}`);
   }
 }
 
@@ -97,7 +104,7 @@ function saveLocationAndReturn() {
 
 function initMap() {
   if (!window.L) {
-    if (typeof showToast === "function") showToast("Xarita yuklanmadi", "error");
+    if (typeof showToast === "function") showToast(t("map_load_failed", "Xarita yuklanmadi"), "error");
     return;
   }
 
@@ -133,4 +140,11 @@ if (confirmBtn) {
   confirmBtn.addEventListener("click", saveLocationAndReturn);
 }
 
-initMap();
+(async function startMap() {
+  await (window.appLangReady || Promise.resolve());
+  initMap();
+})();
+
+document.addEventListener("fe:lang-changed", function () {
+  renderCoords();
+});
