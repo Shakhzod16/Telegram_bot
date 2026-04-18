@@ -5,7 +5,7 @@ import os
 from html import escape
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import httpx
 from aiogram import F, Router
@@ -270,6 +270,30 @@ def _resolve_webapp_url() -> str:
     return _normalize_webapp_url(f"{BACKEND_ROOT}/webapp/")
 
 
+def _append_tg_user_id(url: str, telegram_id: int | None) -> str:
+    raw = (url or "").strip()
+    if not raw or telegram_id is None:
+        return raw
+    try:
+        tid = str(int(telegram_id))
+    except (TypeError, ValueError):
+        return raw
+
+    try:
+        parsed = urlsplit(raw)
+        query_pairs = [
+            (key, value)
+            for key, value in parse_qsl(parsed.query, keep_blank_values=True)
+            if key != "tg_user_id"
+        ]
+        query_pairs.append(("tg_user_id", tid))
+        normalized = parsed._replace(query=urlencode(query_pairs))
+        return urlunsplit(normalized)
+    except Exception:
+        joiner = "&" if "?" in raw else "?"
+        return f"{raw}{joiner}tg_user_id={tid}"
+
+
 def _role_from_user(user: dict[str, Any] | None) -> str:
     if not user:
         return "user"
@@ -376,8 +400,8 @@ async def _has_saved_address(telegram_id: int) -> bool:
     return isinstance(payload, list) and len(payload) > 0
 
 
-def _main_keyboard(lang: str, role: str) -> ReplyKeyboardMarkup:
-    webapp_url = _resolve_webapp_url()
+def _main_keyboard(lang: str, role: str, telegram_id: int | None = None) -> ReplyKeyboardMarkup:
+    webapp_url = _append_tg_user_id(_resolve_webapp_url(), telegram_id)
     menu_button = (
         KeyboardButton(
             text=t("open_menu_btn", lang),
@@ -507,7 +531,7 @@ async def cmd_start(message: Message, state: FSMContext) -> None:
     await message.answer(
         t("already_reg", lang, name=safe_name, role=t(f"role_{role}", lang)),
         parse_mode="HTML",
-        reply_markup=_main_keyboard(lang, role),
+        reply_markup=_main_keyboard(lang, role, telegram_id),
     )
 
     if await _has_saved_address(telegram_id):
@@ -563,7 +587,7 @@ async def handle_contact(message: Message, state: FSMContext) -> None:
 
     await message.answer(
         t("reg_success", lang),
-        reply_markup=_main_keyboard(lang, role),
+        reply_markup=_main_keyboard(lang, role, message.from_user.id),
     )
     await _ask_location(message, lang)
     await state.set_state(Reg.location)
@@ -583,7 +607,7 @@ async def cancel_location(message: Message, state: FSMContext) -> None:
     lang, role = await _resolve_user_context(state, message.from_user.id)
     await message.answer(
         t("cancelled", lang),
-        reply_markup=_main_keyboard(lang, role),
+        reply_markup=_main_keyboard(lang, role, message.from_user.id),
     )
     await state.clear()
 
@@ -603,7 +627,7 @@ async def handle_geo(message: Message, state: FSMContext) -> None:
 
     await message.answer(
         t("loc_saved", lang),
-        reply_markup=_main_keyboard(lang, role),
+        reply_markup=_main_keyboard(lang, role, message.from_user.id),
     )
     await _send_order_type(message, lang)
     await state.clear()
@@ -642,7 +666,7 @@ async def menu_while_location(message: Message, state: FSMContext) -> None:
     lang, role = await _resolve_user_context(state, message.from_user.id)
     await message.answer(
         t("open_menu_hint", lang),
-        reply_markup=_main_keyboard(lang, role),
+        reply_markup=_main_keyboard(lang, role, message.from_user.id),
     )
     await _send_order_type(message, lang)
 
@@ -672,7 +696,7 @@ async def handle_manual_address(message: Message, state: FSMContext) -> None:
 
     await message.answer(
         t("loc_saved", lang),
-        reply_markup=_main_keyboard(lang, role),
+        reply_markup=_main_keyboard(lang, role, message.from_user.id),
     )
     await _send_order_type(message, lang)
     await state.clear()
@@ -701,7 +725,7 @@ async def cb_pickup(call: CallbackQuery, state: FSMContext) -> None:
         await call.message.edit_reply_markup()
         await call.message.answer(
             t("open_menu_hint", lang),
-            reply_markup=_main_keyboard(lang, role),
+            reply_markup=_main_keyboard(lang, role, call.from_user.id),
         )
     await state.clear()
     await call.answer()
@@ -721,7 +745,7 @@ async def cmd_menu(message: Message, state: FSMContext) -> None:
     await state.update_data(lang=lang, role=role)
     await message.answer(
         t("open_menu_hint", lang),
-        reply_markup=_main_keyboard(lang, role),
+        reply_markup=_main_keyboard(lang, role, message.from_user.id),
     )
     await _send_order_type(message, lang)
 

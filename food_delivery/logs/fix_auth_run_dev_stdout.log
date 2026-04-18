@@ -1,3 +1,234 @@
 {"timestamp": "2026-04-18T03:47:15.350508+00:00", "level": "INFO", "message": "application_startup", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
 {"timestamp": "2026-04-18T03:47:16.369526+00:00", "level": "WARNING", "message": "redis_unavailable", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
 {"timestamp": "2026-04-18T03:47:16.408887+00:00", "level": "WARNING", "message": "redis_fallback_enabled", "module": "main", "logger": "food_delivery.app.main", "extra": {"taskName": "Task-2"}}
+INFO:     127.0.0.1:58102 - "GET /api/users/5478161891 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58105 - "GET /api/v1/addresses HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58106 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53248 - "GET /api/v1/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53250 - "GET /api/v1/admin/categories HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53252 - "GET /api/v1/admin/products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53254 - "GET /api/v1/admin/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53256 - "GET /api/v1/admin/orders?page=1&size=30 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /webapp/admin HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/css/tokens.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/api.js?v=20260418-1 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/auth.js?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/css/components.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/animations.js?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/css/base.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/css/pages.css?v=20260415-2 HTTP/1.1" 200 OK
+{"timestamp": "2026-04-18T03:48:08.025586+00:00", "level": "WARNING", "message": "telegram_init_data_validation_skipped_dev_mode", "module": "auth", "logger": "food_delivery.app.services.auth", "extra": {"taskName": "Task-46"}}
+INFO:     37.110.210.117:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     37.110.210.117:0 - "POST /api/v1/auth/telegram/init HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/admin/broadcast/recipients-count HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/admin/orders?page=1&size=100 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/admin/settings HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/admin/products HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/admin/categories HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61723 - "GET /api/users/5676921562 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61725 - "GET /api/v1/addresses HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /webapp/admin HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/api.js?v=20260418-1 HTTP/1.1" 304 Not Modified
+INFO:     37.110.210.117:0 - "GET /api/v1/admin/settings HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     37.110.210.117:0 - "GET /api/v1/admin/broadcast/recipients-count HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/admin/products HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/admin/orders?page=1&size=100 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/admin/categories HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63445 - "POST /api/addresses/save HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/i18n.js?v=20260416-2 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/css/pages.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/api.js?v=20260418-1 HTTP/1.1" 304 Not Modified
+INFO:     37.110.210.117:0 - "GET /static/js/auth.js?v=20260416-8 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/catalog.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     37.110.210.117:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/categories HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/products?page=1&size=40 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/3-1776230574-703bc167.png HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/Screenshot-2026-04-13-104427-1776270794-91e8d695.png HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%285%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%282%29.png HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/2026-04-09-111833-1776309846-6f887ef1.png HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2817%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%284%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%283%29.png HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2816%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%F0%9F%8D%B0%F0%9F%8D%B0%F0%9F%8D%B0%F0%9F%8D%B0.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/Nutella%20Tiramisu.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2815%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2814%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/js/animations.js?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/css/components.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/js/api.js?v=20260418-1 HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/js/i18n.js?v=20260416-2 HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/js/auth.js?v=20260416-8 HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/css/pages.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/css/tokens.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/css/base.css?v=20260409-2 HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/js/catalog.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2813%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2811%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2812%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2810%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "POST /api/v1/cart/items HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/Vegetable%20salad.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/Fresh%20Garden%20Salad.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/Payhip%20-%20Create%20a%20free%20website%20and%20sell%20online.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/Pasta%20%F0%9F%8D%B2%F0%9F%8D%B2.png HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%281%29.png HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/images/products/Beef%20and%20Vegetable%20Kabobs%20with%20Lemon%20Herb%20Marinade.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /webapp/cart HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/api.js?v=20260418-1 HTTP/1.1" 304 Not Modified
+INFO:     37.110.210.117:0 - "GET /static/js/cart.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+{"timestamp": "2026-04-18T03:49:33.164581+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-162", "path": "/api/v1/users/me", "origin": null, "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:49:33.168318+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-162", "path": "/api/v1/users/me", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "GET /api/v1/users/me HTTP/1.1" 401 Unauthorized
+INFO:     37.110.210.117:0 - "GET /webapp/checkout HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/checkout.js?v=20260416-map-pin2 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /api/v1/categories HTTP/1.1" 200 OK
+{"timestamp": "2026-04-18T03:49:55.210033+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-172", "path": "/api/v1/cart", "origin": null, "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:49:55.214127+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-172", "path": "/api/v1/cart", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "GET /api/v1/cart HTTP/1.1" 401 Unauthorized
+INFO:     87.192.227.94:0 - "GET /api/v1/products?page=1&size=40 HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/3-1776230574-703bc167.png HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2817%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%284%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%285%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%282%29.png HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%283%29.png HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/2026-04-09-111833-1776309846-6f887ef1.png HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/Screenshot-2026-04-13-104427-1776270794-91e8d695.png HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /webapp/map HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/map.js?v=20260416-2 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/api.js?v=20260418-1 HTTP/1.1" 304 Not Modified
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2816%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%F0%9F%8D%B0%F0%9F%8D%B0%F0%9F%8D%B0%F0%9F%8D%B0.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/Nutella%20Tiramisu.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2815%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2814%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2812%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2813%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/Fresh%20Garden%20Salad.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/Vegetable%20salad.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2810%29.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%2811%29.jpg HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /webapp/checkout HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/%D0%91%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%281%29.png HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/Payhip%20-%20Create%20a%20free%20website%20and%20sell%20online.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/Beef%20and%20Vegetable%20Kabobs%20with%20Lemon%20Herb%20Marinade.jpg HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/images/products/Pasta%20%F0%9F%8D%B2%F0%9F%8D%B2.png HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /api/v1/products?category_id=1&page=1&size=40 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/cart HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /api/v1/products/43 HTTP/1.1" 200 OK
+{"timestamp": "2026-04-18T03:50:08.609641+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-219", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:08.610251+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-219", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:13.664088+00:00", "level": "INFO", "message": "HTTP Request: POST https://api.telegram.org/bot8772453459:AAHQA0dUIMqp2nSCrj353bhxNiOeFQxFDjM/sendMessage \"HTTP/1.1 200 OK\"", "module": "_client", "logger": "httpx", "extra": {"taskName": "Task-221"}}
+{"timestamp": "2026-04-18T03:50:14.403021+00:00", "level": "INFO", "message": "HTTP Request: POST https://api.telegram.org/bot8772453459:AAHQA0dUIMqp2nSCrj353bhxNiOeFQxFDjM/sendMessage \"HTTP/1.1 400 Bad Request\"", "module": "_client", "logger": "httpx", "extra": {"taskName": "Task-221"}}
+{"timestamp": "2026-04-18T03:50:14.407376+00:00", "level": "WARNING", "message": "telegram_send_failed 400 {\"ok\":false,\"error_code\":400,\"description\":\"Bad Request: inline keyboard button URL 'tel:+998916460163' is invalid: Wrong port number specified in the URL\"}", "module": "notification", "logger": "food_delivery.app.services.notification", "extra": {"taskName": "Task-221"}}
+{"timestamp": "2026-04-18T03:50:14.459604+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-225", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:14.461867+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-228", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:14.463338+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-231", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:14.464368+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-225", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:14.466002+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-234", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:14.466813+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-228", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:14.468761+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-237", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:14.469614+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-231", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:14.471813+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-240", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:14.472913+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-234", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:14.474919+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-243", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:14.475797+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-237", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:14.477799+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-246", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:14.478520+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-240", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:14.480954+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-249", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:14.481787+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-243", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:14.483639+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-251", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:14.484178+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-246", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:14.485721+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-249", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:14.487109+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-251", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:15.035983+00:00", "level": "INFO", "message": "Order #23 guruhga yuborildi: -5222403367", "module": "order_notify", "logger": "app.services.order_notify", "extra": {"taskName": "Task-221"}}
+INFO:     37.110.210.117:0 - "POST /api/v1/orders HTTP/1.1" 200 OK
+{"timestamp": "2026-04-18T03:50:19.923726+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-256", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:19.927494+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-256", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+{"timestamp": "2026-04-18T03:50:47.961729+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-259", "path": "/api/v1/cart/items", "origin": "https://twist-competing-issue-frankfurt.trycloudflare.com", "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:50:47.965424+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-259", "path": "/api/v1/cart/items", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "POST /api/v1/cart/items HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:57916 - "GET /api/users/5676921562 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57918 - "GET /api/v1/profile HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/js/api.js?v=20260418-1 HTTP/1.1" 304 Not Modified
+INFO:     87.192.227.94:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+{"timestamp": "2026-04-18T03:51:21.172732+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-272", "path": "/api/v1/users/me", "origin": null, "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:51:21.176379+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-272", "path": "/api/v1/users/me", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "GET /api/v1/users/me HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:57924 - "POST /api/addresses/save HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /webapp/ HTTP/1.1" 200 OK
+INFO:     87.192.227.94:0 - "GET /static/js/api.js?v=20260418-1 HTTP/1.1" 304 Not Modified
+INFO:     87.192.227.94:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+{"timestamp": "2026-04-18T03:51:56.162963+00:00", "level": "WARNING", "message": "missing_credentials_with_headers", "module": "deps", "logger": "food_delivery.app.api.deps", "extra": {"taskName": "Task-282", "path": "/api/v1/users/me", "origin": null, "referer": "https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/", "has_authorization": false, "has_x_telegram_init_data": false, "has_x_telegram_init_data_alt": false, "has_x_init_data": false}}
+{"timestamp": "2026-04-18T03:51:56.164217+00:00", "level": "WARNING", "message": "app_exception", "module": "exceptions", "logger": "food_delivery.app.core.exceptions", "extra": {"taskName": "Task-282", "path": "/api/v1/users/me", "code": "UNAUTHORIZED", "detail": "Missing credentials", "field": null}}
+INFO:     87.192.227.94:0 - "GET /api/v1/users/me HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:57930 - "GET /api/users/5676921562 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57932 - "GET /api/v1/addresses HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /webapp/orders HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /static/js/api.js?v=20260418-1 HTTP/1.1" 304 Not Modified
+INFO:     37.110.210.117:0 - "GET /static/js/orders.js?v=20260416-1 HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+INFO:     37.110.210.117:0 - "GET /api/v1/orders?page=1&size=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62288 - "PATCH /api/v1/orders/23/status HTTP/1.1" 200 OK
+Using DATABASE_URL=sqlite+aiosqlite:///./food_delivery.db
+Using REDIS_URL=redis://localhost:6379/0
+Using WEBAPP_URL=https://configured-serious-deferred-rolled.trycloudflare.com/webapp/
+Using npm cache=C:\Users\Roma\Desktop\Telegram_bot\food_delivery\.npm-cache
+Using DEV_RELOAD=0
+Using DEV_TUNNEL_PROVIDER=auto
+Starting cloudflared quick tunnel ...
+[cloudflared] 2026-04-18T03:47:05Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+[cloudflared] 2026-04-18T03:47:05Z INF Requesting new quick Tunnel on trycloudflare.com...
+[cloudflared] 2026-04-18T03:47:10Z INF +--------------------------------------------------------------------------------------------+
+[cloudflared] 2026-04-18T03:47:10Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+[cloudflared] 2026-04-18T03:47:10Z INF |  https://twist-competing-issue-frankfurt.trycloudflare.com                                 |
+[cloudflared] 2026-04-18T03:47:10Z INF +--------------------------------------------------------------------------------------------+
+[cloudflared] 2026-04-18T03:47:10Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp]
+[cloudflared] 2026-04-18T03:47:10Z INF Version 2026.3.0 (Checksum 59b12880b24af581cf5b1013db601c7d843b9b097e9c78aa5957c7f39f741885)
+[cloudflared] 2026-04-18T03:47:10Z INF GOOS: windows, GOVersion: go1.24.13, GoArch: amd64
+[cloudflared] 2026-04-18T03:47:10Z INF Settings: map[ha-connections:1 p:http2 protocol:http2 url:http://localhost:8000]
+[cloudflared] 2026-04-18T03:47:10Z INF Environmental variables map[DEV_TUNNEL_PROVIDER:auto]
+[cloudflared] 2026-04-18T03:47:10Z INF cloudflared will not automatically update on Windows systems.
+[cloudflared] 2026-04-18T03:47:10Z INF Generated Connector ID: aa956620-eaa6-4148-90c8-0e8e68ae9624
+Using BACKEND_URL=https://twist-competing-issue-frankfurt.trycloudflare.com
+Using WEBAPP_URL=https://twist-competing-issue-frankfurt.trycloudflare.com/webapp/
+[cloudflared] 2026-04-18T03:47:10Z INF Initial protocol http2
+[cloudflared] 2026-04-18T03:47:10Z INF ICMP proxy will use 10.33.173.105 as source for IPv4
+[cloudflared] 2026-04-18T03:47:10Z INF ICMP proxy will use fe80::a3bf:7491:3cb8:27e9 in zone Беспроводная сеть as source for IPv6
+[cloudflared] 2026-04-18T03:47:10Z INF cloudflared does not support loading the system root certificate pool on Windows. Please use --origin-ca-pool <PATH> to specify the path to the certificate pool
+[cloudflared] 2026-04-18T03:47:10Z INF ICMP proxy will use 10.33.173.105 as source for IPv4
+[cloudflared] 2026-04-18T03:47:11Z INF ICMP proxy will use fe80::a3bf:7491:3cb8:27e9 in zone Беспроводная сеть as source for IPv6
+[cloudflared] 2026-04-18T03:47:11Z INF Starting metrics server on 127.0.0.1:20242/metrics
+[cloudflared] 2026-04-18T03:47:12Z INF Registered tunnel connection connIndex=0 connection=7f22cf41-870a-4211-b993-3364204df667 event=0 ip=198.41.200.233 location=waw05 protocol=http2
+[cloudflared] 2026-04-18T03:54:11Z INF Initiating graceful shutdown due to signal terminated ...
+[cloudflared] 2026-04-18T03:54:11Z INF Unregistered tunnel connection connIndex=0 event=0 ip=198.41.200.233
+backend exited with code 3221225786. Stopping remaining process...
+Stopped.

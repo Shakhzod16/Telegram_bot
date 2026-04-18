@@ -369,6 +369,23 @@ async def main() -> None:
                     if name not in critical_processes:
                         print(f"{name} exited with code {code}. Backend and bot will keep running.")
                         processes.pop(name, None)
+
+                        # Auto-recover tunnel so Telegram WebApp URL does not go stale.
+                        if name == "tunnel":
+                            try:
+                                print("Attempting tunnel restart...")
+                                restarted_tunnel = await _start_tunnel_if_needed(root=root, env=env)
+                            except Exception as exc:
+                                print(f"Tunnel restart failed: {exc}")
+                                restarted_tunnel = None
+
+                            if restarted_tunnel is not None:
+                                processes["tunnel"] = restarted_tunnel
+                                print("Tunnel restarted successfully.")
+                            else:
+                                print("Tunnel restart unavailable. Running without tunnel for now.")
+
+                        # Non-critical process handled, continue monitoring.
                         continue
                     print(f"{name} exited with code {code}. Stopping remaining process...")
                     exit_code = code or exit_code

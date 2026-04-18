@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import httpx
 from aiogram import F, Router
@@ -49,11 +49,34 @@ def _normalize_webapp_url(url: str) -> str:
     return urlunsplit(normalized)
 
 
-def _admin_orders_url() -> str:
+def _append_tg_user_id(url: str, telegram_id: int | None) -> str:
+    raw = (url or "").strip()
+    if not raw or telegram_id is None:
+        return raw
+    try:
+        tid = str(int(telegram_id))
+    except (TypeError, ValueError):
+        return raw
+    try:
+        parsed = urlsplit(raw)
+        query_pairs = [
+            (key, value)
+            for key, value in parse_qsl(parsed.query, keep_blank_values=True)
+            if key != "tg_user_id"
+        ]
+        query_pairs.append(("tg_user_id", tid))
+        normalized = parsed._replace(query=urlencode(query_pairs))
+        return urlunsplit(normalized)
+    except Exception:
+        joiner = "&" if "?" in raw else "?"
+        return f"{raw}{joiner}tg_user_id={tid}"
+
+
+def _admin_orders_url(telegram_id: int | None = None) -> str:
     base = _resolve_webapp_url().rstrip("/")
     if not base:
         return ""
-    return f"{base}/admin/orders"
+    return _append_tg_user_id(f"{base}/admin/orders", telegram_id)
 
 
 def _safe_text(resp: httpx.Response) -> str:
@@ -180,7 +203,7 @@ async def my_admin_orders(message: Message) -> None:
                 f"{_status_emoji(status)} <b>#{oid}</b> {_status_label(status)} • {total_amount:,.0f} so'm • {created_at}"
             )
 
-        admin_orders_url = _admin_orders_url()
+        admin_orders_url = _admin_orders_url(telegram_id)
         kb = None
         if admin_orders_url.startswith("https://"):
             kb = InlineKeyboardMarkup(

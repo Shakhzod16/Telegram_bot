@@ -23,6 +23,88 @@ function safeClearToken() {
 	} catch (_) {}
 }
 
+const TELEGRAM_USER_ID_KEY = 'tg_user_id_fallback';
+let memoryTelegramUserId = null;
+
+function normalizeTelegramUserId(raw) {
+	if (raw === undefined || raw === null) return null;
+	const asNumber = Number(raw);
+	if (!Number.isFinite(asNumber)) return null;
+	return String(Math.trunc(asNumber));
+}
+
+function safeSetTelegramUserId(rawId) {
+	const normalized = normalizeTelegramUserId(rawId);
+	if (!normalized) return null;
+	memoryTelegramUserId = normalized;
+	try {
+		sessionStorage.setItem(TELEGRAM_USER_ID_KEY, normalized);
+	} catch (_) {}
+	try {
+		localStorage.setItem(TELEGRAM_USER_ID_KEY, normalized);
+	} catch (_) {}
+	return normalized;
+}
+
+function safeGetTelegramUserId() {
+	if (memoryTelegramUserId) return memoryTelegramUserId;
+	try {
+		const sessionValue = sessionStorage.getItem(TELEGRAM_USER_ID_KEY);
+		if (sessionValue) {
+			memoryTelegramUserId = sessionValue;
+			return sessionValue;
+		}
+	} catch (_) {}
+	try {
+		const localValue = localStorage.getItem(TELEGRAM_USER_ID_KEY);
+		if (localValue) {
+			memoryTelegramUserId = localValue;
+			return localValue;
+		}
+	} catch (_) {}
+	return null;
+}
+
+window.getTelegramUserIdSafe = safeGetTelegramUserId;
+window.setTelegramUserIdSafe = safeSetTelegramUserId;
+
+function readTelegramUserIdFromLaunchParams() {
+	function extractFromRaw(raw) {
+		if (!raw) return null;
+		const text = String(raw).trim();
+		if (!text) return null;
+		const normalized = text.startsWith('#') || text.startsWith('?')
+			? text.slice(1)
+			: text;
+		if (!normalized) return null;
+		try {
+			const params = new URLSearchParams(normalized);
+			const keys = ['tg_user_id', 'tgUserId', 'telegram_id', 'user_id'];
+			for (let i = 0; i < keys.length; i += 1) {
+				const value = normalizeTelegramUserId((params.get(keys[i]) || '').trim());
+				if (value) return value;
+			}
+		} catch (_) {}
+		return null;
+	}
+	const fromQuery = extractFromRaw(window.location.search || '');
+	if (fromQuery) return fromQuery;
+	return extractFromRaw(window.location.hash || '');
+}
+
+function parseTelegramUserIdFromInitData(initData) {
+	if (!initData) return null;
+	try {
+		const params = new URLSearchParams(String(initData));
+		const rawUser = (params.get('user') || '').trim();
+		if (!rawUser) return null;
+		const parsedUser = JSON.parse(rawUser);
+		return normalizeTelegramUserId(parsedUser && parsedUser.id);
+	} catch (_) {
+		return null;
+	}
+}
+
 function delay(ms) {
 	return new Promise(function (resolve) {
 		setTimeout(resolve, ms);
@@ -82,21 +164,52 @@ function readTelegramUserIdFast() {
 	const tg = window.Telegram && window.Telegram.WebApp;
 	const user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
 	if (!user || user.id === undefined || user.id === null) return null;
-	const asNumber = Number(user.id);
-	if (!Number.isFinite(asNumber)) return null;
-	return String(Math.trunc(asNumber));
+	return safeSetTelegramUserId(user.id);
 }
 
 function generatedInitDataFromUnsafeUser() {
 	const tg = window.Telegram && window.Telegram.WebApp;
-	const user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
-	if (!user || !user.id) return null;
+	let user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
+	if (!user || !normalizeTelegramUserId(user.id)) {
+		const fallbackId = safeGetTelegramUserId();
+		if (!fallbackId) return null;
+		user = { id: Number(fallbackId) };
+	}
 	try {
 		return 'user=' + encodeURIComponent(JSON.stringify(user));
 	} catch (_) {
 		return null;
 	}
 }
+
+async function resolveTelegramUserIdForHeader() {
+	const fromLaunch = readTelegramUserIdFromLaunchParams();
+	if (fromLaunch) return safeSetTelegramUserId(fromLaunch);
+
+	const direct = readTelegramUserIdFast();
+	if (direct) return direct;
+
+	const fromInitData = parseTelegramUserIdFromInitData(readInitDataFast());
+	if (fromInitData) return safeSetTelegramUserId(fromInitData);
+
+	if (typeof window.getTelegramInitDataSafe === 'function') {
+		const storedInitData = window.getTelegramInitDataSafe();
+		const fromStoredInitData = parseTelegramUserIdFromInitData(storedInitData);
+		if (fromStoredInitData) return safeSetTelegramUserId(fromStoredInitData);
+	}
+
+	for (let i = 0; i < 15; i += 1) {
+		await delay(80);
+		const delayed = readTelegramUserIdFast();
+		if (delayed) return delayed;
+
+		const delayedFromInitData = parseTelegramUserIdFromInitData(readInitDataFast());
+		if (delayedFromInitData) return safeSetTelegramUserId(delayedFromInitData);
+	}
+	return safeGetTelegramUserId();
+}
+
+safeSetTelegramUserId(readTelegramUserIdFromLaunchParams());
 
 async function resolveTelegramInitDataForHeader() {
 	if (typeof window.resolveTelegramInitData === 'function') {
@@ -163,10 +276,10 @@ async function buildHeaders(options) {
 		}
 	}
 
-	// Fallback for Telegram clients where initData is unavailable,
-	// but initDataUnsafe.user.id is still exposed.
+	// Fallback for clients where initData is unavailable.
+	// We resolve Telegram user id from initDataUnsafe, URL params, or stored fallback.
 	if (!headers['X-Telegram-Id']) {
-		const tgUserId = readTelegramUserIdFast();
+		const tgUserId = await resolveTelegramUserIdForHeader();
 		if (tgUserId) {
 			headers['X-Telegram-Id'] = tgUserId;
 		}

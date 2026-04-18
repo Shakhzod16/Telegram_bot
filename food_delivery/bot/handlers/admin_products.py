@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import httpx
 from aiogram import F, Router
@@ -68,11 +68,34 @@ def _normalize_webapp_url(url: str) -> str:
     return urlunsplit(normalized)
 
 
-def _admin_product_new_url() -> str:
+def _append_tg_user_id(url: str, telegram_id: int | None) -> str:
+    raw = (url or "").strip()
+    if not raw or telegram_id is None:
+        return raw
+    try:
+        tid = str(int(telegram_id))
+    except (TypeError, ValueError):
+        return raw
+    try:
+        parsed = urlsplit(raw)
+        query_pairs = [
+            (key, value)
+            for key, value in parse_qsl(parsed.query, keep_blank_values=True)
+            if key != "tg_user_id"
+        ]
+        query_pairs.append(("tg_user_id", tid))
+        normalized = parsed._replace(query=urlencode(query_pairs))
+        return urlunsplit(normalized)
+    except Exception:
+        joiner = "&" if "?" in raw else "?"
+        return f"{raw}{joiner}tg_user_id={tid}"
+
+
+def _admin_product_new_url(telegram_id: int | None = None) -> str:
     base = _resolve_webapp_url().rstrip("/")
     if not base:
         return ""
-    return f"{base}/admin/products/new"
+    return _append_tg_user_id(f"{base}/admin/products/new", telegram_id)
 
 
 def _to_price(value: object) -> float:
@@ -195,7 +218,8 @@ async def my_products(message: Message) -> None:
 
 @router.callback_query(F.data == "prod_add_new")
 async def open_product_add_webapp(callback: CallbackQuery) -> None:
-    webapp_url = _admin_product_new_url()
+    telegram_id = callback.from_user.id if callback.from_user else None
+    webapp_url = _admin_product_new_url(telegram_id)
     if callback.message is None:
         await callback.answer("Xabar topilmadi", show_alert=True)
         return
@@ -227,7 +251,8 @@ async def open_product_add_webapp(callback: CallbackQuery) -> None:
 @router.message(F.text == "🌐 WebApp")
 async def open_admin_webapp(message: Message) -> None:
     base_webapp_url = _resolve_webapp_url().rstrip("/")
-    admin_url = f"{base_webapp_url}/admin" if base_webapp_url else ""
+    telegram_id = message.from_user.id if message.from_user else None
+    admin_url = _append_tg_user_id(f"{base_webapp_url}/admin", telegram_id) if base_webapp_url else ""
     if not admin_url.startswith("https://"):
         await message.answer(
             "❌ WebApp URL topilmadi yoki HTTPS emas.\n"

@@ -119,6 +119,54 @@ function readInitDataFromQuery() {
 	return null;
 }
 
+function generateInitDataFromFallbackUserId() {
+	function normalizeUserId(raw) {
+		const asNumber = Number(raw);
+		if (!Number.isFinite(asNumber)) return null;
+		return Math.trunc(asNumber);
+	}
+
+	function readUserIdFromRaw(raw) {
+		if (!raw) return null;
+		const text = String(raw).trim();
+		if (!text) return null;
+		const normalized = text.startsWith('#') || text.startsWith('?')
+			? text.slice(1)
+			: text;
+		if (!normalized) return null;
+		try {
+			const params = new URLSearchParams(normalized);
+			const keys = ['tg_user_id', 'tgUserId', 'telegram_id', 'user_id'];
+			for (let i = 0; i < keys.length; i += 1) {
+				const value = normalizeUserId((params.get(keys[i]) || '').trim());
+				if (value !== null) return value;
+			}
+		} catch (_) {}
+		return null;
+	}
+
+	let userId = null;
+	if (typeof window.getTelegramUserIdSafe === 'function') {
+		userId = normalizeUserId(window.getTelegramUserIdSafe());
+	}
+	if (userId === null) {
+		userId = readUserIdFromRaw(window.location.search || '') || readUserIdFromRaw(window.location.hash || '');
+	}
+	if (userId === null) return null;
+
+	if (typeof window.setTelegramUserIdSafe === 'function') {
+		try {
+			window.setTelegramUserIdSafe(String(userId));
+		} catch (_) {}
+	}
+
+	try {
+		return 'user=' + encodeURIComponent(JSON.stringify({ id: userId }));
+	} catch (_) {
+		return null;
+	}
+}
+
 async function resolveTelegramInitData() {
 	const tg = window.Telegram && window.Telegram.WebApp;
 	if (!tg) return safeGetInitData();
@@ -145,6 +193,12 @@ async function resolveTelegramInitData() {
 		return queryData;
 	}
 
+	const generatedFromFallbackUser = generateInitDataFromFallbackUserId();
+	if (generatedFromFallbackUser) {
+		safeSetInitData(generatedFromFallbackUser);
+		return generatedFromFallbackUser;
+	}
+
 	for (let i = 0; i < 35; i += 1) {
 		await delay(100);
 		initData = (tg.initData || '').trim();
@@ -163,6 +217,12 @@ async function resolveTelegramInitData() {
 		} catch (_) {
 			return safeGetInitData();
 		}
+	}
+
+	const generatedFromFallbackUserAfterWait = generateInitDataFromFallbackUserId();
+	if (generatedFromFallbackUserAfterWait) {
+		safeSetInitData(generatedFromFallbackUserAfterWait);
+		return generatedFromFallbackUserAfterWait;
 	}
 
 	return safeGetInitData();
